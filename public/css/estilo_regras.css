@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f2f2f2;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    min-width: 320px;
+    margin: auto;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Botão Voltar */
+.btn-voltar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 18px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+}
+
+.btn-voltar:hover {
+    background: linear-gradient(135deg, #27ae60, #219653);
+    transform: translateY(-2px);
+}
+
+/* Título Principal */
+.titulo-principal {
+    background: #e74c3c;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Conteúdo das Regras */
+.conteudo-regras {
+    padding: 25px 20px;
+}
+
+.regra-item {
+    margin-bottom: 25px;
+    background: rgba(0, 74, 173, 1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.regra-item:last-child {
+    margin-bottom: 0;
+}
+
+.regra-numero {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+    display: inline-block;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.regra-texto {
+    font-size: 16px;
+    color: white;
+    
+}
+
+/* Sub-regras */
+.sub-regras {
+    margin-top: 15px;
+    padding-left: 10px;
+    border-left: 2px solid #ddd;
+}
+
+.sub-regra {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: white;
+    padding-left: 10px;
+}
+
+.sub-regra:last-child {
+    margin-bottom: 0;
+}
+
+.sub-regra span {
+    font-weight: 700;
+    color: white;
+    margin-right: 8px;
+}
+
+/* Footer com logo */
+footer {
+    text-align: center;
+    margin-top: 25px;
+    padding: 20px 15px;
+    background: #f8f9fa;
+    border-top: 1px solid #eaeaea;
+    border-radius: 0 0 14px 14px;
+}
+
+.logo-footer {
+    max-width: 160px;
+    width: 60%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* Efeito hover para interatividade */
+.regra-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+    }
+    
+    body {
+        padding: 10px;
+        align-items: flex-start;
+        min-height: auto;
+    }
+    
+    .titulo-principal {
+        font-size: 22px;
+        padding: 20px 15px;
+    }
+    
+    .conteudo-regras {
+        padding: 20px 15px;
+    }
+    
+    .regra-item {
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .logo-footer {
+        max-width: 140px;
+        width: 55%;
+    }
+    
+    footer {
+        padding: 15px 12px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        border-radius: 0;
+    }
+    
+    .titulo-principal {
+        font-size: 20px;
+        padding: 18px 12px;
+    }
+    
+    .conteudo-regras {
+        padding: 16px 12px;
+    }
+    
+    .regra-item {
+        padding: 14px;
+        margin-bottom: 16px;
+    }
+    
+    .regra-texto {
+        font-size: 15px;
+    }
+    
+    .sub-regra {
+        font-size: 14px;
+    }
+    
+    .logo-footer {
+        max-width: 120px;
+        width: 50%;
+    }
+    
+    footer {
+        padding: 12px 10px;
+        margin-top: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .logo-footer {
+        max-width: 180px;
+        width: 60%;
+    }
+    
+    footer {
+        padding: 20px;
+        margin-top: 25px;
+    }
+}

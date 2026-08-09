@@ -1,0 +1,238 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ------------------- ÁREA PRINCIPAL ------------------- */
+
+.borda_principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+}
+
+.card {
+    background-color: rgba(0, 74, 173, 1);
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: 
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);   /* 🔥 sobe, vem pra frente */
+    background-color: rgb(17, 103, 230); /* muda a cor */
+    box-shadow: 0 10px 25px rgba(183, 33, 33, 0.35); /* ganha profundidade */
+}
+
+/* quando clicar */
+.card:active {
+    transform: translateY(-2px) scale(0.98); /* leve compressão */
+    background-color: rgb(11, 80, 185);
+}
+
+/* CARD BARBEIRO */
+.barbeiro {
+    grid-column: span 2;
+    height: 80px;
+}
+
+/* VENDAS */
+.vendas {
+    background-color: rgb(40, 134, 40);
+}
+
+/* AGENDAMENTOS */
+.total_agendamentos {
+    background-color: rgb(228, 34, 34);
+}
+
+/* RANKING */
+.ranking {
+    background-color: rgba(148, 150, 13, 1);
+}
+
+/* RELATÓRIOS */
+.relatorios {
+    background-color: rgba(245, 131, 44, 1);
+}
+
+
+
+
+
+/* ÍCONES */
+.icone {
+    width: 48px;
+    height: auto;
+}
+
+/* TEXTO DOS CARDS PRINCIPAIS */
+.texto-barbeiro,
+.texto-vendas,
+.texto-agendamentos,
+.texto-ranking,
+.texto-relatorio,
+.texto-dia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+
+}
+
+.titulo1 {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.titulo2 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.titulo3 {
+    font-weight: 400;
+    font-size: 18px;
+}
+.titulo4 {
+    font-weight: bold;
+    font-size:20
+}
+
+
+
+.titulo5 {
+    font-weight: bold;
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: absolute;
+    right: 20px; /* Distância da borda direita */
+    top: 50%;
+    transform: translateY(-50%);
+    /* REMOVA O WIDTH: 90% DAQUI */
+    width: auto; 
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.borda-segundaria {
+    display: flex;               
+    gap: 20px;                   
+    padding: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+/* CARD DOS DIAS */
+.agendamento {
+    width: 50%;
+    height: 50%;
+    background-color: #1e90ff;  
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.borda-mostrar-agendamentos{
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    flex-direction: row;
+    align-items: center;
+    
+    
+}
+
+.agendamentos_por_ordem {
+    border-radius: 10px;
+    background-color: #1e90ff;
+    width: 98%;          /* Ocupa quase toda a largura */
+    max-width: 99%;   /* Aumente este valor para ficar mais largo */
+    margin: 10px auto;
+    height: 120px;
+    padding: 15px 30px;  /* Aumenta o espaço lateral interno */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinha verticalmente */
+    align-items: flex-start; /* 🔥 Isso JOGA O TEXTO PARA A ESQUERDA */
+}
+
+footer{
+    text-align: center;
+    width: auto;
+    display: block;
+    
+}
+
+
+.voltar{
+   width: 90%;
+    height: 200px;
+    display: flex;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   AJUSTES PARA O FUNCIONAMENTO DINÂMICO (INTEGRAÇÃO COM O JAVASCRIPT)
+   ========================================================================== */
+
+/* 1. Melhora a experiência de clique nos cards de dias */
+.agendamento {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    user-select: none; /* Impede que o usuário selecione o texto sem querer ao clicar rápido */
+}
+
+/* 2. Efeito de Hover específico para os cards de dias */
+.agendamento:hover {
+    transform: translateY(-4px);
+    background-color: #0074ad; /* Tom ligeiramente mais escuro que o azul padrão */
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.4);
+}
+
+/* 3. Destaque Visual para o DIA SELECIONADO (ATIVO) */
+.agendamento.ativo {
+    background-color: #004aad !important; /* Cor idêntica à do card do Barbeiro */
+    box-shadow: 0 0 0 3px #ffffff, 0 8px 20px rgba(0, 74, 173, 0.5); /* Borda branca fina e sombra azul */
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* 4. Garante que os links dentro do card de Ranking herdem a cor branca e quebrem linha */
+.texto-ranking a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.texto-ranking a:first-child {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.texto-ranking a:last-child {
+    font-weight: bold;
+    font-size: 20px;
+}

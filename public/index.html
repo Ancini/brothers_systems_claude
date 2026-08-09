@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brothers Systems</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<div class="container-login">
+  <div class="form-wrapper">
+
+    <div class="logo_pagina">
+      <img src="css/imagens/logo.png" alt="logo">
+    </div>
+
+    <form id="formLogin" class="formulario_entrar">
+
+      <div class="input-container">
+        <input id="email" type="email" placeholder="Digite seu e-mail" required>
+        <i class="fa-regular fa-envelope"></i>
+      </div>
+
+      <div class="input-container">
+        <input id="password" type="password" placeholder="Digite sua senha" required>
+        <i class="fa fa-key"></i>
+      </div>
+
+      <div class="botao_entrar">
+        <button type="submit">
+          Entrar <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </div>
+
+      <div class="a_2">
+        <a href="tela_cadastro_de_usuario.html">Não possui conta? Cadastre-se!</a>
+      </div>
+
+      <div class="a_2">
+        <a href="esqueci_minha_senha.html">Esqueceu sua senha?</a>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<footer></footer>
+
+<script>
+  // Configuração do Supabase
+  const SUPABASE_URL = "https://hnaapsbkrokrkmnzayyr.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_AaxUlPsbivnRIu2_iu3Epg_nzr8w-3u";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Funções de sessão
+  function salvarSessao(user) {
+    localStorage.setItem("usuarioLogado", JSON.stringify(user));
+  }
+
+  function pegarSessao() {
+    return JSON.parse(localStorage.getItem("usuarioLogado"));
+  }
+
+  // Verificar se já está logado (MAS NÃO REDIRECIONA AUTOMATICAMENTE)
+  const usuarioExistente = pegarSessao();
+  if (usuarioExistente) {
+    alert("✅ Você já está logado! Redirecionando...");
+    window.location.href = "menu_cliente.html";
+  }
+
+  // 🔥 Função de login ATUALIZADA com a busca pela coluna correta: 'auth_id'
+  async function fazerLogin(email, password) {
+    try {
+      // 1. Faz o login na autenticação padrão do Supabase
+      const { data: authData, error: authError } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (authError) throw authError;
+
+      // 2. Busca na sua tabela customizada 'usuario' usando a coluna de ligação 'auth_id'
+      const { data: dadosUsuario, error: dbError } = await supabaseClient
+        .from('usuario') 
+        .select('barbeiro, nome_usuario')
+        .eq('auth_id', authData.user.id) // 🔥 CORREÇÃO: antes estava 'id', agora é 'auth_id'
+        .single();
+
+      if (dbError) {
+        console.warn("Aviso: Não foi possível buscar o perfil na tabela usuario:", dbError.message);
+      }
+
+      // 3. Mescla o objeto criando as propriedades 'barbeiro' e 'nome' no objeto final
+      const usuarioCompleto = {
+        ...authData.user,
+        barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false,
+        nome: dadosUsuario ? dadosUsuario.nome_usuario : "Cliente"
+      };
+
+      // Retorna o usuário já com as flags atualizadas do banco de dados
+      return { success: true, user: usuarioCompleto };
+
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Evento do formulário
+  document.getElementById("formLogin").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    
+    if (!email || !password) {
+      alert("❌ Preencha email e senha!");
+      return;
+    }
+    
+    const result = await fazerLogin(email, password);
+    
+    if (result.success) {
+      alert("✅ Login realizado com sucesso!");
+      salvarSessao(result.user); // Agora salva no navegador com as informações completas
+      window.location.href = "menu_cliente.html";
+    } else {
+      alert("❌ Erro: " + result.error);
+    }
+  });
+</script>
+
+</body>
+</html>

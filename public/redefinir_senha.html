@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brothers Systems</title>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet"
+    href="css/estilo_esquci_minha_senha.css">
+
+    <link rel="icon"
+    type="image/x-icon"
+    href="css/imagens/2.ico">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <!-- LOGO -->
+    <div class="logo_pagina">
+        <img src="css/imagens/logo.png" alt="logo">
+    </div>
+
+    <!-- FORM -->
+    <div class="formulario_entrar">
+        <div class="form-wrapper">
+
+            <form id="formSenha">
+
+                <div class="input-container">
+                    <input
+                    type="password"
+                    id="novaSenha"
+                    placeholder="Digite sua nova senha"
+                    required>
+
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <div class="input-container">
+                    <input
+                    type="password"
+                    id="confirmarSenha"
+                    placeholder="Confirme sua senha"
+                    required>
+
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <div class="botao_enviar">
+                    <button type="submit">
+                        Redefinir senha
+                        <i class="fa-regular fa-paper-plane"></i>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/recuperar_senha.js"></script>
+
+</body>
+</html>

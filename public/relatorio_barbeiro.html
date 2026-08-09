@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Relatório Barbeiro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="CSS/estilo_relatorio.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card barbeiro-header">
+        <div class="barbeiro-info">
+            <div class="barbeiro-titulo">Barbeiro</div>
+            <div class="barbeiro-nome">Gabriel E. Ancini</div>
+        </div>
+        <img src="css/imagens/barbeiro.png" alt="Barbeiro" class="barbeiro-foto">
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-card vendas">
+            <div class="stat-label">Total de vendas</div>
+            <div class="stat-value">R$350,00 Reais</div>
+        </div>
+        
+        <div class="stat-card agendamentos">
+            <div class="stat-label">Agendamentos</div>
+            <div class="stat-value">15</div>
+        </div>
+    </div>
+
+    <div class="btn-ranking" onclick="window.location.href='raking.html'">
+        🏆 Ranking – Tabela de pontuação
+    </div>
+
+    <div class="filtros-container">
+        <div class="section-title">Relatórios</div>
+        <div class="filtros-botoes">
+            <div class="filtro-btn" onclick="filtrarRelatorio('dia')">
+                Dia
+            </div>
+            <div class="filtro-btn" onclick="filtrarRelatorio('mes')">
+                Mês
+            </div>
+            <div class="filtro-btn" onclick="filtrarRelatorio('ano')">
+                Ano
+            </div>
+        </div>
+    </div>
+
+    <div class="periodo-info">
+        Em Janeiro de 2025
+    </div>
+
+    <div class="estatisticas-mensais">
+        <div class="estatistica-card">
+            <div class="estatistica-label">Você conseguiu</div>
+            <div class="estatistica-valor">R$3.500,00 Reais</div>
+        </div>
+        
+        <div class="estatistica-card">
+            <div class="estatistica-label">Você cortou</div>
+            <div class="estatistica-valor">85 cabelos</div>
+        </div>
+    </div>
+
+    <div class="btn-voltar" onclick="window.location.href='menu_barbeiro.html'">
+        Voltar
+    </div>
+
+    <footer>
+        <img src="css/imagens/logo.png" alt="Brothers Systems" class="logo-footer">
+    </footer>
+
+</div>
+
+<script>
+    function filtrarRelatorio(tipo) {
+        console.log(`Filtrando relatório por: ${tipo}`);
+        
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.classList.remove('ativo');
+        });
+        
+        event.target.classList.add('ativo');
+        
+        atualizarDadosPeriodo(tipo);
+    }
+    
+    function atualizarDadosPeriodo(tipo) {
+        const periodoElemento = document.querySelector('.periodo-info');
+        
+        switch(tipo) {
+            case 'dia':
+                periodoElemento.textContent = 'Em Hoje (14/01/2026)';
+                break;
+            case 'mes':
+                periodoElemento.textContent = 'Em Janeiro de 2026';
+                break;
+            case 'ano':
+                periodoElemento.textContent = 'Em 2026';
+                break;
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.filtro-btn:nth-child(2)').classList.add('ativo');
+    });
+</script>
+
+</body>
+</html>

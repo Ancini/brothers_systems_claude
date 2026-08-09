@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brothers Systems</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_esquci_minha_senha.css">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+</head>
+
+<body>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="login-box">
+
+        <!-- LOGO -->
+        <div class="logo_pagina">
+            <img src="css/imagens/logo.png" alt="logo">
+        </div>
+
+      <div class="formulario_entrar">
+    <div class="form-wrapper">
+
+        <form onsubmit="recuperarSenha(event)">
+
+            <div class="input-container">
+                <input id="email" type="email" placeholder="Digite seu e-mail" required>
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+
+            <div class="botao_enviar">
+                <button type="submit">
+                    Enviar e-mail
+                    <i class="fa-regular fa-paper-plane"></i>
+                </button>
+            </div>
+
+            <div class="botao_enviar">
+                <a href="index.html" class="btn-link" role="button">
+                    Retornar ao menu principal
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+    </div>
+
+</body>
+<footer>
+
+</footer>
+ 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="js/enviar_email_recuperar_senha.js"></script>
+</html>

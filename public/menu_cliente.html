@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brothers Systems - Agendamento</title>
+    <link rel="stylesheet" href="css/menu_cliente.css">
+    <style>
+        /* Estilo adicional para o botão de sair do rodapé */
+        .footer-sair {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .logout-btn-footer {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn-footer:hover {
+            background: #c82333;
+        }
+        
+        .logout-btn-header {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+        }
+        
+        .logout-btn-header:hover {
+            background: #c82333;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 🔥 NOVO CSS: ESTILO DO CARD EXTRA DO PAINEL DO BARBEIRO */
+        .barbeiro-acesso-card {
+            display: none; /* Fica oculto por padrão no carregamento da página */
+            background-color: rgb(228, 34, 34); /* Tom vermelho correspondente ao padrão da marca */
+            border-radius: 12px;
+            padding: 15px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .barbeiro-acesso-card:hover {
+            transform: translateY(-3px);
+            background-color: rgb(198, 24, 24);
+        }
+
+        .barbeiro-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .barbeiro-icon {
+            width: 32px;
+            height: auto;
+        }
+
+        .barbeiro-titulo {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .barbeiro-link {
+            font-size: 14px;
+            color: #fff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="cliente-card">
+                <div class="cliente-avatar">
+                    <img src="css/imagens/barbeiro.png" alt="Cliente">
+                </div>
+                <div class="cliente-info">
+                    <span class="label">Cliente</span>
+                    <span class="nome">Carregando...</span>
+                </div>
+            </div>
+            
+            <div class="pontuacao-card">
+                <div class="pontuacao-icone">
+                    <img src="css/imagens/pontuacao-maxima.png" alt="Pontuação">
+                </div>
+                <div class="pontuacao-info">
+                    <span class="label">Pontuação</span>
+                    <span id="pontuacao-usuario"></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+    <div class="barbeiro-acesso-card" id="cardAcessoBarbeiro">
+        <div class="barbeiro-left">
+            <img src="css/imagens/calendario.png" alt="Agenda" class="barbeiro-icon">
+            <span class="barbeiro-titulo">Painel Administrativo</span>
+        </div>
+        <span class="barbeiro-link">Ver meus agendamentos ➔</span>
+    </div>
+</div>
+
+        <div class="ranking-card">
+            <div class="ranking-left">
+                <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
+                <span class="ranking-titulo">Ranking</span>
+            </div>
+            <span class="ranking-link"></span>
+        </div>
+
+        <div class="calendario-card">
+            <div class="calendario-left">
+                <img src="css/imagens/calendario.png" alt="calendario" class="icone">
+                <span class="calendario-titulo">Meus Agendamentos</span>
+            </div>
+            <span class="calendario-link"></span>
+        </div>
+
+        <div class="busca-card">
+             <img src="css/imagens/lupa.png" alt="calendario" class="icone">
+            <span class="busca-texto">Buscar estabelecimento</span>
+
+        </div>
+
+
+        <section class="estabelecimentos-section">
+            <div class="section-badge abertos">
+                <span>Abertos agora</span>
+            </div>
+            <div class="estabelecimentos-grid" id="abertos"></div> 
+        </section>
+
+        <section class="estabelecimentos-section">
+            <div class="section-badge fechados">
+                <span>Fechados que abrem em seguida</span>
+            </div>
+            <div class="estabelecimentos-grid" id="fechados"></div>
+        </section>
+        
+        <div class="footer-sair">
+            <button class="logout-btn-footer" id="btnSairFooter">🚪 Sair da Conta</button>
+            <div class="copyright">© 2026 Brothers Systems - Todos os direitos reservados</div>
+        </div>
+    </div>
+
+    <script type="module" src="js/menu_cliente.js"></script>
+
+    <script>
+        // Funções de sessão (cópia local para não precisar de import)
+        function pegarSessao() {
+            return JSON.parse(localStorage.getItem("usuarioLogado"));
+        }
+
+        function logout() {
+            localStorage.removeItem("usuarioLogado");
+            console.log("Usuário deslogado, sessão removida");
+        }
+
+        // Verificar se está logado
+        const user = pegarSessao();
+
+        if (!user) {
+            alert("Você não está logado! Redirecionando para o login...");
+            window.location.href = "index.html";
+        }
+
+       // 🔥 CONTROLE EXCLUSIVO PARA O PERFIL DE BARBEIRO (ATUALIZADO)
+if (user) {
+    // 1. Checa se o campo se chama 'barbeiro' direto no objeto, 
+    // ou dentro de 'user_metadata' (dependendo de como você salvou no login)
+    const ehBarbeiro = user.barbeiro || user.user_metadata?.barbeiro || false;
+    
+    console.log("Dados do usuário logado:", user); // Para você inspecionar no F12 do navegador
+    console.log("Status do campo barbeiro:", ehBarbeiro);
+
+    // Como o campo pode vir como booleano (true) ou como string ("true" ou "s"), tratamos as possibilidades:
+    if (ehBarbeiro === true || ehBarbeiro === "true" || ehBarbeiro === "s") {
+        const cardAcessoBarbeiro = document.getElementById('cardAcessoBarbeiro');
+        if (cardAcessoBarbeiro) {
+            cardAcessoBarbeiro.style.display = 'flex'; // Exibe o card vermelho
+            
+            // Ação de clique para mudar de página
+            cardAcessoBarbeiro.onclick = () => {
+                window.location.href = "menu_inicial_barbeiro.html";
+            };
+        }
+    }
+}
+
+        // Atualizar o nome do cliente no header
+        const nomeClienteSpan = document.querySelector('.cliente-info .nome');
+        if (nomeClienteSpan && user) {
+            const nome = user.user_metadata?.name || user.email?.split('@')[0] || "Cliente";
+            nomeClienteSpan.textContent = nome;
+        }
+
+        // Adicionar botão de logout no header (canto superior direito)
+        const header = document.querySelector('.header');
+        if (header && !document.querySelector('.logout-btn-header')) {
+            const logoutBtnHeader = document.createElement('button');
+            logoutBtnHeader.textContent = 'Sair';
+            logoutBtnHeader.className = 'logout-btn-header';
+            logoutBtnHeader.onclick = () => {
+                if (confirm("Tem certeza que deseja sair da sua conta?")) {
+                    logout();
+                    window.location.href = "index.html";
+                }
+            };
+            header.appendChild(logoutBtnHeader);
+        }
+
+        // Botão de sair no rodapé
+        const btnSairFooter = document.getElementById('btnSairFooter');
+        if (btnSairFooter) {
+            btnSairFooter.onclick = () => {
+                if (confirm("Tem certeza que deseja sair da sua conta?")) {
+                    logout();
+                    window.location.href = "index.html";
+                }
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #ffffff;
+    padding: 15px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Header Cards */
+.header-cards {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.cliente-card {
+    flex: 1;
+    background-color: #2196F3;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cliente-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cliente-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cliente-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cliente-info .label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cliente-info .nome {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Ranking e Pontuação Card */
+.ranking-pontuacao-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ranking-section {
+    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ranking-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.ranking-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.ranking-label {
+    font-size: 11px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.ranking-link {
+    font-size: 10px;
+    color: #ffffff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.pontuacao-section {
+    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pontuacao-label {
+    font-size: 11px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.pontuacao-valor {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Botão Retornar */
+.btn-retornar {
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.2s;
+}
+
+.btn-retornar:hover {
+    transform: translateY(-2px);
+}
+
+.icone-voltar {
+    font-size: 18px;
+}
+
+/* Card Header Agendamentos */
+.card-agendamentos-header {
+    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    border-radius: 15px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.calendario-icon {
+    width: 40px;
+    height: 40px;
+    filter: brightness(0) invert(1);
+}
+
+.agendamentos-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.agendamentos-label {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.agendamentos-total {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Lista de Agendamentos */
+.agendamentos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.agendamento-card {
+    background-color: #2196F3;
+    border-radius: 15px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.agendamento-card:hover {
+    transform: translateY(-2px);
+}
+
+.agendamento-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.barbeiro-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.barbearia-nome {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.servico-label {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.data-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.data-valor {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.agendamento-horario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.horario {
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.periodo {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.dia-semana {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .header-cards {
+        flex-direction: column;
+    }
+    
+    .agendamento-card {
+        padding: 12px 15px;
+    }
+    
+    .horario {
+        font-size: 28px;
+    }
+    
+    .periodo {
+        font-size: 18px;
+    }
+}

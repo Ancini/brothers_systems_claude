@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title> Brothers Systems </title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_cadastro.css">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo_pagina">
+        <img src="css/imagens/logo.png" alt="logo">
+    </div>
+
+    <br>
+<br>
+    <div class="formulario_entrar">
+        <div class="form-wrapper">
+
+        <!-- CHAMA FUNÇÃO JS -->
+        <form onsubmit="cadastrarUsuario(event)">
+
+            <div class="input-container">
+                <input id="nome" placeholder="Digite seu nome">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+
+            <div class="input-container">
+                <input id="email" type="email" placeholder="Digite seu e-mail">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+
+
+            <div class="input-container">
+                <input id="senha" type="password" placeholder="Digite sua senha">
+                <i class="fa-solid fa-key"></i>
+            </div>
+
+            <div class="input-container">
+                <input id="confirmarsenha" type="password" placeholder="Confirme sua senha">
+                <i class="fa-solid fa-key"></i>
+            </div>
+
+                 <div class="input-container">
+                <input id="telefone" type="tel" placeholder="Digite seu telefone">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+
+            <div class="botao_cadastrar">
+                <button type="submit">
+                    Cadastrar
+                    <i class="fa-solid fa-user-plus"></i>
+                </button>
+            </div>
+
+            <div class="botao_cadastrar">
+                <a href="index.html" class="botao_link">
+                    Voltar ao menu principal
+                    <i class="fa-solid fa-right-to-bracket" style="color:white;"></i>
+                </a>
+            </div>
+
+        </form>
+
+        </div>
+    </div>
+
+</div>
+
+<footer></footer>
+
+<!-- SDK do Back4App -->
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+
+<!-- SEU JS -->
+<script src="js/cadastro.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,370 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    min-width: 320px;
+    margin: auto;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.barbeiro-header {
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(26, 41, 128, 0.3);
+}
+
+.barbeiro-info {
+    flex: 1;
+}
+
+.barbeiro-titulo {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.barbeiro-nome {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.barbeiro-foto {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    margin-left: 15px;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card.vendas {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+.stat-card.agendamentos {
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+
+.stat-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.btn-ranking {
+    background: linear-gradient(135deg, #f1c40f, #d4ac0d);
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    padding: 18px;
+    border-radius: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(241, 196, 15, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-ranking:hover {
+    background: linear-gradient(135deg, #d4ac0d, #b8940b);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(241, 196, 15, 0.4);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.filtros-container {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.filtros-botoes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.filtro-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filtro-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+    transform: translateY(-2px);
+}
+
+.filtro-btn.ativo {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.periodo-info {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    margin: 20px 0;
+    padding: 12px;
+    background: linear-gradient(135deg, #fdfcfb, #f5f7fa);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.estatisticas-mensais {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.estatistica-card {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.estatistica-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.estatistica-card:nth-child(2) {
+    background: linear-gradient(135deg, #84fab0, #8fd3f4);
+}
+
+.estatistica-label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.estatistica-valor {
+    font-size: 24px;
+    font-weight: 800;
+    color: #222;
+}
+
+.btn-voltar {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 18px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-voltar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+footer {
+    text-align: center;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.logo-footer {
+    max-width: 160px;
+    width: 60%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        max-width: 95%;
+    }
+    
+    body {
+        padding: 10px;
+    }
+    
+    .barbeiro-header {
+        padding: 15px;
+    }
+    
+    .barbeiro-nome {
+        font-size: 22px;
+    }
+    
+    .barbeiro-foto {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+    }
+    
+    .btn-ranking {
+        font-size: 16px;
+        padding: 16px;
+    }
+    
+    .estatistica-valor {
+        font-size: 22px;
+    }
+    
+    .logo-footer {
+        max-width: 140px;
+        width: 55%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+        max-width: 100%;
+        border-radius: 16px;
+    }
+    
+    .barbeiro-header {
+        padding: 12px;
+    }
+    
+    .barbeiro-nome {
+        font-size: 20px;
+    }
+    
+    .barbeiro-foto {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .stats-container {
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .btn-ranking {
+        font-size: 15px;
+        padding: 14px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+    }
+    
+    .filtro-btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .estatistica-card {
+        padding: 16px;
+    }
+    
+    .estatistica-valor {
+        font-size: 20px;
+    }
+    
+    .btn-voltar {
+        padding: 16px;
+        font-size: 15px;
+    }
+    
+    .logo-footer {
+        max-width: 120px;
+        width: 50%;
+    }
+}

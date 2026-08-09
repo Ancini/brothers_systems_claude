@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo_barbeiro.css">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico"> 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="borda_principal">
+        <div class="card barbeiro">
+            <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
+            <div class="texto-barbeiro">
+                <span class="titulo1">Barbeiro</span>
+                <span class="titulo2">Gabriel Eduardo Ancini</span>
+            </div>
+        </div>
+        <div class="card vendas">
+            <img src="css/imagens/dinheiro.png" alt="dinheiro" class="icone">
+            <div class="texto-vendas">
+                <span class="titulo1">Total de vendas</span>
+                <span class="titulo2">R$ 2500,00</span>
+            </div>
+        </div>
+        <div class="card total_agendamentos">
+            <img src="css/imagens/calendario.png" alt="calendario" class="icone">
+            <div class="texto-agendamentos">
+                <span class="titulo1"> Agendamentos </span>
+                <span class="titulo2"> 0 </span> <!-- O JS atualizará esse número dinamicamente -->
+            </div>
+        </div>
+        <div class="card ranking">
+            <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
+            <div class="texto-ranking">
+                <a href=""> Ranking </a>
+                <a href=""> Tabela de classificação </a>
+            </div>
+        </div>
+        <div class="card relatorios">
+            <img src="css/imagens/relatorio.png" alt="Relatório" class="icone">
+            <div class="texto-relatorio">
+                <span class="titulo 1"> Relatórios </span>
+            </div>
+        </div>    
+    </div>
+
+    <!-- LINHA DO TEMPO (DIAS): O JavaScript gerará os 4 botões de dias aqui dentro -->
+    <div class="borda-segundaria linha-tempo-dias">
+        <!-- Gerado dinamicamente via JS -->
+    </div>
+
+    <!-- ÁREA DOS AGENDAMENTOS: O JavaScript renderizará os agendamentos do dia ativo aqui dentro -->
+    <div id="container-lista-agendamentos">
+        <!-- Gerado dinamicamente via JS -->
+    </div>
+
+    <footer>
+        <img src="css/imagens/logo.png" alt="Brothers Systems">
+    </footer>
+
+    <!-- Arquivo de script responsável pela lógica e atualização dinâmica dos dados -->
+    <script src="js/controle_barbeiro.js"></script>
+</body>
+</html>

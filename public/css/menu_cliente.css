@@ -1,0 +1,394 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+/* Header */
+.header {
+    display: flex;
+    padding: 15px;
+    gap: 10px;
+    background-color: #ffffff;
+}
+
+.cliente-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background-color: rgba(38, 152, 246, 1);
+    border: 2px solid #000000;
+    border-radius: 15px;
+    padding: 12px 15px;
+    gap: 12px;
+}
+
+.cliente-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000000;
+}
+
+.cliente-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cliente-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cliente-info .label {
+    font-size: 11px;
+    color:white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cliente-info .nome {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+}
+
+.pontuacao-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #c9a935 0%, #e8d67a 100%);
+    border: 2px solid #000000;
+    border-radius: 15px;
+    padding: 12px 18px;
+    gap: 12px;
+    min-width: 145px;
+}
+
+.pontuacao-icone {
+    width: 40px;
+    height: 40px;
+}
+
+.pontuacao-icone img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.pontuacao-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pontuacao-info .label {
+    font-size: 11px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.pontuacao-info .valor {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* Meus agendamentos */
+
+.calendario-card {
+    margin: 0 15px 15px 15px;
+    font-size: 12px;
+    background-color:  rgba(148, 150, 13, 1);
+    border-radius: 15px;
+    padding: 15px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendario-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.calendario-icon {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.calendario-titulo {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.calendario-link {
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.calendario-card:hover{
+    background-color: rgb(168, 170, 46);
+    cursor:pointer;
+}
+
+.calendario-link:hover {
+    text-decoration: underline;
+    background-color: black;
+}
+
+/* Meus agendamentos */
+
+/* Ranking */
+.ranking-card {
+    margin: 0 15px 15px 15px;
+    font-size: 12px;
+    background-color: rgba(148, 150, 13, 1);
+    border-radius: 15px;
+    padding: 15px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ranking-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ranking-icon {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.ranking-titulo {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.ranking-link {
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ranking-card:hover {
+    background-color:  rgba(145, 110, 13, 1);
+    cursor: pointer;
+}
+
+/* Busca */
+.busca-card {
+    margin: 0 15px 20px 15px;
+    background-color: rgba(38, 152, 246, 1);
+    border-radius: 15px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.busca-card:hover {
+    background-color: rgb(6, 93, 164);
+}
+
+.busca-icon {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+}
+
+.busca-texto {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Estabelecimentos Section */
+.estabelecimentos-section {
+    margin: 0 15px 25px 15px;
+}
+
+.section-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.section-badge.abertos {
+    background-color: #27ae60;
+    color: white;
+}
+
+.section-badge.fechados {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.estabelecimentos-grid {
+    background-color: rgb(39, 158, 39);
+    border: 2px solid #000000;
+    border-radius: 15px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.estabelecimento-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.estabelecimento-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.estabelecimento-logo {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000000;
+}
+
+.estabelecimento-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.estabelecimento-nome {
+    font-size: 12px;
+    text-align: center;
+    color: #000;
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .header {
+        flex-direction: column;
+    }
+    
+    .pontuacao-card {
+        width: 100%;
+    }
+    
+    .estabelecimentos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .estabelecimentos-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.barbeiro-acesso-card {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    background-color: rgb(228, 34, 34);
+    padding: 15px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    color: white;
+    
+    /* MUDANÇAS PARA ALINHAR TUDO */
+    width: calc(100% - 30px); /* Garante que respeite as margens de 15px dos outros cards */
+    max-width: 570px;         /* Ajustado para caber no seu container de 600px */
+    margin: 10px auto;        /* O "auto" centraliza o bloco na tela */
+}
+
+.barbeiro-acesso-card:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+.barbeiro-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o ícone e o texto */
+}
+
+.barbeiro-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.barbeiro-titulo {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.barbeiro-link {
+    font-weight: 500;
+    white-space: nowrap; /* Impede que o texto "Ver meus agendamentos" quebre de linha */
+    margin-left: 20px;
+}
+
+.icone {
+    width: 30px;
+    height: auto;
+}

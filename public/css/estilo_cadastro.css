@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* LOGO */
+.logo_pagina {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+}
+
+/* FORM */
+.formulario_entrar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* WRAPPER GERAL */
+.form-wrapper {
+  width: 100%;
+  max-width: 680px;      /* largura igual à imagem */
+  padding: 0 16px;      /* margem no celular */
+}
+
+/* INPUTS E BOTÕES — MESMA LARGURA */
+.input-container,
+.botao_cadastrar {
+  width: 100%;
+  max-width: 680px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+/* INPUT */
+input {
+  background-color: rgba(0, 74, 173, 1);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  width: 100%;
+  height: 55px;
+  padding: 10px 50px 10px 15px;
+  text-align: center;
+  outline: none;
+}
+
+/* PLACEHOLDER */
+input::placeholder {
+  color: white;
+  text-align: center;
+}
+
+/* ÍCONES DOS INPUTS */
+.input-container i {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffffff;
+  font-size: 20px;
+}
+
+/* BOTÃO */
+button {
+  background-color: rgba(0, 74, 173, 1);
+  color: white;
+  width: 100%;
+  height: 55px;
+  border: none;
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LINK QUE VIRA BOTÃO */
+.botao_link {
+  background-color: rgba(0, 74, 173, 1);
+  color: white;
+  width: 100%;
+  height: 55px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+/* FOOTER */
+footer {
+  background-color: rgba(0, 74, 173, 1);
+  width: 100%;
+  height: 50px;
+  margin-top: 30px;
+}

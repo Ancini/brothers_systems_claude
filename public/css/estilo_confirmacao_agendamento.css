@@ -1,0 +1,271 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor:pointer;
+    
+}
+
+/* GRID SUPERIOR */
+.borda_principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 10px;
+}
+
+.card {
+    background: rgba(0, 74, 173, 1);
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+        transition: 
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+    .card:hover {
+        transform: translateY(-6px);   /* 🔥 sobe, vem pra frente */
+        background-color: rgb(17, 103, 230); /* muda a cor */
+        box-shadow: 0 10px 25px rgba(183, 33, 33, 0.35); /* ganha profundidade */
+    }
+
+/* quando clicar */
+.card:active {
+    transform: translateY(-2px) scale(0.98); /* leve compressão */
+    background-color: rgb(11, 80, 185);
+}
+
+
+.total_agendamentos { background: rgb(228, 34, 34); }
+.ranking { background: rgba(148, 150, 13, 1); text-decoration: none; }
+.pontuacao { background: rgba(211, 214, 26, .9); }
+
+.icone {
+    width: 48px;
+}
+
+.selecionar_barbearia{
+    background-color:  rgb(228, 34, 34);
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+    
+}
+
+.barbeiros{
+    width: 90%;
+    height: 200px;
+    display: flex;
+    margin: 0 auto;
+    
+}
+
+
+
+/* ---------------------------------------
+        ÁREA DE DATAS — IGUAL AO FIGMA
+----------------------------------------*/
+
+
+select {
+    background-color: rgba(0, 74, 173, 1);
+    border-radius: 10px;
+    width: 80%;
+    height: 50px;
+    border: none;
+    text-align: center;
+    color: white;
+}
+
+.selecionar_barbearia,
+.selecionar_barbeiro,
+.selecionar_servico,
+.selecionar_horario 
+{
+    text-align: center;
+    
+}
+
+/* BOTÃO */
+button {
+    background-color: none;
+    height: 50px;
+    border: none;
+    margin: auto;
+   
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.desenho_barbeiro{
+width: 150px;
+height: 150px;
+}
+
+.titulo4{
+    font-size: 35px;
+
+}
+.titulo5{
+        font-size: 35px;
+}
+
+.texto_barbeiros{
+    flex-direction:column ;
+    display: flex;
+   
+}
+
+
+.voltar{
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+.informcacoes_agendamento{
+    width: 90%;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.detalhes_agendamento{
+    margin: auto;
+    width: 90%;
+    height: 150px;
+}
+
+.detalhes_agendamento{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 250px;
+    margin: auto;
+    background:  rgba(0, 74, 173, 1);
+    border-radius: 15px;
+    color: #fff;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.img-barbeiro{
+    width: 90px;
+}
+
+.texto{
+    flex: 1;
+    padding-left: 15px;
+}
+
+.horario{
+    text-align: center;
+    border-left: 2px solid rgba(255,255,255,0.5);
+    padding-left: 15px;
+    min-width: 110px;
+}
+
+.hora{
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.data{
+    font-size: 14px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+
+.botoes{
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    text-align: center;   
+    margin:auto;
+    
+
+}
+
+.editar{
+    background-color: rgba(245, 131, 44, 1);
+    gap:10px;
+    border-radius: 15px;
+    width: 90%;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    
+}
+
+.cancelar{
+    background-color:rgba(238, 4, 4, 1);
+    gap:10px;
+    border-radius: 15px;
+    width: 90%;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    
+}
+
+.confirmar{
+    background-color: rgba(14, 175, 14, 1);
+    gap:10px;
+    border-radius: 15px;
+    width: 90%;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    
+    
+}
+
+.editar,
+.cancelar,
+.confirmar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+}
+
+.editar:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(245, 131, 44, 0.45);
+}
+
+.cancelar:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(238, 4, 4, 0.45);
+}
+
+.confirmar:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(14, 175, 14, 0.45);
+}
+
+.titulo1,
+.titulo2{
+    font-weight: bold;
+}
+
+

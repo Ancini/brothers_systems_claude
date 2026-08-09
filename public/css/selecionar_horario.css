@@ -1,0 +1,159 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor:pointer;
+    
+}
+
+/* GRID SUPERIOR */
+.borda_principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 10px;
+}
+
+.card {
+    background: rgba(0, 74, 173, 1);
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+        transition: 
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-6px);   /* 🔥 sobe, vem pra frente */
+    background-color: rgb(17, 103, 230); /* muda a cor */
+    box-shadow: 0 10px 25px rgba(183, 33, 33, 0.35); /* ganha profundidade */
+}
+
+/* quando clicar */
+.card:active {
+    transform: translateY(-2px) scale(0.98); /* leve compressão */
+    background-color: rgb(11, 80, 185);
+}
+
+
+.total_agendamentos { background: rgb(228, 34, 34); }
+.ranking { background: rgba(148, 150, 13, 1); text-decoration: none; }
+.pontuacao { background: rgba(211, 214, 26, .9); }
+
+.icone {
+    width: 48px;
+}
+
+.selecionar_barbearia{
+    background-color:  rgb(228, 34, 34);
+    width: 99%;
+    display: flex;
+    margin: 0 auto;
+    
+}
+
+.barbeiros{
+    width: 90%;
+    height: 200px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    
+}
+
+.horario{
+    display: flex;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+    align-items: column;
+    gap: 12px;
+}
+
+
+
+
+/* ---------------------------------------
+        ÁREA DE DATAS — IGUAL AO FIGMA
+----------------------------------------*/
+
+
+select {
+    background-color: rgba(0, 74, 173, 1);
+    border-radius: 10px;
+    width: 80%;
+    height: 50px;
+    border: none;
+    text-align: center;
+    color: white;
+}
+
+.selecionar_barbearia,
+.selecionar_barbeiro,
+.selecionar_servico,
+.selecionar_horario {
+    text-align: center;
+    
+}
+
+/* BOTÃO */
+button {
+    background-color: none;
+    height: 50px;
+    border: none;
+    margin: 0 auto;
+   
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.desenho_barbeiro{
+width: 150px;
+height: 150px;
+}
+
+.titulo4{
+    font-size: 35px;
+
+}
+.titulo5{
+        font-size: 35px;
+}
+
+.texto_barbeiros{
+    flex-direction:column ;
+    display: flex;
+   
+}
+
+
+.voltar{
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    margin: 0 auto;
+
+
+}
+
+.titulo6{
+    font-size: 35px;
+    font-weight: bold;
+}
+.titulo7{
+        font-size: 35px;
+        font-weight: bold;
+        
+}

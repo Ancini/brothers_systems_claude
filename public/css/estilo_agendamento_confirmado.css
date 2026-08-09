@@ -1,0 +1,119 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.logo{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: rgba(14, 175, 14, 1);
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    height: 150px;
+    margin: auto;
+
+    transition: 
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* hover – efeito card (igual imagem) */
+.card:hover {
+    transform: translateY(-6px);
+    background-color: rgb(47, 192, 47);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* clique – sem mudar para azul */
+.card:active {
+    transform: translateY(-2px) scale(0.98);
+    background-color: rgb(20, 150, 20);
+}
+
+/* texto principal */
+.titulo_confirmado{
+    font-weight: bold;
+    font-size: 35px;
+    margin: auto;
+}
+
+.button{
+    background: rgb(47, 192, 47); 
+    border: none;          
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    cursor: pointer;
+    decoration:none;
+
+    width: 90%;
+    height: 40px;
+    margin: auto;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;              /* espaço texto ↔ ícone */
+}
+
+/* garante que a imagem não quebre o layout */
+.button img{
+    width: 20px;
+}
+
+
+.button button{
+    background: rgb(47, 192, 47); 
+    border: none;          
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    cursor: pointer;
+
+    height: 40px;
+    padding: 0 20px;      /* substitui width fixa */
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.button{
+    transition: 
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* hover igual ao card */
+.button:hover{
+    transform: translateY(-6px);
+    background-color: rgb(47, 192, 47);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* clique igual ao card */
+.button:active{
+    transform: translateY(-2px) scale(0.98);
+    background-color: rgb(20, 150, 20);
+}

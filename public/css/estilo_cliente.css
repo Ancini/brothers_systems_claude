@@ -1,0 +1,110 @@
+/* 1. RESET E BASE */
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: #333;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body { background-color: #f4f4f4; }
+
+/* 2. GRID SUPERIOR */
+.borda_principal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.card {
+    background: rgba(0, 74, 173, 1);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    transition: transform 0.2s;
+}
+
+.card * { color: white; }
+
+.icone { width: 35px; }
+
+/* 3. RESPONSIVIDADE */
+@media (max-width: 480px) {
+    .titulo4, .titulo5 { font-size: 24px !important; }
+    .borda_principal { gap: 8px; }
+    .card { padding: 8px; }
+}
+
+/* 4. ESTABELECIMENTOS - AJUSTES FORÇADOS */
+.estabelecimentos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 10px;
+}
+
+.estabelecimento-item {
+    background: white;
+    border-radius: 15px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.estabelecimento-item:hover {
+    transform: translateY(-3px);
+}
+
+.estabelecimento-logo {
+    width: 100% !important;
+    height: 140px !important; /* Altura fixa para manter o padrão */
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #eee; /* Cor de fundo caso a imagem carregue devagar */
+}
+
+.estabelecimento-logo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Força o preenchimento total */
+    object-position: center !important;
+    border-radius: 0 !important; /* Garante que não fique circular */
+    display: block !important;
+}
+
+.estabelecimento-nome {
+    padding: 10px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* 5. DEMAIS ELEMENTOS */
+.total_agendamentos { background: rgb(228, 34, 34); }
+.ranking { background: rgba(148, 150, 13, 1); }
+.pontuacao { background: rgba(211, 214, 26, 1); }
+
+select, .selecionar_barbearia {
+    width: 95% !important;
+    margin: 10px auto;
+    height: 45px;
+}
+
+.barbeiros {
+    width: 95%;
+    display: flex;
+    margin: 10px auto;
+    align-items: center;
+    justify-content: center;
+}
