@@ -200,46 +200,40 @@ footer img {
 
 /* ==========================================================
    Responsivo - Tablet / Desktop
+   Todos os cards (topo, vermelho, barbeiros, voltar) usam o
+   MESMO tamanho fixo (--card-w), formando um grid uniforme
    ========================================================== */
+:root {
+    --card-w: 210px;
+    --card-gap: 16px;
+    --area-max: 940px;
+}
+
 @media (min-width: 768px) {
-    .borda_principal {
-        max-width: 900px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
-    .borda_principal .card {
-        flex: 1 1 calc(25% - 16px);
-        min-width: 180px;
-    }
-
-    .card.selecionar_barbearia {
-        max-width: 900px;
-    }
-
+    .borda_principal,
     #lista-barbeiros {
-        max-width: 900px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, var(--card-w));
+        justify-content: center;
+        gap: var(--card-gap);
+        max-width: var(--area-max);
     }
 
+    .borda_principal .card,
     #lista-barbeiros .card.barbeiros {
-        flex: 1 1 calc(33.333% - 16px);
-        min-width: 220px;
+        width: var(--card-w);
     }
 
+    .card.selecionar_barbearia,
     .card.voltar {
-        max-width: 900px;
+        width: var(--card-w);
+        max-width: var(--card-w);
     }
 }
 
 @media (min-width: 1200px) {
-    .borda_principal,
-    .card.selecionar_barbearia,
-    #lista-barbeiros,
-    .card.voltar {
-        max-width: 1000px;
+    :root {
+        --card-w: 230px;
+        --area-max: 1000px;
     }
 }
