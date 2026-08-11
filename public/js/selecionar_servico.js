@@ -11,14 +11,14 @@ async function carregarServicos() {
     }
 
     const { data, error } = await supabase
-        .from("servico_estabelecimento")
+        .from("servico_estabelicimento")
         .select(`
             id_servico_estabelicimento,
             valor_servico,
             tempo_servico,
             servico:id_servico ( id_servico, nome_servico, pontuacao_servico )
         `)
-        .eq("id_estabelecimento", agendamento.id_estabelicimento);
+        .eq("id_estabelicimento", agendamento.id_estabelicimento);
 
     const container = document.getElementById("lista-servicos");
     if (!container) {
@@ -53,7 +53,7 @@ async function carregarServicos() {
 
         card.addEventListener("click", () => {
             salvarEtapaAgendamento({
-                id_servico_estabelecimento: item.id_servico_estabelicimento,
+                id_servico_estabelicimento: item.id_servico_estabelicimento,
                 nome_servico: nome,
                 valor_servico: item.valor_servico,
                 tempo_servico: item.tempo_servico
