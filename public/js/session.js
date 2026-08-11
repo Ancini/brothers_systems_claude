@@ -30,9 +30,9 @@ export async function efetuarLogin(email, senha) {
         if (authError) throw authError;
 
         const { data: dadosUsuario, error: dbError } = await supabaseClient
-            .from('usuario') 
-            .select('id, barbeiro') 
-            .eq('id', authData.user.id) 
+            .from('usuario')
+            .select('id_usuario, barbeiro')
+            .eq('auth_id', authData.user.id)
             .single();
 
         if (dbError) {
@@ -41,7 +41,7 @@ export async function efetuarLogin(email, senha) {
 
         const usuarioCompleto = {
             ...authData.user,
-            id_usuario: dadosUsuario ? dadosUsuario.id : null, 
+            id_usuario: dadosUsuario ? dadosUsuario.id_usuario : null,
             barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false
         };
 

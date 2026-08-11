@@ -54,15 +54,15 @@
 
     <div class="texto">
         <span class="titulo1">Barbeiro</span><br>
-        <span class="titulo2">Lucas de Bruno Ancini</span><br>
+        <span class="titulo2" id="nome-barbeiro-confirmacao">-</span><br>
 
         <span class="titulo1">Serviço</span><br>
-        <span class="titulo2">Corte de cabelo</span>
+        <span class="titulo2" id="nome-servico-confirmacao">-</span>
     </div>
 
     <div class="horario">
-        <span class="hora">08:30 AM</span><br>
-        <span class="data">03 de janeiro<br>quarta-feira</span>
+        <span class="hora" id="hora-confirmacao">--:--</span><br>
+        <span class="data" id="data-confirmacao">-</span>
     </div>
 </div>
 
@@ -70,7 +70,7 @@
 <br>
 <div class="botoes">
 
-        <button type="button" class="editar">
+        <button type="button" class="editar" id="btn-editar">
         Editar agendamento
          <img src="css/imagens/editar.png " style="width: 30px;" alt="editar">
 
@@ -78,14 +78,14 @@
 <br>
 
 
-    <button type="button" class="cancelar">
+    <button type="button" class="cancelar" id="btn-cancelar">
         Cancelar agendamento
         <img src="css/imagens/cancelar.png " style="width: 30px;" alt="cancelar">
 
     </button>
     <br>
 
-    <button type="submit" class="confirmar">
+    <button type="button" class="confirmar" id="btn-confirmar">
         Confirmar agendamento
                         <img src="css/imagens/confirmar.png " style="width: 30px;" alt="confirmar">
 
@@ -93,8 +93,10 @@
 
 
 </div>
-</body>
- <footer>
+    <footer>
         <img src="css/imagens/logo.png" alt="Brothers Systems" >
     </footer>
+
+    <script type="module" src="js/confirmacao_agendamento.js"></script>
+</body>
 </html>

@@ -155,5 +155,30 @@ height: 150px;
 .titulo7{
         font-size: 35px;
         font-weight: bold;
-        
+
+}
+
+/* ---------------------------------------
+        GRADE DE HORÁRIOS — cards do mesmo tamanho
+----------------------------------------*/
+.grade-horarios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.card-horario {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 90px;
+}
+
+.hora-texto {
+    font-size: 22px;
+    font-weight: bold;
 }
