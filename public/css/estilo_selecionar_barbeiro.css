@@ -98,6 +98,8 @@ html, body {
     background-color: #e53935;
     justify-content: center;
     text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 .card.selecionar_barbearia .texto-agendamentos {
@@ -212,6 +214,10 @@ footer img {
         min-width: 180px;
     }
 
+    .card.selecionar_barbearia {
+        max-width: 900px;
+    }
+
     #lista-barbeiros {
         max-width: 900px;
         flex-direction: row;
@@ -231,6 +237,7 @@ footer img {
 
 @media (min-width: 1200px) {
     .borda_principal,
+    .card.selecionar_barbearia,
     #lista-barbeiros,
     .card.voltar {
         max-width: 1000px;
