@@ -58,7 +58,7 @@ async function carregarServicos() {
                 valor_servico: item.valor_servico,
                 tempo_servico: item.tempo_servico
             });
-            window.location.href = "selecionar_horario.html";
+            window.location.href = "selecionar_data.html";
         });
 
         container.appendChild(card);
