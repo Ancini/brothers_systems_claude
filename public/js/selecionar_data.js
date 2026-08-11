@@ -42,36 +42,27 @@ function carregarDatas() {
         return;
     }
     container.innerHTML = "";
+    container.className = "grade-datas";
 
     const datas = gerarProximasDatas();
 
-    for (let i = 0; i < datas.length; i += 3) {
-        const linha = document.createElement("div");
-        linha.className = "horario";
+    datas.forEach(data => {
+        const card = document.createElement("div");
+        card.className = "card card-data";
+        card.innerHTML = `
+            <span class="data-dia">${data.getDate()} ${MESES[data.getMonth()]}</span>
+            <span class="data-semana">${DIAS_SEMANA[data.getDay()]}</span>
+        `;
 
-        datas.slice(i, i + 3).forEach(data => {
-            const card = document.createElement("div");
-            card.className = "card selecionar_horario";
-            card.innerHTML = `
-                <div class="texto-horario">
-                    <span class="titulo6">${data.getDate()} ${MESES[data.getMonth()]}</span>
-                    <br>
-                    <span class="titulo7">${DIAS_SEMANA[data.getDay()]}</span>
-                </div>
-            `;
-
-            card.addEventListener("click", () => {
-                salvarEtapaAgendamento({
-                    data_agendamento: formatarDataBanco(data)
-                });
-                window.location.href = "selecionar_horario.html";
+        card.addEventListener("click", () => {
+            salvarEtapaAgendamento({
+                data_agendamento: formatarDataBanco(data)
             });
-
-            linha.appendChild(card);
+            window.location.href = "selecionar_horario.html";
         });
 
-        container.appendChild(linha);
-    }
+        container.appendChild(card);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", carregarDatas);

@@ -1,0 +1,108 @@
+* {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* GRID SUPERIOR */
+.borda_principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 10px;
+}
+
+.card {
+    background: rgba(0, 74, 173, 1);
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-6px);
+    background-color: rgb(17, 103, 230);
+    box-shadow: 0 10px 25px rgba(183, 33, 33, 0.35);
+}
+.card:active {
+    transform: translateY(-2px) scale(0.98);
+    background-color: rgb(11, 80, 185);
+}
+
+.total_agendamentos { background: rgb(228, 34, 34); }
+.ranking { background: rgba(148, 150, 13, 1); text-decoration: none; }
+.pontuacao { background: rgba(211, 214, 26, .9); }
+
+.icone {
+    width: 48px;
+}
+
+.selecionar_barbearia {
+    background-color: rgb(228, 34, 34);
+    width: 99%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.titulo1 {
+    font-size: 16px;
+}
+.titulo2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+.titulo5 {
+    font-size: 35px;
+}
+
+/* ---------------------------------------
+        GRADE DE DATAS — cards do mesmo tamanho
+----------------------------------------*/
+.grade-datas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 10px;
+}
+
+.card-data {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    aspect-ratio: 1 / 1;
+}
+
+.data-dia {
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+}
+
+.data-semana {
+    font-size: 15px;
+    display: block;
+    margin-top: 4px;
+}
+
+.voltar {
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    margin: 0 auto;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
