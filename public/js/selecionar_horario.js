@@ -2,6 +2,13 @@ import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 
 const INTERVALO_MINUTOS = 30;
+const SLOTS_POR_PAGINA = 9;
+
+// Intervalo de almoço fixo, aplicado a todas as barbearias por enquanto.
+// Ainda não existe configuração por barbearia no banco (isso deve virar
+// uma tela do barbeiro na versão Dart, permitindo cada um definir o próprio horário).
+const ALMOCO_INICIO_MIN = 12 * 60;
+const ALMOCO_FIM_MIN = 13 * 60 + 30;
 
 function paraMinutos(horaTexto) {
     const [h, m] = horaTexto.split(":").map(Number);
@@ -33,7 +40,7 @@ async function carregarHorarios() {
         return;
     }
     container.innerHTML = "";
-    container.className = "grade-horarios";
+    container.className = "horarios-carrossel";
 
     const duracaoServico = agendamento.tempo_servico || 30;
 
@@ -68,6 +75,7 @@ async function carregarHorarios() {
             inicio: paraMinutos(o.horario_inicio),
             fim: paraMinutos(o.horario_fim)
         }));
+    ocupadosMin.push({ inicio: ALMOCO_INICIO_MIN, fim: ALMOCO_FIM_MIN });
 
     const disponiveis = [];
     for (let slot = inicioMin; slot + duracaoServico <= fimMin; slot += INTERVALO_MINUTOS) {
@@ -83,24 +91,31 @@ async function carregarHorarios() {
         return;
     }
 
-    disponiveis.forEach(slot => {
-        const horaInicio = paraHoraTexto(slot);
-        const horaFim = paraHoraTexto(slot + duracaoServico);
+    for (let i = 0; i < disponiveis.length; i += SLOTS_POR_PAGINA) {
+        const pagina = document.createElement("div");
+        pagina.className = "pagina-horarios";
 
-        const card = document.createElement("div");
-        card.className = "card card-horario";
-        card.innerHTML = `<span class="hora-texto">${horaInicio}</span>`;
+        disponiveis.slice(i, i + SLOTS_POR_PAGINA).forEach(slot => {
+            const horaInicio = paraHoraTexto(slot);
+            const horaFim = paraHoraTexto(slot + duracaoServico);
 
-        card.addEventListener("click", () => {
-            salvarEtapaAgendamento({
-                horario_inicio: `${horaInicio}:00`,
-                horario_fim: `${horaFim}:00`
+            const card = document.createElement("div");
+            card.className = "card card-horario";
+            card.innerHTML = `<span class="hora-texto">${horaInicio}</span>`;
+
+            card.addEventListener("click", () => {
+                salvarEtapaAgendamento({
+                    horario_inicio: `${horaInicio}:00`,
+                    horario_fim: `${horaFim}:00`
+                });
+                window.location.href = "confirmacao_agendamento.html";
             });
-            window.location.href = "confirmacao_agendamento.html";
+
+            pagina.appendChild(card);
         });
 
-        container.appendChild(card);
-    });
+        container.appendChild(pagina);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", carregarHorarios);

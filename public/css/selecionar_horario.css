@@ -159,15 +159,23 @@ height: 150px;
 }
 
 /* ---------------------------------------
-        GRADE DE HORÁRIOS — cards do mesmo tamanho
+        CARROSSEL DE HORÁRIOS — 9 por página, desliza pro lado
 ----------------------------------------*/
-.grade-horarios {
+.horarios-carrossel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.pagina-horarios {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     padding: 10px;
-    max-width: 480px;
-    margin: 0 auto;
 }
 
 .card-horario {
