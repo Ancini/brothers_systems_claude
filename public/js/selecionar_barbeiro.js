@@ -13,13 +13,13 @@ async function carregarBarbeiros() {
     const nomeSpan = document.getElementById("nome-barbearia-selecionada");
     if (nomeSpan) nomeSpan.textContent = agendamento.nome_estabelicimento || "";
 
-    const { data, error } = await supabase
-        .from("prestador")
-        .select(`
-            id_prestador,
-            usuario:id_prestador ( nome_usuario )
-        `)
-        .eq("id_estabelicimento", agendamento.id_estabelicimento);
+   const { data, error } = await supabase
+    .from("prestador")
+    .select(`
+        id_prestador,
+        usuario:prestador_id_prestador_fkey ( nome_usuario )
+    `)
+    .eq("id_estabelicimento", agendamento.id_estabelicimento);
 
     const container = document.getElementById("lista-barbeiros");
     if (!container) {
