@@ -1,0 +1,238 @@
+/* ==========================================================
+   Brothers Systems - Estilo Cliente
+   Baseado no protótipo (Figma) - mobile first, escala p/ desktop
+   ========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+html, body {
+    background-color: #eaf6fb;
+    min-height: 100vh;
+}
+
+/* ---------- Container principal ---------- */
+.borda_principal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 12px;
+}
+
+/* ---------- Card base ---------- */
+.card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #1e88e5;
+    border-radius: 14px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: #fff;
+}
+
+.card .icone {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.titulo1 {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.titulo2 {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* ---------- Cards do topo (cliente, agendamentos, ranking, pontuação) ---------- */
+.card.barbeiro,
+.card.total_agendamentos {
+    background-color: #1e88e5;
+}
+
+.card.ranking {
+    background-color: #7c8b17;
+}
+
+.card.ranking .texto-ranking {
+    display: flex;
+    flex-direction: column;
+}
+
+.card.ranking .texto-ranking a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.card.ranking .texto-ranking a:first-child {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.card.pontuacao {
+    background-color: #c9c400;
+    color: #333;
+}
+
+.card.pontuacao .titulo1,
+.card.pontuacao .titulo2 {
+    color: #333;
+}
+
+/* ---------- Card "Selecione o barbeiro" (destaque vermelho) ---------- */
+.card.selecionar_barbearia {
+    background-color: #e53935;
+    justify-content: center;
+    text-align: center;
+}
+
+.card.selecionar_barbearia .texto-agendamentos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card.selecionar_barbearia .titulo1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    opacity: 1;
+}
+
+.card.selecionar_barbearia .titulo2 {
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+/* ---------- Lista de barbeiros ---------- */
+#lista-barbeiros {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+.card.barbeiros {
+    background-color: #1e88e5;
+    justify-content: flex-start;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card.barbeiros:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.card.barbeiros .desenho_barbeiro {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fff;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.texto_barbeiros {
+    display: flex;
+    flex-direction: column;
+}
+
+.texto_barbeiros .titulo5 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.texto_barbeiros .titulo5::before {
+    content: "Barbeiro";
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+/* ---------- Botão Voltar ---------- */
+.card.voltar {
+    background-color: #43a047;
+    justify-content: center;
+    margin: 16px auto 0;
+    max-width: 480px;
+    width: 100%;
+}
+
+.card.voltar .icone {
+    width: 24px;
+    height: 24px;
+}
+
+.card.voltar .titulo5 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* ---------- Rodapé / logo ---------- */
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 30px;
+}
+
+footer img {
+    max-width: 160px;
+    height: auto;
+}
+
+/* ==========================================================
+   Responsivo - Tablet / Desktop
+   ========================================================== */
+@media (min-width: 768px) {
+    .borda_principal {
+        max-width: 900px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .borda_principal .card {
+        flex: 1 1 calc(25% - 16px);
+        min-width: 180px;
+    }
+
+    #lista-barbeiros {
+        max-width: 900px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    #lista-barbeiros .card.barbeiros {
+        flex: 1 1 calc(33.333% - 16px);
+        min-width: 220px;
+    }
+
+    .card.voltar {
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .borda_principal,
+    #lista-barbeiros,
+    .card.voltar {
+        max-width: 1000px;
+    }
+}
