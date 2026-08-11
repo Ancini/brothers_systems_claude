@@ -54,7 +54,7 @@
 
 .selecionar_barbearia{
     background-color:  rgb(228, 34, 34);
-    width: 90%;
+    width: 95%;
     display: flex;
     margin: 0 auto;
     
@@ -130,7 +130,7 @@ height: 150px;
 .voltar{
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
-
+    display: flex;
 }
