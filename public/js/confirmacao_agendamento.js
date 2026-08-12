@@ -68,7 +68,7 @@ function configurarBotoes(agendamento) {
 
     if (btnEditar) {
         btnEditar.addEventListener("click", () => {
-            window.location.href = "selecionar_horario.html";
+            window.location.href = "agendamento_selecionar_barbearia.html";
         });
     }
 
