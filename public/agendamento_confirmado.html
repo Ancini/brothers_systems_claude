@@ -29,11 +29,15 @@
    
 
     <div class="button">
-        <button>Retornar ao menu principal</button>
+        <button id="btn-retornar">Retornar ao menu principal</button>
         <img src="css/imagens/retornar.png" alt="voltar" style="width: 30px;">
    </div>
     </div>
 
-
+    <script>
+        document.getElementById("btn-retornar").addEventListener("click", () => {
+            window.location.href = "menu_cliente.html";
+        });
+    </script>
 </body>
 </html>
