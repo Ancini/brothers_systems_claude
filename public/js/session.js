@@ -1,8 +1,7 @@
-// Adicionado o 'export' aqui na frente para poder usar em outros arquivos
-export const supabaseClient = supabase.createClient(
-    "https://hnaapsbkrokrkmnzayyr.supabase.co",
-    "sb_publishable_AaxUlPsbivnRIu2_iu3Epg_nzr8w-3u"
-);
+import { supabase } from "./supabase.js";
+
+// Reaproveita o mesmo client já criado em supabase.js, em vez de criar outro
+export const supabaseClient = supabase;
 
 // Salva usuário no navegador
 export function salvarSessao(user) {
