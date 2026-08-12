@@ -89,8 +89,8 @@
 
       // 2. Busca na sua tabela customizada 'usuario' usando a coluna de ligação 'auth_id'
       const { data: dadosUsuario, error: dbError } = await supabaseClient
-        .from('usuario') 
-        .select('barbeiro, nome_usuario')
+        .from('usuario')
+        .select('id_usuario, barbeiro, nome_usuario')
         .eq('auth_id', authData.user.id) // 🔥 CORREÇÃO: antes estava 'id', agora é 'auth_id'
         .single();
 
@@ -98,9 +98,10 @@
         console.warn("Aviso: Não foi possível buscar o perfil na tabela usuario:", dbError.message);
       }
 
-      // 3. Mescla o objeto criando as propriedades 'barbeiro' e 'nome' no objeto final
+      // 3. Mescla o objeto criando as propriedades 'id_usuario', 'barbeiro' e 'nome' no objeto final
       const usuarioCompleto = {
         ...authData.user,
+        id_usuario: dadosUsuario ? dadosUsuario.id_usuario : null,
         barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false,
         nome: dadosUsuario ? dadosUsuario.nome_usuario : "Cliente"
       };
