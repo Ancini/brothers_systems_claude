@@ -102,7 +102,7 @@ body {
 
 .pontuacao-info .label {
     font-size: 11px;
-    color: #1a1a1a;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 500;
@@ -111,7 +111,7 @@ body {
 .pontuacao-info .valor {
     font-size: 24px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #ffffff;
 }
 
 /* Meus agendamentos */
@@ -342,7 +342,7 @@ body {
 }
 
 .barbeiro-acesso-card {
-    display: flex;
+    display: none; /* Fica oculto por padrão; JS troca para flex se o usuário for barbeiro */
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
