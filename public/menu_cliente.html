@@ -29,22 +29,7 @@
         .logout-btn-footer:hover {
             background: #c82333;
         }
-        
-        .logout-btn-header {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: auto;
-        }
-        
-        .logout-btn-header:hover {
-            background: #c82333;
-        }
-        
+
         .copyright {
             margin-top: 15px;
             font-size: 12px;
@@ -134,7 +119,7 @@
                 <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
                 <span class="ranking-titulo">Ranking</span>
             </div>
-            <span class="ranking-link"></span>
+            <span class="ranking-link">Tabela de pontuação</span>
         </div>
 
         <div class="calendario-card">
@@ -153,21 +138,29 @@
 
 
         <section class="estabelecimentos-section">
-            <div class="section-badge abertos">
-                <span>Abertos agora</span>
+            <div class="section-badge-row">
+                <span class="pill pill-aberto">ABERTO</span>
+                <span class="section-title">Abertos agora</span>
+                <span class="pill pill-aberto">ABERTO</span>
             </div>
-            <div class="estabelecimentos-grid" id="abertos"></div> 
+            <div class="estabelecimentos-grid" id="abertos"></div>
         </section>
 
         <section class="estabelecimentos-section">
-            <div class="section-badge fechados">
-                <span>Fechados que abrem em seguida</span>
+            <div class="section-badge-row">
+                <span class="pill pill-fechado">FECHADO</span>
+                <span class="section-title">Fechados que abrem em seguida</span>
+                <span class="pill pill-fechado">FECHADO</span>
             </div>
             <div class="estabelecimentos-grid" id="fechados"></div>
         </section>
-        
+
         <div class="footer-sair">
             <button class="logout-btn-footer" id="btnSairFooter">🚪 Sair da Conta</button>
+            <div class="brand-footer">
+                <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+                <span class="brand-footer-sub">BARBER SHOP</span>
+            </div>
             <div class="copyright">© 2026 Brothers Systems - Todos os direitos reservados</div>
         </div>
     </div>
@@ -221,21 +214,6 @@ if (user) {
         if (nomeClienteSpan && user) {
             const nome = user.user_metadata?.name || user.email?.split('@')[0] || "Cliente";
             nomeClienteSpan.textContent = nome;
-        }
-
-        // Adicionar botão de logout no header (canto superior direito)
-        const header = document.querySelector('.header');
-        if (header && !document.querySelector('.logout-btn-header')) {
-            const logoutBtnHeader = document.createElement('button');
-            logoutBtnHeader.textContent = 'Sair';
-            logoutBtnHeader.className = 'logout-btn-header';
-            logoutBtnHeader.onclick = () => {
-                if (confirm("Tem certeza que deseja sair da sua conta?")) {
-                    logout();
-                    window.location.href = "index.html";
-                }
-            };
-            header.appendChild(logoutBtnHeader);
         }
 
         // Botão de sair no rodapé
