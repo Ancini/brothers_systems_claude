@@ -35,48 +35,6 @@
             font-size: 12px;
             color: #999;
         }
-
-        /* 🔥 NOVO CSS: ESTILO DO CARD EXTRA DO PAINEL DO BARBEIRO */
-        .barbeiro-acesso-card {
-            display: none; /* Fica oculto por padrão no carregamento da página */
-            background-color: rgb(228, 34, 34); /* Tom vermelho correspondente ao padrão da marca */
-            border-radius: 12px;
-            padding: 15px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .barbeiro-acesso-card:hover {
-            transform: translateY(-3px);
-            background-color: rgb(198, 24, 24);
-        }
-
-        .barbeiro-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .barbeiro-icon {
-            width: 32px;
-            height: auto;
-        }
-
-        .barbeiro-titulo {
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .barbeiro-link {
-            font-size: 14px;
-            color: #fff;
-            text-decoration: underline;
-            font-weight: bold;
-        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -99,7 +57,7 @@
                 </div>
                 <div class="pontuacao-info">
                     <span class="label">Pontuação</span>
-                    <span id="pontuacao-usuario"></span>
+                    <span id="pontuacao-usuario" class="valor"></span>
                 </div>
             </div>
         </header>
