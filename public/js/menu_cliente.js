@@ -88,7 +88,18 @@ function renderizar(lista, containerId) {
     });
 }
 
+function configurarNavegacaoCards() {
+    const cardAgendamentos = document.querySelector(".calendario-card");
+    if (cardAgendamentos) {
+        cardAgendamentos.style.cursor = "pointer";
+        cardAgendamentos.addEventListener("click", () => {
+            window.location.href = "meusAgendamentos.html";
+        });
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     inicializarEstabelecimentos();
     carregarPontuacaoUsuario();
+    configurarNavegacaoCards();
 });
