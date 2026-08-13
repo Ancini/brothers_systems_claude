@@ -131,22 +131,20 @@ a {
 
 
 .borda-segundaria {
-    display: flex;               
-    gap: 20px;                   
-    padding: 20px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
     margin-top: 20px;
-    flex-direction: row;
-    align-items: center;
-    
 }
 
 /* CARD DOS DIAS */
 .agendamento {
-    width: 50%;
-    height: 50%;
-    background-color: #1e90ff;  
-    border-radius: 5px;
+    width: 100%;
+    height: auto;
+    padding: 10px 4px;
+    background-color: #1e90ff;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -178,6 +176,41 @@ a {
     flex-direction: column;
     justify-content: center; /* Alinha verticalmente */
     align-items: flex-start; /* 🔥 Isso JOGA O TEXTO PARA A ESQUERDA */
+}
+
+.agendamento-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.agendamento-valor {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.agendamento-servico {
+    margin-top: 5px;
+}
+
+.agendamento-horario {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 45px;
+    font-family: Georgia, serif;
+    text-align: right;
+    line-height: 1;
+}
+
+.agendamento-horario .periodo {
+    display: block;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+    margin-top: 4px;
 }
 
 footer{
@@ -235,4 +268,62 @@ footer{
 .texto-ranking a:last-child {
     font-weight: bold;
     font-size: 20px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (evita cards estourando a largura da tela no celular)
+   ========================================================================== */
+@media (max-width: 480px) {
+    * {
+        font-size: 16px;
+    }
+
+    .borda_principal {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .card {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .icone {
+        width: 34px;
+    }
+
+    .titulo1 {
+        font-size: 13px;
+    }
+
+    .titulo2 {
+        font-size: 15px;
+    }
+
+    .borda-segundaria {
+        gap: 6px;
+        padding: 8px;
+        margin-top: 12px;
+    }
+
+    .agendamentos_por_ordem {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100px;
+        padding: 12px 16px;
+    }
+
+    .agendamento-valor {
+        font-size: 16px;
+    }
+
+    .agendamento-horario {
+        right: 16px;
+        font-size: 26px;
+    }
+
+    .agendamento-horario .periodo {
+        font-size: 12px;
+    }
 }
