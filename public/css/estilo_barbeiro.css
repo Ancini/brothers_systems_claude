@@ -223,7 +223,7 @@ a {
 
 .agendamento-horario .periodo {
     display: block;
-    font-size: 20px;
+    font-size: 26px;
     font-weight: normal;
     text-align: right;
     margin-top: 4px;
@@ -362,6 +362,6 @@ footer{
     }
 
     .agendamento-horario .periodo {
-        font-size: 13px;
+        font-size: 16px;
     }
 }
