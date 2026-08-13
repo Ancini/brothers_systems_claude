@@ -9,13 +9,6 @@
 
 /* ------------------- ÁREA PRINCIPAL ------------------- */
 
-@media (min-width: 768px) {
-    .pagina-barbeiro {
-        max-width: 480px;
-        margin: 0 auto;
-    }
-}
-
 .borda_principal {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -181,23 +174,27 @@ a {
 .agendamentos_por_ordem {
     border-radius: 10px;
     background-color: #1e90ff;
-    width: 98%;          /* Ocupa quase toda a largura */
-    max-width: 99%;   /* Aumente este valor para ficar mais largo */
-    margin: 10px auto;
-    height: 120px;
-    padding: 15px 30px;  /* Aumenta o espaço lateral interno */
-    position: relative;
+    width: 100%;
+    margin: 10px 0;
+    min-height: 120px;
+    padding: 15px 20px;  /* Aumenta o espaço lateral interno */
     display: flex;
-    flex-direction: column;
-    justify-content: center; /* Alinha verticalmente */
-    align-items: flex-start; /* 🔥 Isso JOGA O TEXTO PARA A ESQUERDA */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
+/* Layout em flexbox (em vez de position:absolute) para o horário nunca
+   sobrepor o nome do cliente/serviço quando o texto é longo */
 .agendamento-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: break-word;
 }
 
 .agendamento-valor {
@@ -210,10 +207,7 @@ a {
 }
 
 .agendamento-horario {
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     font-size: 50px;
     font-weight: bold;
     font-family: Georgia, serif;
@@ -345,11 +339,9 @@ footer{
     }
 
     .agendamentos_por_ordem {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
         min-height: 100px;
         padding: 12px 16px;
+        gap: 8px;
     }
 
     .agendamento-valor {
@@ -357,11 +349,48 @@ footer{
     }
 
     .agendamento-horario {
-        right: 16px;
         font-size: 28px;
     }
 
     .agendamento-horario .periodo {
         font-size: 16px;
+    }
+}
+
+/* ==========================================================================
+   DESKTOP: evita que a página fique "pequena" perdida no meio da tela
+   ========================================================================== */
+@media (min-width: 768px) {
+    .pagina-barbeiro {
+        max-width: 680px;
+        margin: 30px auto;
+    }
+
+    .icone {
+        width: 56px;
+    }
+
+    .titulo1 {
+        font-size: 20px;
+    }
+
+    .titulo2 {
+        font-size: 23px;
+    }
+
+    .barbeiro,
+    .vendas,
+    .total_agendamentos,
+    .ranking,
+    .relatorios {
+        height: 95px;
+    }
+
+    .card {
+        padding: 16px 20px;
+    }
+
+    .agendamento {
+        padding: 16px 8px;
     }
 }
