@@ -87,6 +87,17 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
     }
 }
 
+// Converte "HH:MM:SS"/"HH:MM" (24h) para { hora: "HH:MM", periodo: "AM"/"PM" }
+function formatarHorario12h(horario24) {
+    if (!horario24) return { hora: '--:--', periodo: '' };
+    const [horaStr, minutoStr] = horario24.split(':');
+    let hora = parseInt(horaStr, 10);
+    const periodo = hora >= 12 ? 'PM' : 'AM';
+    hora = hora % 12;
+    if (hora === 0) hora = 12;
+    return { hora: `${String(hora).padStart(2, '0')}:${minutoStr}`, periodo };
+}
+
 function atualizarContadorAgendamentos(total) {
     // Alvo: O span titulo2 dentro do card total_agendamentos
     const elContador = document.querySelector(".total_agendamentos .titulo2");
@@ -101,17 +112,18 @@ function renderizarAgendamentos(agendamentos) {
     agendamentos.forEach(ag => {
         const card = document.createElement("div");
         card.className = "card agendamentos_por_ordem";
-        
-        // Dentro da função renderizarAgendamentos, no forEach:
-card.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+
+        const { hora, periodo } = formatarHorario12h(ag.horario_inicio);
+
+        card.innerHTML = `
+    <div class="agendamento-info">
         <span class="titulo1">Cliente</span>
-        <span class="titulo2" style="font-size: 22px; font-weight: bold;">${ag.nome_cliente}</span>
-        <span class="titulo1" style="margin-top: 5px;">Serviço</span>
-        <span class="titulo2" style="font-size: 22px; font-weight: bold;">${ag.nome_servico}</span>
+        <span class="titulo2 agendamento-valor">${ag.nome_cliente}</span>
+        <span class="titulo1 agendamento-servico">Serviço</span>
+        <span class="titulo2 agendamento-valor">${ag.nome_servico}</span>
     </div>
-    <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 45px; font-family: Georgia, serif;">
-        ${ag.horario_inicio ? ag.horario_inicio.substring(0, 5) : '--:--'}
+    <div class="agendamento-horario">
+        ${hora}<span class="periodo">${periodo}</span>
     </div>
 `;
         container.appendChild(card);
