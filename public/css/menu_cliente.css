@@ -76,7 +76,7 @@ body {
 .pontuacao-card {
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #c9a935 0%, #e8d67a 100%);
+    background-color: #d4af37;
     border-radius: 15px;
     padding: 12px 18px;
     gap: 12px;
@@ -172,8 +172,8 @@ body {
     border-radius: 15px;
     padding: 15px 18px;
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ranking-left {
@@ -197,9 +197,8 @@ body {
 .ranking-link {
     font-size: 13px;
     color: #fff;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
-    margin-left: 32px;
 }
 
 .ranking-card:hover {
@@ -344,15 +343,16 @@ body {
 
 .barbeiro-acesso-card {
     display: flex;
-    justify-content: space-between; 
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
     background-color: rgb(228, 34, 34);
     padding: 15px 20px;
     border-radius: 15px;
     cursor: pointer;
     transition: transform 0.2s;
     color: white;
-    
+
     /* MUDANÇAS PARA ALINHAR TUDO */
     width: calc(100% - 30px); /* Garante que respeite as margens de 15px dos outros cards */
     max-width: 570px;         /* Ajustado para caber no seu container de 600px */
@@ -382,8 +382,8 @@ body {
 
 .barbeiro-link {
     font-weight: 500;
-    white-space: nowrap; /* Impede que o texto "Ver meus agendamentos" quebre de linha */
-    margin-left: 20px;
+    font-size: 14px;
+    margin-left: 45px; /* alinha com o texto do título, depois do ícone */
 }
 
 .icone {
