@@ -16,7 +16,7 @@
                 </div>
                 <div class="cliente-info">
                     <span class="label">Cliente</span>
-                    <span class="nome">Alexandre Donner</span>
+                    <span class="nome">Carregando...</span>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
                 </div>
                 <div class="pontuacao-section">
                     <span class="pontuacao-label">Pontuação Mensal</span>
-                    <span class="pontuacao-valor">45</span>
+                    <span class="pontuacao-valor">-</span>
                 </div>
             </div>
         </div>
@@ -47,76 +47,14 @@
             <img src="css/imagens/calendario.png" alt="Calendário" class="calendario-icon">
             <div class="agendamentos-info">
                 <span class="agendamentos-label">Meus Agendamentos</span>
-                <span class="agendamentos-total">10</span>
+                <span class="agendamentos-total">0</span>
             </div>
         </div>
 
-        <!-- Lista de Agendamentos -->
-        <div class="agendamentos-lista">
-            <!-- Agendamento 1 -->
-            <div class="agendamento-card">
-                <div class="agendamento-info">
-                    <span class="barbeiro-label">Barbeiro</span>
-                    <span class="barbearia-nome">Zé da norte Sul</span>
-                    <span class="servico-label">Serviço: Cabelo + Barba</span>
-                    <span class="data-label">Data</span>
-                    <span class="data-valor">25 de Junho de 2025</span>
-                </div>
-                <div class="agendamento-horario">
-                    <span class="horario">17:15</span>
-                    <span class="periodo">PM</span>
-                    <span class="dia-semana">Sexta</span>
-                </div>
-            </div>
-
-            <!-- Agendamento 2 -->
-            <div class="agendamento-card">
-                <div class="agendamento-info">
-                    <span class="barbeiro-label">Barbeiro</span>
-                    <span class="barbearia-nome">Zé da norte Sul</span>
-                    <span class="servico-label">Serviço: Cabelo + Barba</span>
-                    <span class="data-label">Data</span>
-                    <span class="data-valor">25 de agosto de 2025</span>
-                </div>
-                <div class="agendamento-horario">
-                    <span class="horario">16:15</span>
-                    <span class="periodo">PM</span>
-                    <span class="dia-semana">Sábado</span>
-                </div>
-            </div>
-
-            <!-- Agendamento 3 -->
-            <div class="agendamento-card">
-                <div class="agendamento-info">
-                    <span class="barbeiro-label">Barbeiro</span>
-                    <span class="barbearia-nome">Zé da norte Sul</span>
-                    <span class="servico-label">Serviço: Cabelo + Barba</span>
-                    <span class="data-label">Data</span>
-                    <span class="data-valor">15 de setembro de 2025</span>
-                </div>
-                <div class="agendamento-horario">
-                    <span class="horario">17:15</span>
-                    <span class="periodo">PM</span>
-                    <span class="dia-semana">Segunda</span>
-                </div>
-            </div>
-
-            <!-- Agendamento 4 -->
-            <div class="agendamento-card">
-                <div class="agendamento-info">
-                    <span class="barbeiro-label">Barbeiro</span>
-                    <span class="barbearia-nome">Zé da norte Sul</span>
-                    <span class="servico-label">Serviço: Cabelo + Barba</span>
-                    <span class="data-label">Data</span>
-                    <span class="data-valor">25 de novembro de 2025</span>
-                </div>
-                <div class="agendamento-horario">
-                    <span class="horario">17:15</span>
-                    <span class="periodo">PM</span>
-                    <span class="dia-semana">Terça</span>
-                </div>
-            </div>
-        </div>
+        <!-- Lista de Agendamentos: renderizada dinamicamente via JS -->
+        <div class="agendamentos-lista"></div>
     </div>
+
+    <script type="module" src="js/meusAgendamentos.js"></script>
 </body>
 </html>
