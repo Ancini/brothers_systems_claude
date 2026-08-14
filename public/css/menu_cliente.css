@@ -18,16 +18,16 @@ body {
     padding: 0;
 }
 
-/* Header */
-.header {
-    display: flex;
+/* Grid 2x2: Cliente / Meus Agendamentos / Ranking / Pontuação */
+.grid-topo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding: 15px;
     gap: 10px;
     background-color: #ffffff;
 }
 
 .cliente-card {
-    flex: 1;
     display: flex;
     align-items: center;
     background-color: rgba(38, 152, 246, 1);
@@ -76,7 +76,6 @@ body {
     border-radius: 15px;
     padding: 12px 18px;
     gap: 12px;
-    min-width: 145px;
 }
 
 .pontuacao-icone {
@@ -113,14 +112,15 @@ body {
 /* Meus agendamentos */
 
 .calendario-card {
-    margin: 0 15px 15px 15px;
     font-size: 12px;
     background-color:  rgba(148, 150, 13, 1);
     border-radius: 15px;
     padding: 15px 18px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
 }
 
 .calendario-left {
@@ -162,14 +162,15 @@ body {
 
 /* Ranking */
 .ranking-card {
-    margin: 0 15px 15px 15px;
     font-size: 12px;
     background-color: rgba(38, 152, 246, 1);
     border-radius: 15px;
     padding: 15px 18px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
 }
 
 .ranking-left {
@@ -313,14 +314,6 @@ body {
 
 /* Responsividade */
 @media (max-width: 480px) {
-    .header {
-        flex-direction: column;
-    }
-    
-    .pontuacao-card {
-        width: 100%;
-    }
-    
     .estabelecimentos-grid {
         grid-template-columns: repeat(2, 1fr);
     }
