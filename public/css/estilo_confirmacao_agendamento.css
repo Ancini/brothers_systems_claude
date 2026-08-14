@@ -60,7 +60,7 @@ html, body {
     font-weight: 700;
 }
 
-.card.barbeiro { background-color: rgba(38, 152, 246, 1); }
+.card.barbeiro { background-color: rgba(0, 74, 173, 1); }
 .card.barbeiro:hover { background-color: rgb(6, 93, 164); cursor: pointer; }
 
 .card.total_agendamentos { background-color: rgb(228, 34, 34); }
