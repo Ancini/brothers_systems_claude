@@ -25,6 +25,15 @@ function horariosSeSobrepoem(inicioA, fimA, inicioB, fimB) {
     return inicioA < fimB && fimA > inicioB;
 }
 
+// "YYYY-MM-DD" de hoje no fuso local (mesmo formato salvo em data_agendamento)
+function dataDeHojeBanco() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
+
 async function carregarHorarios() {
     const agendamento = pegarAgendamentoEmAndamento();
 
@@ -77,8 +86,15 @@ async function carregarHorarios() {
         }));
     ocupadosMin.push({ inicio: ALMOCO_INICIO_MIN, fim: ALMOCO_FIM_MIN });
 
+    const ehHoje = agendamento.data_agendamento === dataDeHojeBanco();
+    const agora = new Date();
+    const agoraMin = agora.getHours() * 60 + agora.getMinutes();
+
     const disponiveis = [];
     for (let slot = inicioMin; slot + duracaoServico <= fimMin; slot += INTERVALO_MINUTOS) {
+        if (ehHoje && slot <= agoraMin) {
+            continue;
+        }
         const fimSlot = slot + duracaoServico;
         const conflita = ocupadosMin.some(o => horariosSeSobrepoem(slot, fimSlot, o.inicio, o.fim));
         if (!conflita) {

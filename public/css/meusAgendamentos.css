@@ -35,18 +35,15 @@ body {
 .cliente-avatar {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .cliente-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .cliente-info {
