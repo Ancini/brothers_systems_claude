@@ -1,8 +1,8 @@
 import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 
-const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-const DIAS_SEMANA = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+const DIAS_SEMANA = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
 function formatarHorario12h(horario24) {
     if (!horario24) return { hora: "--:--", periodo: "" };
@@ -19,7 +19,7 @@ function formatarData(dataTexto) {
     const [ano, mes, dia] = dataTexto.split("-").map(Number);
     const data = new Date(ano, mes - 1, dia);
     return {
-        data: `${String(dia).padStart(2, "0")} de ${MESES[mes - 1]}`,
+        data: `${dia} de ${MESES[mes - 1]} de ${ano}`,
         diaSemana: DIAS_SEMANA[data.getDay()]
     };
 }
@@ -52,9 +52,9 @@ function renderizarAgendamentos(agendamentos) {
         card.className = "agendamento-card";
         card.innerHTML = `
             <div class="agendamento-info">
-                <span class="barbeiro-label">Barbearia</span>
-                <span class="barbearia-nome">${ag.nome_estabelicimento || "-"}</span>
-                <span class="servico-label">${ag.nome_servico || "-"}</span>
+                <span class="barbeiro-label">Barbeiro</span>
+                <span class="barbearia-nome">${ag.nome_barbeiro || "-"}</span>
+                <span class="servico-label">Serviço: ${ag.nome_servico || "-"}</span>
                 <span class="data-label">Data</span>
                 <span class="data-valor">${data}</span>
             </div>
@@ -66,6 +66,22 @@ function renderizarAgendamentos(agendamentos) {
         `;
         container.appendChild(card);
     });
+}
+
+async function carregarPontuacao(usuario) {
+    const { data, error } = await supabase
+        .from("vw_pontuacao_usuario")
+        .select("pontuacao_total")
+        .eq("id_usuario", usuario.id_usuario)
+        .single();
+
+    if (error) {
+        console.error("Erro ao carregar a pontuação:", error);
+        return;
+    }
+
+    const elPontuacao = document.getElementById("pontuacao-usuario");
+    if (elPontuacao) elPontuacao.textContent = data?.pontuacao_total ?? 0;
 }
 
 async function carregarAgendamentos(usuario) {
@@ -115,4 +131,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     carregarAgendamentos(usuario);
+    carregarPontuacao(usuario);
 });
