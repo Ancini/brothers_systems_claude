@@ -36,6 +36,11 @@ body {
     gap: 12px;
 }
 
+.cliente-card:hover {
+    background-color: rgb(6, 93, 164);
+    cursor: pointer;
+}
+
 .cliente-avatar {
     width: 50px;
     height: 50px;
@@ -76,6 +81,11 @@ body {
     border-radius: 15px;
     padding: 12px 18px;
     gap: 12px;
+}
+
+.pontuacao-card:hover {
+    background-color: #b8932e;
+    cursor: pointer;
 }
 
 .pontuacao-icone {
