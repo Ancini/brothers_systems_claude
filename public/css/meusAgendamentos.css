@@ -28,7 +28,7 @@ body {
 
 .cliente-card {
     grid-area: cliente;
-    background-color: #2196F3;
+    background-color: rgba(38, 152, 246, 1);
     border-radius: 15px;
     padding: 15px;
     display: flex;
@@ -106,7 +106,7 @@ body {
 
 .pontuacao-section {
     grid-area: pontuacao;
-    background: rgba(211, 214, 26, .9);
+    background: #d4af37;
     border-radius: 12px;
     padding: 10px 15px;
     display: flex;
@@ -161,7 +161,7 @@ body {
 
 /* Card Header Agendamentos */
 .card-agendamentos-header {
-    background: rgba(148, 150, 13, 1);
+    background: rgb(228, 34, 34);
     border-radius: 15px;
     padding: 15px 20px;
     display: flex;

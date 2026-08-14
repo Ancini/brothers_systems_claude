@@ -113,7 +113,7 @@ body {
 
 .calendario-card {
     font-size: 12px;
-    background-color:  rgba(148, 150, 13, 1);
+    background-color: rgb(228, 34, 34);
     border-radius: 15px;
     padding: 15px 18px;
     display: flex;
@@ -149,7 +149,7 @@ body {
 }
 
 .calendario-card:hover{
-    background-color: rgb(168, 170, 46);
+    background-color: rgb(190, 20, 20);
     cursor:pointer;
 }
 
