@@ -65,7 +65,7 @@ html, body {
 
 /* ---------- Cliente: azul mais forte, igual à tela inicial ---------- */
 .card.barbeiro {
-    background-color: rgba(38, 152, 246, 1);
+    background-color: rgba(0, 74, 173, 1);
 }
 
 .card.barbeiro:hover {
