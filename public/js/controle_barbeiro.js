@@ -81,6 +81,7 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
         if (error) throw error;
         
         atualizarContadorAgendamentos(agendamentos ? agendamentos.length : 0);
+        atualizarTotalVendas(agendamentos || []);
         renderizarAgendamentos(agendamentos || []);
     } catch (error) {
         console.error("Erro ao buscar agendamentos:", error);
@@ -102,6 +103,16 @@ function atualizarContadorAgendamentos(total) {
     // Alvo: O span titulo2 dentro do card total_agendamentos
     const elContador = document.querySelector(".total_agendamentos .titulo2");
     if (elContador) elContador.innerText = total;
+}
+
+function formatarMoeda(valor) {
+    return `R$ ${valor.toFixed(2).replace('.', ',')}`;
+}
+
+function atualizarTotalVendas(agendamentos) {
+    const total = agendamentos.reduce((soma, ag) => soma + Number(ag.valor_servico || 0), 0);
+    const elVendas = document.querySelector(".vendas .titulo2");
+    if (elVendas) elVendas.innerText = formatarMoeda(total);
 }
 
 function renderizarAgendamentos(agendamentos) {
