@@ -1,5 +1,6 @@
 import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
+import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
 const INTERVALO_MINUTOS = 30;
 const SLOTS_POR_PAGINA = 9;
@@ -134,4 +135,7 @@ async function carregarHorarios() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", carregarHorarios);
+document.addEventListener("DOMContentLoaded", () => {
+    carregarHorarios();
+    preencherCabecalhoCliente();
+});

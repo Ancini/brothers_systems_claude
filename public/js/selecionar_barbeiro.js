@@ -1,5 +1,6 @@
 import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
+import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
 async function carregarBarbeiros() {
     const agendamento = pegarAgendamentoEmAndamento();
@@ -76,4 +77,5 @@ function configurarBotaoVoltar() {
 document.addEventListener("DOMContentLoaded", () => {
     carregarBarbeiros();
     configurarBotaoVoltar();
+    preencherCabecalhoCliente();
 });

@@ -1,102 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
+    <title>Brothers Systems</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilo_confirmacao_agendamento.css">
-   <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
-    <title>Brothers Systems</title>
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
 </head>
+
 <body>
-     <div class="borda_principal">
+    <div class="container">
 
-        <div class="card barbeiro">
-            <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
-            <div class="texto-barbeiro">
-                <span class="titulo1">Cliente</span>
-                <span class="titulo2">Alexandre Necher Donner</span>
+        <div class="grid-topo">
+            <div class="card barbeiro">
+                <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
+                <div class="texto-barbeiro">
+                    <span class="titulo1">Cliente</span>
+                    <span class="titulo2">Alexandre Necher Donner</span>
+                </div>
+            </div>
+
+            <div class="card total_agendamentos">
+                <img src="css/imagens/calendario.png" alt="calendario" class="icone">
+                <div class="texto-agendamentos">
+                    <span class="titulo1">Meus agendamentos</span>
+                    <span class="titulo2">15</span>
+                </div>
+            </div>
+
+            <div class="card ranking">
+                <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
+                <div class="texto-ranking">
+                    <a href="">Ranking</a>
+                    <a href="">Tabela de classificação</a>
+                </div>
+            </div>
+
+            <div class="card pontuacao">
+                <img src="css/imagens/pontuacao-maxima.png" alt="pontuacao" class="icone">
+                <div class="texto-relatorio">
+                    <span class="titulo1">Pontuação</span>
+                    <span class="titulo2">15</span>
+                </div>
             </div>
         </div>
 
-        <div class="card total_agendamentos">
-            <img src="css/imagens/calendario.png" alt="calendario" class="icone">
-            <div class="texto-agendamentos">
-                <span class="titulo1">Meus agendamentos</span>
-                <span class="titulo2">15</span>
-            </div>
-        </div>
-
-        <div class="card ranking">
-            <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
-            <div class="texto-ranking">
-                <a href="">Ranking</a>
-                <a href="">Tabela de classificação</a>
-            </div>
-        </div>
-
-        <div class="card pontuacao">
-            <img src="css/imagens/pontuacao-maxima.png" alt="pontuacao" class="icone">
-            <div class="texto-relatorio">
-                <span class="titulo1">Pontuação</span>
-                <span class="titulo2">15</span>
-            </div>
-        </div>
-    </div>
-    <br>
-
-    <div class="card informcacoes_agendamento">
+        <div class="card informcacoes_agendamento">
             <b>Informações do agendamento</b>
+        </div>
+
+        <div class="card detalhes_agendamento">
+            <img src="css/imagens/desenho_barbeiro.png" alt="barbeiro" class="img-barbeiro">
+
+            <div class="texto">
+                <span class="titulo1">Barbeiro</span>
+                <span class="titulo2" id="nome-barbeiro-confirmacao">-</span>
+
+                <span class="titulo1">Serviço</span>
+                <span class="titulo2" id="nome-servico-confirmacao">-</span>
+            </div>
+
+            <div class="horario">
+                <span class="hora" id="hora-confirmacao">--:--</span>
+                <span class="data" id="data-confirmacao">-</span>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <button type="button" class="editar" id="btn-editar">
+                Editar agendamento
+                <img src="css/imagens/editar.png" alt="editar">
+            </button>
+
+            <button type="button" class="cancelar" id="btn-cancelar">
+                Cancelar agendamento
+                <img src="css/imagens/cancelar.png" alt="cancelar">
+            </button>
+
+            <button type="button" class="confirmar" id="btn-confirmar">
+                Confirmar agendamento
+                <img src="css/imagens/confirmar.png" alt="confirmar">
+            </button>
+        </div>
+
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
     </div>
-    <br>
-    
- <div class="card detalhes_agendamento">
-    <img src="css/imagens/desenho_barbeiro.png" alt="barbeiro" class="img-barbeiro">
-
-    <div class="texto">
-        <span class="titulo1">Barbeiro</span><br>
-        <span class="titulo2" id="nome-barbeiro-confirmacao">-</span><br>
-
-        <span class="titulo1">Serviço</span><br>
-        <span class="titulo2" id="nome-servico-confirmacao">-</span>
-    </div>
-
-    <div class="horario">
-        <span class="hora" id="hora-confirmacao">--:--</span><br>
-        <span class="data" id="data-confirmacao">-</span>
-    </div>
-</div>
-
-
-<br>
-<div class="botoes">
-
-        <button type="button" class="editar" id="btn-editar">
-        Editar agendamento
-         <img src="css/imagens/editar.png " style="width: 30px;" alt="editar">
-
-    </button>
-<br>
-
-
-    <button type="button" class="cancelar" id="btn-cancelar">
-        Cancelar agendamento
-        <img src="css/imagens/cancelar.png " style="width: 30px;" alt="cancelar">
-
-    </button>
-    <br>
-
-    <button type="button" class="confirmar" id="btn-confirmar">
-        Confirmar agendamento
-                        <img src="css/imagens/confirmar.png " style="width: 30px;" alt="confirmar">
-
-    </button>
-
-
-</div>
-    <footer>
-        <img src="css/imagens/logo.png" alt="Brothers Systems" >
-    </footer>
 
     <script type="module" src="js/confirmacao_agendamento.js"></script>
 </body>
+
 </html>

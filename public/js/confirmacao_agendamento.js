@@ -1,6 +1,7 @@
 import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 import { pegarAgendamentoEmAndamento, limparAgendamentoEmAndamento } from "./agendamento_estado.js";
+import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
 const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 const DIAS_SEMANA = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
@@ -95,4 +96,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     exibirResumo(agendamento);
     configurarBotoes(agendamento);
+    preencherCabecalhoCliente();
 });

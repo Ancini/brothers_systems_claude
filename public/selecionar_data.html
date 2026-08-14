@@ -10,67 +10,62 @@
 </head>
 
 <body>
+    <div class="container">
 
-    <div class="borda_principal">
+        <div class="grid-topo">
+            <div class="card barbeiro">
+                <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
+                <div class="texto-barbeiro">
+                    <span class="titulo1">Cliente</span>
+                    <span class="titulo2">Alexandre Necher Donner</span>
+                </div>
+            </div>
 
-        <div class="card barbeiro">
-            <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
-            <div class="texto-barbeiro">
-                <span class="titulo1">Cliente</span>
-                <span class="titulo2">Alexandre Necher Donner</span>
+            <div class="card total_agendamentos">
+                <img src="css/imagens/calendario.png" alt="calendario" class="icone">
+                <div class="texto-agendamentos">
+                    <span class="titulo1">Meus agendamentos</span>
+                    <span class="titulo2">15</span>
+                </div>
+            </div>
+
+            <div class="card ranking">
+                <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
+                <div class="texto-ranking">
+                    <a href="">Ranking</a>
+                    <a href="">Tabela de classificação</a>
+                </div>
+            </div>
+
+            <div class="card pontuacao">
+                <img src="css/imagens/pontuacao-maxima.png" alt="pontuacao" class="icone">
+                <div class="texto-relatorio">
+                    <span class="titulo1">Pontuação</span>
+                    <span class="titulo2">15</span>
+                </div>
             </div>
         </div>
 
-        <div class="card total_agendamentos">
+        <div class="card selecionar_barbearia">
             <img src="css/imagens/calendario.png" alt="calendario" class="icone">
             <div class="texto-agendamentos">
-                <span class="titulo1">Meus agendamentos</span>
-                <span class="titulo2">15</span>
+                <span class="titulo1"> Selecionar data </span>
             </div>
         </div>
 
-        <div class="card ranking">
-            <img src="css/imagens/ranking.png" alt="Ranking" class="icone">
-            <div class="texto-ranking">
-                <a href="">Ranking</a>
-                <a href="">Tabela de classificação</a>
-            </div>
-        </div>
+        <div id="lista-datas"></div>
 
-        <div class="card pontuacao">
-            <img src="css/imagens/pontuacao-maxima.png" alt="pontuacao" class="icone">
-            <div class="texto-relatorio">
-                <span class="titulo1">Pontuação</span>
-                <span class="titulo2">15</span>
-            </div>
+        <a href="tela_selecionar_servico.html" class="btn-retornar">
+            <span class="icone-voltar">↩</span>
+            Voltar
+            <span class="icone-voltar">↩</span>
+        </a>
+
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
         </div>
     </div>
-
-    <br>
-
-    <div class="card selecionar_barbearia">
-        <img src="css/imagens/calendario.png" alt="calendario" class="icone">
-        <div class="texto-agendamentos">
-            <span class="titulo1"> Selecionar data </span>
-        </div>
-    </div>
-
-    <br>
-
-    <div id="lista-datas"></div>
-
-    <br>
-
-    <a href="tela_selecionar_servico.html" class="card voltar">
-        <img src="css/imagens/voltar.png" alt="voltar" class="icone">
-        <div class="texto-barbeiro">
-             <span class="titulo5">Voltar</span>
-        </div>
-    </a>
-
-    <footer>
-        <img src="css/imagens/logo.png" alt="Brothers Systems">
-    </footer>
 
     <script type="module" src="js/selecionar_data.js"></script>
 
