@@ -164,7 +164,7 @@ body {
 .ranking-card {
     margin: 0 15px 15px 15px;
     font-size: 12px;
-    background-color: rgba(38, 152, 246, 1);
+    background-color:  rgba(0, 74, 173, 1);
     border-radius: 15px;
     padding: 15px 18px;
     display: flex;
@@ -198,14 +198,14 @@ body {
 }
 
 .ranking-card:hover {
-    background-color: rgb(6, 93, 164);
+    background-color: rgba(0, 74, 173, 1);
     cursor: pointer;
 }
 
 /* Busca */
 .busca-card {
     margin: 0 15px 20px 15px;
-    background-color: rgba(38, 152, 246, 1);
+    background-color: rgba(0, 74, 173, 1);
     border-radius: 15px;
     padding: 16px 18px;
     display: flex;
