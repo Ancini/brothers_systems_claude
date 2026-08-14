@@ -26,6 +26,11 @@ body {
     margin-bottom: 15px;
 }
 
+.cliente-card:hover {
+    background-color: rgb(6, 93, 164);
+    cursor: pointer;
+}
+
 .cliente-card {
     grid-area: cliente;
     background-color: rgba(38, 152, 246, 1);
@@ -80,6 +85,11 @@ body {
     gap: 10px;
 }
 
+.ranking-section:hover {
+    background: rgb(118, 120, 10);
+    cursor: pointer;
+}
+
 .ranking-icon {
     width: 24px;
     height: 24px;
@@ -112,6 +122,11 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.pontuacao-section:hover {
+    background: #b8932e;
+    cursor: pointer;
 }
 
 .pontuacao-icon {
@@ -153,6 +168,7 @@ body {
 
 .btn-retornar:hover {
     transform: translateY(-2px);
+    filter: brightness(0.92);
 }
 
 .icone-voltar {
@@ -168,6 +184,11 @@ body {
     align-items: center;
     gap: 15px;
     margin-bottom: 15px;
+}
+
+.card-agendamentos-header:hover {
+    background: rgb(190, 20, 20);
+    cursor: pointer;
 }
 
 .calendario-icon {
@@ -212,6 +233,7 @@ body {
 
 .agendamento-card:hover {
     transform: translateY(-2px);
+    background-color: rgb(6, 93, 164);
 }
 
 .agendamento-info {

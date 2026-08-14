@@ -4,14 +4,10 @@ import { pegarSessao } from "./session.js";
 const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 const DIAS_SEMANA = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
-function formatarHorario12h(horario24) {
-    if (!horario24) return { hora: "--:--", periodo: "" };
+function formatarHorario24h(horario24) {
+    if (!horario24) return "--:--";
     const [horaStr, minutoStr] = horario24.split(":");
-    let hora = parseInt(horaStr, 10);
-    const periodo = hora >= 12 ? "PM" : "AM";
-    hora = hora % 12;
-    if (hora === 0) hora = 12;
-    return { hora: `${String(hora).padStart(2, "0")}:${minutoStr}`, periodo };
+    return `${horaStr.padStart(2, "0")}:${minutoStr}`;
 }
 
 function formatarData(dataTexto) {
@@ -45,7 +41,7 @@ function renderizarAgendamentos(agendamentos) {
     }
 
     agendamentos.forEach(ag => {
-        const { hora, periodo } = formatarHorario12h(ag.horario_inicio);
+        const hora = formatarHorario24h(ag.horario_inicio);
         const { data, diaSemana } = formatarData(ag.data_agendamento);
 
         const card = document.createElement("div");
@@ -60,7 +56,6 @@ function renderizarAgendamentos(agendamentos) {
             </div>
             <div class="agendamento-horario">
                 <span class="horario">${hora}</span>
-                <span class="periodo">${periodo}</span>
                 <span class="dia-semana">${diaSemana}</span>
             </div>
         `;

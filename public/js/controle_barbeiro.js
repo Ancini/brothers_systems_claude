@@ -129,15 +129,11 @@ async function buscarTotalVendasDoMes() {
     }
 }
 
-// Converte "HH:MM:SS"/"HH:MM" (24h) para { hora: "HH:MM", periodo: "AM"/"PM" }
-function formatarHorario12h(horario24) {
-    if (!horario24) return { hora: '--:--', periodo: '' };
+// Normaliza "HH:MM:SS"/"HH:MM" para "HH:MM" (24h)
+function formatarHorario24h(horario24) {
+    if (!horario24) return '--:--';
     const [horaStr, minutoStr] = horario24.split(':');
-    let hora = parseInt(horaStr, 10);
-    const periodo = hora >= 12 ? 'PM' : 'AM';
-    hora = hora % 12;
-    if (hora === 0) hora = 12;
-    return { hora: `${String(hora).padStart(2, '0')}:${minutoStr}`, periodo };
+    return `${horaStr.padStart(2, '0')}:${minutoStr}`;
 }
 
 function atualizarContadorAgendamentos(total) {
@@ -165,7 +161,7 @@ function renderizarAgendamentos(agendamentos) {
         const card = document.createElement("div");
         card.className = "card agendamentos_por_ordem";
 
-        const { hora, periodo } = formatarHorario12h(ag.horario_inicio);
+        const hora = formatarHorario24h(ag.horario_inicio);
 
         card.innerHTML = `
     <div class="agendamento-info">
@@ -175,7 +171,7 @@ function renderizarAgendamentos(agendamentos) {
         <span class="titulo2 agendamento-valor">${ag.nome_servico}</span>
     </div>
     <div class="agendamento-horario">
-        ${hora}<span class="periodo">${periodo}</span>
+        ${hora}
     </div>
 `;
         container.appendChild(card);
