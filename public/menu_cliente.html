@@ -167,11 +167,11 @@ if (user) {
     }
 }
 
-        // Atualizar o nome do cliente no header
+        // Atualizar o nome do cliente no header (só o primeiro nome)
         const nomeClienteSpan = document.querySelector('.cliente-info .nome');
         if (nomeClienteSpan && user) {
-            const nome = user.user_metadata?.name || user.email?.split('@')[0] || "Cliente";
-            nomeClienteSpan.textContent = nome;
+            const nomeCompleto = user.nome || user.user_metadata?.name || user.email?.split('@')[0] || "Cliente";
+            nomeClienteSpan.textContent = nomeCompleto.split(' ')[0];
         }
 
         // Botão de sair no rodapé

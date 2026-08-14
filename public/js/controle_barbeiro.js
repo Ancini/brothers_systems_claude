@@ -9,10 +9,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sucesso = await inicializarIdentidadeBarbeiro();
     if (sucesso) {
         inicializarLinhaDoTempo();
+        buscarTotalVendasDoMes();
     } else {
         console.error("Não foi possível identificar o barbeiro. Verifique o login ou o vínculo no banco.");
     }
 });
+
+// Formata um Date pra "YYYY-MM-DD" usando o fuso local (evita o desvio de dia do toISOString)
+function formatarDataBanco(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const dia = String(data.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
 
 // FUNÇÃO DA PONTE
 async function inicializarIdentidadeBarbeiro() {
@@ -21,14 +30,20 @@ async function inicializarIdentidadeBarbeiro() {
 
     const { data: vinculo, error } = await supabaseClient
         .from('prestador')
-        .select('id_prestador')
-        .eq('uuid_vinculo', user.id) 
-        .limit(1); 
+        .select('id_prestador, usuario:prestador_id_prestador_fkey ( nome_usuario )')
+        .eq('uuid_vinculo', user.id)
+        .limit(1);
 
     if (error || !vinculo || vinculo.length === 0) return false;
-    
+
     idBarbeiroLogado = vinculo[0].id_prestador;
+    exibirNomeBarbeiro(vinculo[0].usuario?.nome_usuario);
     return true;
+}
+
+function exibirNomeBarbeiro(nome) {
+    const elNome = document.querySelector(".card.barbeiro .titulo2");
+    if (elNome && nome) elNome.textContent = nome;
 }
 
 // 2. GERA OS 4 DIAS DINAMICAMENTE
@@ -81,10 +96,36 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
         if (error) throw error;
         
         atualizarContadorAgendamentos(agendamentos ? agendamentos.length : 0);
-        atualizarTotalVendas(agendamentos || []);
         renderizarAgendamentos(agendamentos || []);
     } catch (error) {
         console.error("Erro ao buscar agendamentos:", error);
+    }
+}
+
+// Total de vendas do mês corrente (independente do dia selecionado na linha do tempo)
+async function buscarTotalVendasDoMes() {
+    if (!idBarbeiroLogado) return;
+
+    const hoje = new Date();
+    const inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    const inicioProximoMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 1);
+
+    const dataInicio = `${formatarDataBanco(inicioMes)}T00:00:00`;
+    const dataFim = `${formatarDataBanco(inicioProximoMes)}T00:00:00`;
+
+    try {
+        const { data: agendamentos, error } = await supabaseClient
+            .from('vw_agenda_do_barbeiro')
+            .select('valor_servico')
+            .eq('id_prestador', idBarbeiroLogado)
+            .gte('data_agendamento', dataInicio)
+            .lt('data_agendamento', dataFim);
+
+        if (error) throw error;
+
+        atualizarTotalVendas(agendamentos || []);
+    } catch (error) {
+        console.error("Erro ao buscar total de vendas do mês:", error);
     }
 }
 
