@@ -17,13 +17,17 @@ body {
 
 /* Header Cards */
 .header-cards {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "cliente ranking"
+        "pontuacao pontuacao";
+    gap: 8px;
     margin-bottom: 15px;
 }
 
 .cliente-card {
-    flex: 1;
+    grid-area: cliente;
     background-color: #2196F3;
     border-radius: 15px;
     padding: 15px;
@@ -66,13 +70,8 @@ body {
 }
 
 /* Ranking e Pontuação Card */
-.ranking-pontuacao-card {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
 .ranking-section {
+    grid-area: ranking;
     background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
     border-radius: 12px;
     padding: 10px 15px;
@@ -107,6 +106,7 @@ body {
 }
 
 .pontuacao-section {
+    grid-area: pontuacao;
     background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
     border-radius: 12px;
     padding: 10px 15px;
@@ -278,10 +278,6 @@ body {
 
 /* Responsividade */
 @media (max-width: 480px) {
-    .header-cards {
-        flex-direction: column;
-    }
-    
     .agendamento-card {
         padding: 12px 15px;
     }
