@@ -33,7 +33,7 @@ body {
 
 .cliente-card {
     grid-area: cliente;
-    background-color: rgba(38, 152, 246, 1);
+    background-color: rgba(0, 74, 173, 1);
     border-radius: 15px;
     padding: 15px;
     display: flex;
