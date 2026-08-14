@@ -72,7 +72,7 @@ body {
 /* Ranking e Pontuação Card */
 .ranking-section {
     grid-area: ranking;
-    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    background: rgba(148, 150, 13, 1);
     border-radius: 12px;
     padding: 10px 15px;
     display: flex;
@@ -83,7 +83,6 @@ body {
 .ranking-icon {
     width: 24px;
     height: 24px;
-    filter: brightness(0) invert(1);
 }
 
 .ranking-info {
@@ -107,15 +106,21 @@ body {
 
 .pontuacao-section {
     grid-area: pontuacao;
-    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    background: rgba(211, 214, 26, .9);
     border-radius: 12px;
     padding: 10px 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px;
+}
+
+.pontuacao-icon {
+    width: 24px;
+    height: 24px;
 }
 
 .pontuacao-label {
+    flex: 1;
     font-size: 11px;
     color: #ffffff;
     font-weight: 600;
@@ -156,7 +161,7 @@ body {
 
 /* Card Header Agendamentos */
 .card-agendamentos-header {
-    background: linear-gradient(135deg, #9B7E3C 0%, #C9A935 100%);
+    background: rgba(148, 150, 13, 1);
     border-radius: 15px;
     padding: 15px 20px;
     display: flex;
@@ -168,7 +173,6 @@ body {
 .calendario-icon {
     width: 40px;
     height: 40px;
-    filter: brightness(0) invert(1);
 }
 
 .agendamentos-info {
@@ -274,6 +278,28 @@ body {
     color: #ffffff;
     font-weight: 600;
     margin-top: 4px;
+}
+
+/* Rodapé com a marca */
+.brand-footer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
 }
 
 /* Responsividade */
