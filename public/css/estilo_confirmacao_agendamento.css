@@ -1,271 +1,212 @@
+/* ==========================================================
+   Brothers Systems - Estilo Cliente
+   Baseado no protótipo (Figma) - mobile first, escala p/ desktop
+   ========================================================== */
+
 * {
-    font-family: 'Times New Roman', Times, serif;
-    color: white;
-    font-size: 20px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-decoration: none;
-    cursor:pointer;
-    
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
-/* GRID SUPERIOR */
-.borda_principal {
+html, body {
+    background-color: #eaf6fb;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 12px;
+}
+
+.grid-topo {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 10px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .card {
-    background: rgba(0, 74, 173, 1);
-    border-radius: 15px;
-    padding: 12px;
     display: flex;
     align-items: center;
     gap: 12px;
-
-        transition: 
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
-}
-    .card:hover {
-        transform: translateY(-6px);   /* 🔥 sobe, vem pra frente */
-        background-color: rgb(17, 103, 230); /* muda a cor */
-        box-shadow: 0 10px 25px rgba(183, 33, 33, 0.35); /* ganha profundidade */
-    }
-
-/* quando clicar */
-.card:active {
-    transform: translateY(-2px) scale(0.98); /* leve compressão */
-    background-color: rgb(11, 80, 185);
-}
-
-
-.total_agendamentos { background: rgb(228, 34, 34); }
-.ranking { background: rgba(148, 150, 13, 1); text-decoration: none; }
-.pontuacao { background: rgba(211, 214, 26, .9); }
-
-.icone {
-    width: 48px;
-}
-
-.selecionar_barbearia{
-    background-color:  rgb(228, 34, 34);
-    width: 90%;
-    display: flex;
-    margin: 0 auto;
-    
-}
-
-.barbeiros{
-    width: 90%;
-    height: 200px;
-    display: flex;
-    margin: 0 auto;
-    
-}
-
-
-
-/* ---------------------------------------
-        ÁREA DE DATAS — IGUAL AO FIGMA
-----------------------------------------*/
-
-
-select {
-    background-color: rgba(0, 74, 173, 1);
-    border-radius: 10px;
-    width: 80%;
-    height: 50px;
-    border: none;
-    text-align: center;
-    color: white;
-}
-
-.selecionar_barbearia,
-.selecionar_barbeiro,
-.selecionar_servico,
-.selecionar_horario 
-{
-    text-align: center;
-    
-}
-
-/* BOTÃO */
-button {
-    background-color: none;
-    height: 50px;
-    border: none;
-    margin: auto;
-   
-}
-
-footer {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.desenho_barbeiro{
-width: 150px;
-height: 150px;
-}
-
-.titulo4{
-    font-size: 35px;
-
-}
-.titulo5{
-        font-size: 35px;
-}
-
-.texto_barbeiros{
-    flex-direction:column ;
-    display: flex;
-   
-}
-
-
-.voltar{
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
-
-}
-
-.informcacoes_agendamento{
-    width: 90%;
-    height: 80px;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-}
-
-.detalhes_agendamento{
-    margin: auto;
-    width: 90%;
-    height: 150px;
-}
-
-.detalhes_agendamento{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    height: 250px;
-    margin: auto;
-    background:  rgba(0, 74, 173, 1);
-    border-radius: 15px;
+    background-color: #1e88e5;
+    border-radius: 14px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     color: #fff;
-    padding: 15px;
-    box-sizing: border-box;
+    transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
-.img-barbeiro{
-    width: 90px;
+.card .icone {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
-.texto{
-    flex: 1;
-    padding-left: 15px;
+.titulo1 {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.9;
 }
 
-.horario{
+.titulo2 {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.card.barbeiro { background-color: rgba(38, 152, 246, 1); }
+.card.barbeiro:hover { background-color: rgb(6, 93, 164); cursor: pointer; }
+
+.card.total_agendamentos { background-color: rgb(228, 34, 34); }
+.card.total_agendamentos:hover { background-color: rgb(190, 20, 20); cursor: pointer; }
+
+.card.ranking { background-color: #7c8b17; }
+.card.ranking:hover { background-color: #626f12; cursor: pointer; }
+.card.ranking .texto-ranking { display: flex; flex-direction: column; }
+.card.ranking .texto-ranking a { color: #fff; text-decoration: none; font-size: 0.85rem; }
+.card.ranking .texto-ranking a:first-child { font-weight: 700; font-size: 0.95rem; }
+
+.card.pontuacao { background-color: #c9c400; color: #333; }
+.card.pontuacao:hover { background-color: #a8a400; cursor: pointer; }
+.card.pontuacao .titulo1, .card.pontuacao .titulo2 { color: #333; }
+
+/* ---------- Título da seção (destaque vermelho) ---------- */
+.card.informcacoes_agendamento {
+    background-color: #e53935;
+    justify-content: center;
     text-align: center;
-    border-left: 2px solid rgba(255,255,255,0.5);
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+/* ---------- Card com os detalhes do agendamento ---------- */
+.card.detalhes_agendamento {
+    background-color: rgba(38, 152, 246, 1);
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.img-barbeiro {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.texto .titulo2 {
+    margin-bottom: 6px;
+}
+
+.horario {
+    text-align: center;
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
     padding-left: 15px;
-    min-width: 110px;
+    min-width: 100px;
 }
 
-.hora{
-    font-size: 26px;
-    font-weight: bold;
+.hora {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
 }
 
-.data{
-    font-size: 14px;
-    margin-top: 5px;
-    display: inline-block;
+.data {
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    opacity: 0.9;
 }
 
-
-.botoes{
-    grid-template-columns: 1fr 1fr;
-    justify-content: center;
-    text-align: center;   
-    margin:auto;
-    
-
-}
-
-.editar{
-    background-color: rgba(245, 131, 44, 1);
-    gap:10px;
-    border-radius: 15px;
-    width: 90%;
-    height: 70px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    
-}
-
-.cancelar{
-    background-color:rgba(238, 4, 4, 1);
-    gap:10px;
-    border-radius: 15px;
-    width: 90%;
-    height: 70px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    
-}
-
-.confirmar{
-    background-color: rgba(14, 175, 14, 1);
-    gap:10px;
-    border-radius: 15px;
-    width: 90%;
-    height: 70px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    
-    
+/* ---------- Botões de ação ---------- */
+.botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .editar,
 .cancelar,
-.confirmar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+.confirmar {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    font-family: inherit;
 }
 
-.editar:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(245, 131, 44, 0.45);
+.editar { background-color: #f5832c; }
+.cancelar { background-color: #ee0404; }
+.confirmar { background-color: #0eaf0e; }
+
+.editar:hover,
+.cancelar:hover,
+.confirmar:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.92);
 }
 
-.cancelar:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(238, 4, 4, 0.45);
+.editar img,
+.cancelar img,
+.confirmar img {
+    width: 22px;
 }
 
-.confirmar:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(14, 175, 14, 0.45);
+/* ---------- Rodapé com a marca ---------- */
+.brand-footer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
 }
 
-.titulo1,
-.titulo2{
-    font-weight: bold;
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
 }
 
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
+}
 
+/* ==========================================================
+   Responsivo - Tablet / Desktop
+   ========================================================== */
+@media (min-width: 768px) {
+    .container {
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 700px;
+    }
+}

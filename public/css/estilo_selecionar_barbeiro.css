@@ -16,13 +16,18 @@ html, body {
 }
 
 /* ---------- Container principal ---------- */
-.borda_principal {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.container {
     max-width: 480px;
     margin: 0 auto;
     padding: 12px;
+}
+
+/* ---------- Grid 2x2: Cliente / Meus agendamentos / Ranking / Pontuação ---------- */
+.grid-topo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 /* ---------- Card base ---------- */
@@ -35,6 +40,7 @@ html, body {
     padding: 12px 16px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     color: #fff;
+    transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .card .icone {
@@ -57,14 +63,33 @@ html, body {
     font-weight: 700;
 }
 
-/* ---------- Cards do topo (cliente, agendamentos, ranking, pontuação) ---------- */
-.card.barbeiro,
+/* ---------- Cliente: azul mais forte, igual à tela inicial ---------- */
+.card.barbeiro {
+    background-color: rgba(38, 152, 246, 1);
+}
+
+.card.barbeiro:hover {
+    background-color: rgb(6, 93, 164);
+    cursor: pointer;
+}
+
+/* ---------- Meus agendamentos: vermelho do Painel Administrativo ---------- */
 .card.total_agendamentos {
-    background-color: #1e88e5;
+    background-color: rgb(228, 34, 34);
+}
+
+.card.total_agendamentos:hover {
+    background-color: rgb(190, 20, 20);
+    cursor: pointer;
 }
 
 .card.ranking {
     background-color: #7c8b17;
+}
+
+.card.ranking:hover {
+    background-color: #626f12;
+    cursor: pointer;
 }
 
 .card.ranking .texto-ranking {
@@ -88,6 +113,11 @@ html, body {
     color: #333;
 }
 
+.card.pontuacao:hover {
+    background-color: #a8a400;
+    cursor: pointer;
+}
+
 .card.pontuacao .titulo1,
 .card.pontuacao .titulo2 {
     color: #333;
@@ -98,14 +128,9 @@ html, body {
     background-color: #e53935;
     justify-content: center;
     text-align: center;
-    width: 90%;
-    display: flex;
-    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 10px;
 }
-
-
-
-
 
 .card.selecionar_barbearia .texto-agendamentos {
     display: flex;
@@ -129,27 +154,25 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 0 12px;
+    margin-bottom: 10px;
 }
 
 .card.barbeiros {
     background-color: #1e88e5;
     justify-content: flex-start;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    padding: 18px 18px;
 }
 
 .card.barbeiros:hover {
     transform: translateY(-2px);
+    background-color: #1565c0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .card.barbeiros .desenho_barbeiro {
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background-color: #fff;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -160,7 +183,7 @@ html, body {
 }
 
 .texto_barbeiros .titulo5 {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
 }
 
@@ -172,79 +195,67 @@ html, body {
     opacity: 0.9;
 }
 
-/* ---------- Botão Voltar ---------- */
-.card.voltar {
-    background-color: #43a047;
-    justify-content: center;
-    margin: 16px auto 0;
-    max-width: 480px;
+/* ---------- Botão Retornar ---------- */
+.btn-retornar {
     width: 100%;
-}
-
-.card.voltar .icone {
-    width: 24px;
-    height: 24px;
-}
-
-.card.voltar .titulo5 {
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-/* ---------- Rodapé / logo ---------- */
-footer {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 20px 0 30px;
+    gap: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-footer img {
-    max-width: 160px;
-    height: auto;
+.btn-retornar:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.92);
+}
+
+.icone-voltar {
+    font-size: 18px;
+}
+
+/* ---------- Rodapé com a marca ---------- */
+.brand-footer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
 }
 
 /* ==========================================================
    Responsivo - Tablet / Desktop
    ========================================================== */
 @media (min-width: 768px) {
-    .borda_principal {
-        max-width: 900px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
-    .borda_principal .card {
-        flex: 1 1 calc(25% - 16px);
-        min-width: 180px;
-    }
-
-    .card.selecionar_barbearia {
-        max-width: 900px;
-    }
-
-    #lista-barbeiros {
-        max-width: 900px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
-    #lista-barbeiros .card.barbeiros {
-        flex: 1 1 calc(33.333% - 16px);
-        min-width: 220px;
-    }
-
-    .card.voltar {
-        max-width: 800px;
+    .container {
+        max-width: 600px;
     }
 }
 
 @media (min-width: 1200px) {
-    .borda_principal,
-    .card.selecionar_barbearia,
-    #lista-barbeiros,
-    .card.voltar {
-        max-width: 1000px;
+    .container {
+        max-width: 700px;
     }
 }

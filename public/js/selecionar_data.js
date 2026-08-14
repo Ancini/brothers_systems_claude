@@ -1,4 +1,5 @@
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
+import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
 const DIAS_A_MOSTRAR = 9;
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -65,4 +66,7 @@ function carregarDatas() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", carregarDatas);
+document.addEventListener("DOMContentLoaded", () => {
+    carregarDatas();
+    preencherCabecalhoCliente();
+});
