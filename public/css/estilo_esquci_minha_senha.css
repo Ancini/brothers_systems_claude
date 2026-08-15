@@ -33,6 +33,7 @@ body{
 .logo_pagina img{
   width:100%;
   max-width:220px;
+  border-radius: 24px;
 }
 
 /* Formulário */
@@ -95,6 +96,23 @@ button{
   align-items:center;
   gap:10px;
   margin-top:10px;
+}
+
+/* Link "Retornar ao menu principal" com aparência de botão */
+.btn-link{
+  background-color:rgba(0, 74, 173, 1);
+  color:white;
+  height:48px;
+  border-radius:15px;
+  font-size:16px;
+  font-family:'Times New Roman', Times, serif;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+  text-decoration:none;
 }
 
 /* Links */

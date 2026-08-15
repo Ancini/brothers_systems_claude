@@ -23,6 +23,13 @@ function injetarEstilos() {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* Algumas páginas têm um .container com fundo branco próprio, que
+           ficava escondendo o preto do body atrás dele */
+        html.modo-escuro .container,
+        html.modo-escuro .container-login {
+            background-color: #000 !important;
+        }
+
         /* Cards e blocos "de card" viram pretos com borda e texto brancos.
            As imagens dentro deles (logos, ícones, fotos) NÃO são tocadas,
            continuam com a cor original. */
@@ -39,13 +46,22 @@ function injetarEstilos() {
         html.modo-escuro .pontuacao-section,
         html.modo-escuro .card-agendamentos-header,
         html.modo-escuro .agendamento-card,
-        html.modo-escuro .section-badge-row,
+        html.modo-escuro .section-badge-row {
+            background: #000 !important;
+            background-color: #000 !important;
+            background-image: none !important;
+            border: 1px solid #fff !important;
+            color: #fff !important;
+        }
+
+        /* Containers de página (login/cadastro/recuperar senha) só trocam
+           fundo e texto — sem borda externa, a borda fica só nos campos
+           e botões de dentro */
         html.modo-escuro .login-box,
         html.modo-escuro .form-wrapper {
             background: #000 !important;
             background-color: #000 !important;
             background-image: none !important;
-            border: 1px solid #fff !important;
             color: #fff !important;
         }
 
@@ -71,8 +87,41 @@ function injetarEstilos() {
             filter: none !important;
         }
 
+        /* Campos e botões das telas de login, cadastro e recuperar senha */
+        html.modo-escuro input {
+            background-color: #000 !important;
+            color: #fff !important;
+            border: 1px solid #fff !important;
+        }
+
+        html.modo-escuro input::placeholder {
+            color: #fff !important;
+        }
+
+        html.modo-escuro .botao_entrar button,
+        html.modo-escuro .botao_cadastrar button,
+        html.modo-escuro .botao_enviar button,
+        html.modo-escuro .botao_link {
+            background-color: #000 !important;
+            color: #fff !important;
+            border: 1px solid #fff !important;
+        }
+
+        /* Esse link específico já ganha aparência de botão no CSS base;
+           no escuro só troca a cor, sem borda extra */
+        html.modo-escuro .btn-link {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+
         html.modo-escuro .brand-footer-nome {
             color: #fff !important;
+        }
+
+        /* Rodapé (tag <footer>) que tinha fundo azul/cinza fixo */
+        html.modo-escuro footer {
+            background-color: #000 !important;
+            border: none !important;
         }
 
         #botao-modo-escuro {
