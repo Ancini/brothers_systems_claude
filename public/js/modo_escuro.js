@@ -26,7 +26,8 @@ function injetarEstilos() {
         /* Algumas páginas têm um .container com fundo branco próprio, que
            ficava escondendo o preto do body atrás dele */
         html.modo-escuro .container,
-        html.modo-escuro .container-login {
+        html.modo-escuro .container-login,
+        html.modo-escuro .grid-topo {
             background-color: #000 !important;
         }
 
