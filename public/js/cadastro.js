@@ -30,7 +30,7 @@ async function cadastrarUsuario(event) {
                 password: senha,
                 options: {
                     emailRedirectTo:
-                        "https://brotherssystems1-w1o4fqya.b4a.run/redefinir_senha.html",
+                        "https://brothers-systems-claude.vercel.app/index.html",
                     data: {
                         nome,
                         telefone
