@@ -15,11 +15,8 @@ async function carregarBarbeiros() {
     if (nomeSpan) nomeSpan.textContent = agendamento.nome_estabelicimento || "";
 
    const { data, error } = await supabase
-    .from("prestador")
-    .select(`
-        id_prestador,
-        usuario:prestador_id_prestador_fkey ( nome_usuario )
-    `)
+    .from("vw_prestadores_estabelecimento")
+    .select("id_prestador, nome_usuario")
     .eq("id_estabelicimento", agendamento.id_estabelicimento);
 
     const container = document.getElementById("lista-barbeiros");
@@ -41,7 +38,7 @@ async function carregarBarbeiros() {
     }
 
     data.forEach(prestador => {
-        const nome = prestador.usuario?.nome_usuario || "Barbeiro";
+        const nome = prestador.nome_usuario || "Barbeiro";
 
         const card = document.createElement("div");
         card.className = "card barbeiros";
