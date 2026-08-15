@@ -16,18 +16,63 @@ function injetarEstilos() {
     const style = document.createElement("style");
     style.id = "estilo-modo-escuro";
     style.textContent = `
-        html {
-            transition: filter 0.3s ease;
+        html.modo-escuro,
+        html.modo-escuro body {
+            background-color: #000;
+            color: #fff;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        html.modo-escuro {
-            filter: grayscale(1) invert(1);
+        /* Cards e blocos "de card" viram pretos com borda e texto brancos.
+           As imagens dentro deles (logos, ícones, fotos) NÃO são tocadas,
+           continuam com a cor original. */
+        html.modo-escuro .card,
+        html.modo-escuro .cliente-card,
+        html.modo-escuro .pontuacao-card,
+        html.modo-escuro .calendario-card,
+        html.modo-escuro .ranking-card,
+        html.modo-escuro .busca-card,
+        html.modo-escuro .barbeiro-acesso-card,
+        html.modo-escuro .estabelecimento-item,
+        html.modo-escuro .estabelecimentos-grid,
+        html.modo-escuro .ranking-section,
+        html.modo-escuro .pontuacao-section,
+        html.modo-escuro .card-agendamentos-header,
+        html.modo-escuro .agendamento-card,
+        html.modo-escuro .section-badge-row,
+        html.modo-escuro .login-box,
+        html.modo-escuro .form-wrapper {
+            background: #000 !important;
+            background-color: #000 !important;
+            background-image: none !important;
+            border: 1px solid #fff !important;
+            color: #fff !important;
         }
 
-        /* Cancela o invert só nas imagens, pra não virarem "negativo de filme" */
-        html.modo-escuro img,
-        html.modo-escuro video {
-            filter: invert(1);
+        html.modo-escuro .card *,
+        html.modo-escuro .cliente-card *,
+        html.modo-escuro .pontuacao-card *,
+        html.modo-escuro .calendario-card *,
+        html.modo-escuro .ranking-card *,
+        html.modo-escuro .busca-card *,
+        html.modo-escuro .barbeiro-acesso-card *,
+        html.modo-escuro .ranking-section *,
+        html.modo-escuro .pontuacao-section *,
+        html.modo-escuro .card-agendamentos-header *,
+        html.modo-escuro .agendamento-card *,
+        html.modo-escuro .section-badge-row *,
+        html.modo-escuro .login-box *,
+        html.modo-escuro .form-wrapper * {
+            color: #fff !important;
+        }
+
+        /* Mantém as imagens com a cor original, mesmo dentro de um card preto */
+        html.modo-escuro img {
+            filter: none !important;
+        }
+
+        html.modo-escuro .brand-footer-nome {
+            color: #fff !important;
         }
 
         #botao-modo-escuro {
@@ -52,6 +97,10 @@ function injetarEstilos() {
 
         #botao-modo-escuro:hover {
             transform: scale(1.08);
+        }
+
+        html.modo-escuro #botao-modo-escuro {
+            border: 1px solid #fff;
         }
     `;
     document.head.appendChild(style);
