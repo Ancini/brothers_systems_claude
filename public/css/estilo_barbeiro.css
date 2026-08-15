@@ -171,13 +171,16 @@ a {
     
 }
 
+#container-lista-agendamentos {
+    padding: 0 10px;
+}
+
 .agendamentos_por_ordem {
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: #1e90ff;
     width: 100%;
     margin: 10px 0;
-    min-height: 120px;
-    padding: 15px 20px;  /* Aumenta o espaço lateral interno */
+    padding: 15px 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -195,32 +198,31 @@ a {
     min-width: 0;
     flex: 1 1 auto;
     overflow-wrap: break-word;
+    gap: 4px;
+}
+
+.agendamentos_por_ordem .titulo1 {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.9;
 }
 
 .agendamento-valor {
-    font-size: 22px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .agendamento-servico {
-    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .agendamento-horario {
     flex-shrink: 0;
-    font-size: 50px;
+    font-size: 32px;
     font-weight: bold;
-    font-family: Georgia, serif;
     text-align: right;
     line-height: 1;
-}
-
-.agendamento-horario .periodo {
-    display: block;
-    font-size: 26px;
-    font-weight: normal;
-    text-align: right;
-    margin-top: 4px;
 }
 
 footer{
@@ -339,21 +341,12 @@ footer{
     }
 
     .agendamentos_por_ordem {
-        min-height: 100px;
         padding: 12px 16px;
         gap: 8px;
     }
 
-    .agendamento-valor {
-        font-size: 16px;
-    }
-
     .agendamento-horario {
         font-size: 28px;
-    }
-
-    .agendamento-horario .periodo {
-        font-size: 16px;
     }
 }
 

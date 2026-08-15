@@ -166,9 +166,8 @@ function renderizarAgendamentos(agendamentos) {
         card.innerHTML = `
     <div class="agendamento-info">
         <span class="titulo1">Cliente</span>
-        <span class="titulo2 agendamento-valor">${ag.nome_cliente}</span>
-        <span class="titulo1 agendamento-servico">Serviço</span>
-        <span class="titulo2 agendamento-valor">${ag.nome_servico}</span>
+        <span class="agendamento-valor">${ag.nome_cliente}</span>
+        <span class="agendamento-servico">Serviço: ${ag.nome_servico}</span>
     </div>
     <div class="agendamento-horario">
         ${hora}
