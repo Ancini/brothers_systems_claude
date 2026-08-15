@@ -20,14 +20,21 @@ async function cadastrarUsuario(event) {
 
     try {
 
-        // Cria usuário no Auth
+        // Cria usuário no Auth. Nome/telefone vão nos metadados do auth —
+        // uma trigger no banco (on_auth_user_created) lê esses metadados e
+        // cria a linha correspondente em "usuario" automaticamente, porque
+        // o cliente não tem (e não deve ter) permissão de INSERT direto ali.
         const { data, error } =
             await supabaseClient.auth.signUp({
                 email,
                 password: senha,
                 options: {
                     emailRedirectTo:
-                        "https://brotherssystems1-w1o4fqya.b4a.run/redefinir_senha.html"
+                        "https://brotherssystems1-w1o4fqya.b4a.run/redefinir_senha.html",
+                    data: {
+                        nome,
+                        telefone
+                    }
                 }
             });
 
@@ -36,50 +43,6 @@ async function cadastrarUsuario(event) {
         }
 
         console.log("Retorno signup:", data);
-
-        const authId = data.user?.id;
-
-        console.log("Auth ID:", authId);
-
-        if (!authId) {
-            throw new Error(
-                "Não foi possível obter o ID do usuário"
-            );
-        }
-
-        // Verifica se existe sessão/usuário
-        const { data: usuarioLogado } =
-            await supabaseClient.auth.getUser();
-
-        console.log(
-            "Usuário atual:",
-            usuarioLogado
-        );
-
-        // Salva dados na tabela usuario
-        const {
-            data: usuarioData,
-            error: usuarioError
-        } = await supabaseClient
-            .from("usuario")
-            .insert([
-                {
-                    nome_usuario: nome,
-                    email_usuario: email,
-                    telefone_usuario: telefone,
-                    auth_id: authId
-                }
-            ])
-            .select();
-
-        if (usuarioError) {
-            throw usuarioError;
-        }
-
-        console.log(
-            "Usuário salvo:",
-            usuarioData
-        );
 
         alert(
             "Cadastro realizado com sucesso! Verifique seu e-mail para confirmar sua conta."
