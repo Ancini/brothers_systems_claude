@@ -6,7 +6,7 @@
 }
 
 body {
-    background: #f2f2f2;
+    background: white;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -22,42 +22,81 @@ body {
     padding: 15px;
     background: white;
     border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Cliente (esquerda, alto) + Agendamentos / Pontuação (empilhados, à direita) */
+.topo-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 /* Cards base */
 .card {
     border-radius: 14px;
     padding: 14px;
-    margin-bottom: 10px;
     color: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .cliente {
+    grid-row: span 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background: linear-gradient(135deg, #1e90ff, #007bff);
 }
 
-.cliente img {
-    width: 55px;
-    height: 55px;
-    object-fit: cover;
+.cliente-foto {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
-.agendamentos {
+.cliente-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cliente-titulo {
+    font-size: 13px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.cliente-nome {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-card {
+    border-radius: 14px;
+    padding: 10px 12px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.stat-label {
+    font-size: 11px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.stat-card.agendamentos,
+.stat-card.pontuacao {
     background: linear-gradient(135deg, #d4b200, #bfa200);
-    font-weight: bold;
-}
-
-.pontuacao {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    font-weight: bold;
 }
 
 /* Botões */
@@ -69,7 +108,6 @@ body {
     color: #fff;
     cursor: pointer;
     margin-bottom: 6px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
 }
 
@@ -85,12 +123,10 @@ body {
 
 /* Agrupamento vermelho */
 .grupo-vermelho {
-    
     border-radius: 18px;
     padding: 20px 15px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
@@ -119,13 +155,44 @@ body {
 /* Ranking */
 .ranking-titulo {
     background: #bfa200;
-    font-size: 18px;
-    padding: 16px;
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 15px;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.2s ease;
 }
 
 .ranking-titulo:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(191, 162, 0, 0.3);
+}
+
+.ranking-icone {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.ranking-texto {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.ranking-sub {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.ranking-carregando {
+    text-align: center;
+    color: #999;
+    padding: 20px;
 }
 
 .lista-ranking .item {
@@ -138,8 +205,11 @@ body {
     font-size: 16px;
     color: #fff;
     background: linear-gradient(135deg, #1e90ff, #007bff);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
+}
+
+.lista-ranking .item.item-atual {
+    box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px #1e90ff;
 }
 
 .lista-ranking .item:hover {
@@ -212,9 +282,8 @@ footer {
         font-size: 14px;
     }
     
-    .ranking-titulo {
+    .ranking-texto {
         font-size: 16px;
-        padding: 14px;
     }
     
     .logo-footer {
@@ -249,9 +318,8 @@ footer {
         font-size: 13px;
     }
     
-    .ranking-titulo {
+    .ranking-texto {
         font-size: 15px;
-        padding: 12px;
     }
     
     .logo-footer {

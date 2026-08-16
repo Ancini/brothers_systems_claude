@@ -29,6 +29,11 @@
         background-color 0.2s ease;
 }
 
+.ranking,
+.relatorios {
+    cursor: pointer;
+}
+
 .card:hover {
     transform: translateY(-6px);   /* 🔥 sobe, vem pra frente */
     background-color: rgb(17, 103, 230); /* muda a cor */
