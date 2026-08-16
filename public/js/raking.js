@@ -2,6 +2,43 @@ import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 
 const TOP_N = 8;
+const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+let modoPeriodo = "mensal"; // "mensal" | "anual"
+let mesSelecionado = formatarAnoMes(new Date()); // "YYYY-MM"
+
+function formatarAnoMes(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    return `${ano}-${mes}`;
+}
+
+function formatarDataBanco(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const dia = String(data.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
+
+function intervaloDoPeriodo() {
+    if (modoPeriodo === "anual") {
+        const ano = new Date().getFullYear();
+        return {
+            inicio: `${ano}-01-01`,
+            fim: `${ano + 1}-01-01`,
+            texto: `Tabela de pontuação — ${ano}`
+        };
+    }
+
+    const [ano, mes] = mesSelecionado.split("-").map(Number);
+    const inicio = new Date(ano, mes - 1, 1);
+    const fim = new Date(ano, mes, 1);
+    return {
+        inicio: formatarDataBanco(inicio),
+        fim: formatarDataBanco(fim),
+        texto: `Tabela de pontuação — ${MESES[mes - 1]}/${ano}`
+    };
+}
 
 function criarItemRanking(posicao, nome, pontos) {
     const item = document.createElement("div");
@@ -44,16 +81,25 @@ async function carregarCabecalhoCliente(usuario) {
     }
 }
 
-// Ranking é global (a view vw_pontuacao_usuario ainda não tem id_estabelicimento
-// pra permitir separar por barbearia)
+// Ranking por período: soma os pontos de cada agendamento (pontuacao_servico) dentro
+// do intervalo selecionado, agrupando por cliente. Depende da view vw_pontuacao_periodo
+// (id_usuario, usuario, data_agendamento, pontuacao_servico) — precisa existir no Supabase.
 async function carregarRanking(usuario) {
     const container = document.querySelector(".lista-ranking");
     if (!container) return;
 
+    container.innerHTML = `<p class="ranking-carregando">Carregando ranking...</p>`;
+
+    const { inicio, fim, texto } = intervaloDoPeriodo();
+
+    const elSub = document.querySelector(".ranking-sub");
+    if (elSub) elSub.textContent = texto;
+
     const { data, error } = await supabase
-        .from("vw_pontuacao_usuario")
-        .select("id_usuario, usuario, pontuacao_total")
-        .order("pontuacao_total", { ascending: false });
+        .from("vw_pontuacao_periodo")
+        .select("id_usuario, usuario, data_agendamento, pontuacao_servico")
+        .gte("data_agendamento", inicio)
+        .lt("data_agendamento", fim);
 
     if (error || !data) {
         console.error("Erro ao carregar ranking:", error);
@@ -61,21 +107,73 @@ async function carregarRanking(usuario) {
         return;
     }
 
+    const totais = new Map();
+    data.forEach(linha => {
+        const atual = totais.get(linha.id_usuario) || { usuario: linha.usuario, total: 0 };
+        atual.total += Number(linha.pontuacao_servico || 0);
+        totais.set(linha.id_usuario, atual);
+    });
+
+    const ranking = Array.from(totais.entries())
+        .map(([id_usuario, valores]) => ({ id_usuario, usuario: valores.usuario, total: valores.total }))
+        .sort((a, b) => b.total - a.total);
+
     container.innerHTML = "";
 
-    data.slice(0, TOP_N).forEach((linha, indice) => {
-        container.appendChild(criarItemRanking(indice + 1, linha.usuario, linha.pontuacao_total));
-    });
+    if (ranking.length === 0) {
+        container.innerHTML = `<p class="ranking-carregando">Nenhum ponto registrado neste período.</p>`;
+    } else {
+        ranking.slice(0, TOP_N).forEach((linha, indice) => {
+            container.appendChild(criarItemRanking(indice + 1, linha.usuario, linha.total));
+        });
+    }
 
     if (!usuario?.id_usuario) return;
 
-    const posicaoCliente = data.findIndex(linha => linha.id_usuario === usuario.id_usuario);
+    const posicaoCliente = ranking.findIndex(linha => linha.id_usuario === usuario.id_usuario);
     if (posicaoCliente >= TOP_N) {
-        const linhaCliente = data[posicaoCliente];
-        const itemCliente = criarItemRanking(posicaoCliente + 1, linhaCliente.usuario, linhaCliente.pontuacao_total);
+        const linhaCliente = ranking[posicaoCliente];
+        const itemCliente = criarItemRanking(posicaoCliente + 1, linhaCliente.usuario, linhaCliente.total);
         itemCliente.classList.add("item-atual");
         container.appendChild(itemCliente);
     }
+}
+
+function definirModoPeriodo(modo, usuario) {
+    modoPeriodo = modo;
+    document.querySelectorAll(".grupo-vermelho .btn[data-periodo]").forEach(btn => {
+        btn.classList.toggle("ativo", btn.dataset.periodo === modo);
+    });
+    carregarRanking(usuario);
+}
+
+function configurarFiltrosPeriodo(usuario) {
+    const btnSelecionarMes = document.getElementById("btn-selecionar-mes");
+    const inputMes = document.getElementById("input-mes");
+
+    if (inputMes) inputMes.value = mesSelecionado;
+
+    if (btnSelecionarMes && inputMes) {
+        btnSelecionarMes.addEventListener("click", () => {
+            inputMes.classList.toggle("escondido");
+            if (!inputMes.classList.contains("escondido")) {
+                inputMes.focus();
+                if (typeof inputMes.showPicker === "function") {
+                    try { inputMes.showPicker(); } catch (erro) { /* nem todo navegador suporta */ }
+                }
+            }
+        });
+
+        inputMes.addEventListener("change", () => {
+            if (!inputMes.value) return;
+            mesSelecionado = inputMes.value;
+            definirModoPeriodo("mensal", usuario);
+        });
+    }
+
+    document.querySelectorAll(".grupo-vermelho .btn[data-periodo]").forEach(btn => {
+        btn.addEventListener("click", () => definirModoPeriodo(btn.dataset.periodo, usuario));
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,5 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (usuario) {
         carregarCabecalhoCliente(usuario);
     }
-    carregarRanking(usuario);
+    configurarFiltrosPeriodo(usuario);
+    definirModoPeriodo("mensal", usuario);
 });

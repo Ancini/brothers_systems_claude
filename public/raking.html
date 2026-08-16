@@ -45,11 +45,13 @@
 
     <!-- Grupo vermelho -->
     <div class="grupo-vermelho">
-        <div class="btn">📅 Selecionar mês</div>
-        <div class="btn">📆 Mensal</div>
+        <div class="btn" id="btn-selecionar-mes">📅 Selecionar mês</div>
+        <div class="btn" id="btn-mensal" data-periodo="mensal">📆 Mensal</div>
         <div class="btn" onclick="window.location.href='regras_da_casa.html'">📜 Regras da Casa</div>
-        <div class="btn">📆 Anual</div>
+        <div class="btn" id="btn-anual" data-periodo="anual">📆 Anual</div>
     </div>
+
+    <input type="month" id="input-mes" class="input-mes escondido" aria-label="Selecionar mês">
 
     <!-- Ranking -->
     <div class="ranking-titulo">
