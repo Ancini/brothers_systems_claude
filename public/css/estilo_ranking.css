@@ -78,9 +78,15 @@ body {
     padding: 10px 12px;
     color: #fff;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2px;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-icone {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .stat-label {
@@ -94,7 +100,10 @@ body {
     font-weight: 700;
 }
 
-.stat-card.agendamentos,
+.stat-card.agendamentos {
+    background: #e74c3c;
+}
+
 .stat-card.pontuacao {
     background: linear-gradient(135deg, #d4b200, #bfa200);
 }
@@ -232,6 +241,19 @@ body {
 .lista-ranking .item:nth-child(3) {
     background: linear-gradient(135deg, #cd7f32, #b87333);
     color: #000;
+}
+
+/* Modo escuro: mesmo padrão do menu_inicial (cards pretos, borda branca,
+   texto branco). A lista de ranking mantém suas cores (ouro/prata/bronze/azul). */
+html.modo-escuro .stat-card,
+html.modo-escuro .btn-voltar,
+html.modo-escuro .grupo-vermelho .btn,
+html.modo-escuro .ranking-titulo {
+    background: #000 !important;
+    background-color: #000 !important;
+    background-image: none !important;
+    border: 1px solid #fff !important;
+    color: #fff !important;
 }
 
 /* Footer com logo */
