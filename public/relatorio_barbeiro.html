@@ -5,69 +5,85 @@
     <title>Brothers Systems - Relatório Barbeiro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
-    <link rel="stylesheet" href="CSS/estilo_relatorio.css">
+    <link rel="stylesheet" href="css/estilo_relatorio.css">
 </head>
 <body>
 
 <div class="container">
 
-    <div class="card barbeiro-header">
-        <div class="barbeiro-info">
-            <div class="barbeiro-titulo">Barbeiro</div>
-            <div class="barbeiro-nome">Gabriel E. Ancini</div>
+    <div class="topo-grid">
+        <div class="card barbeiro-header">
+            <img src="css/imagens/barbeiro.png" alt="Barbeiro" class="barbeiro-foto">
+            <div class="barbeiro-info">
+                <div class="barbeiro-titulo">Barbeiro</div>
+                <div class="barbeiro-nome" id="barbeiro-nome">Carregando...</div>
+            </div>
         </div>
-        <img src="css/imagens/barbeiro.png" alt="Barbeiro" class="barbeiro-foto">
-    </div>
 
-    <div class="stats-container">
         <div class="stat-card vendas">
-            <div class="stat-label">Total de vendas</div>
-            <div class="stat-value">R$350,00 Reais</div>
+            <img src="css/imagens/dinheiro.png" alt="vendas" class="stat-icone">
+            <div>
+                <div class="stat-label">Total de vendas</div>
+                <div class="stat-value" id="stat-vendas-hoje">R$0,00 Reais</div>
+            </div>
         </div>
-        
+
         <div class="stat-card agendamentos">
-            <div class="stat-label">Agendamentos</div>
-            <div class="stat-value">15</div>
+            <img src="css/imagens/calendario.png" alt="agendamentos" class="stat-icone">
+            <div>
+                <div class="stat-label">Agendamentos</div>
+                <div class="stat-value" id="stat-agendamentos-hoje">0</div>
+            </div>
         </div>
     </div>
 
     <div class="btn-ranking" onclick="window.location.href='raking.html'">
-        🏆 Ranking – Tabela de pontuação
-    </div>
-
-    <div class="filtros-container">
-        <div class="section-title">Relatórios</div>
-        <div class="filtros-botoes">
-            <div class="filtro-btn" onclick="filtrarRelatorio('dia')">
-                Dia
-            </div>
-            <div class="filtro-btn" onclick="filtrarRelatorio('mes')">
-                Mês
-            </div>
-            <div class="filtro-btn" onclick="filtrarRelatorio('ano')">
-                Ano
-            </div>
+        <img src="css/imagens/ranking.png" alt="Ranking" class="ranking-icone">
+        <div class="ranking-texto">
+            <span>Ranking</span>
+            <span class="ranking-sub">Tabela de pontuação</span>
         </div>
     </div>
 
-    <div class="periodo-info">
-        Em Janeiro de 2025
+    <div class="secao-relatorios">Relatórios</div>
+
+    <div class="filtros-botoes">
+        <div class="filtro-btn" data-periodo="dia">
+            Dia
+        </div>
+        <div class="filtro-btn ativo" data-periodo="mes">
+            Mês
+        </div>
+        <div class="filtro-btn" data-periodo="ano">
+            Ano
+        </div>
+    </div>
+
+    <div class="periodo-info" id="periodo-info">
+        Carregando...
     </div>
 
     <div class="estatisticas-mensais">
-        <div class="estatistica-card">
-            <div class="estatistica-label">Você conseguiu</div>
-            <div class="estatistica-valor">R$3.500,00 Reais</div>
+        <div class="estatistica-card conseguiu">
+            <img src="css/imagens/dinheiro.png" alt="valor" class="estatistica-icone">
+            <div>
+                <div class="estatistica-label">Você conseguiu</div>
+                <div class="estatistica-valor" id="valor-periodo">R$0,00 Reais</div>
+            </div>
         </div>
-        
-        <div class="estatistica-card">
-            <div class="estatistica-label">Você cortou</div>
-            <div class="estatistica-valor">85 cabelos</div>
+
+        <div class="estatistica-card cortou">
+            <img src="css/imagens/desenho_barbeiro.png" alt="cortes" class="estatistica-icone">
+            <div>
+                <div class="estatistica-label">Você cortou</div>
+                <div class="estatistica-valor" id="cortes-periodo">0 cabelos</div>
+            </div>
         </div>
     </div>
 
-    <div class="btn-voltar" onclick="window.location.href='menu_barbeiro.html'">
-        Voltar
+    <div class="btn-voltar" id="btn-voltar">
+        <span>Voltar</span>
+        <span class="voltar-icone">↩</span>
     </div>
 
     <footer>
@@ -76,40 +92,7 @@
 
 </div>
 
-<script>
-    function filtrarRelatorio(tipo) {
-        console.log(`Filtrando relatório por: ${tipo}`);
-        
-        document.querySelectorAll('.filtro-btn').forEach(btn => {
-            btn.classList.remove('ativo');
-        });
-        
-        event.target.classList.add('ativo');
-        
-        atualizarDadosPeriodo(tipo);
-    }
-    
-    function atualizarDadosPeriodo(tipo) {
-        const periodoElemento = document.querySelector('.periodo-info');
-        
-        switch(tipo) {
-            case 'dia':
-                periodoElemento.textContent = 'Em Hoje (14/01/2026)';
-                break;
-            case 'mes':
-                periodoElemento.textContent = 'Em Janeiro de 2026';
-                break;
-            case 'ano':
-                periodoElemento.textContent = 'Em 2026';
-                break;
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('.filtro-btn:nth-child(2)').classList.add('ativo');
-    });
-</script>
-
+    <script type="module" src="js/relatorio_barbeiro.js"></script>
     <script type="module" src="js/modo_escuro.js"></script>
 </body>
 </html>
