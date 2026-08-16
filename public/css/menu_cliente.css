@@ -181,6 +181,8 @@ body {
     align-items: flex-start;
     justify-content: center;
     gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .ranking-left {

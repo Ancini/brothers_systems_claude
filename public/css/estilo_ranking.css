@@ -251,18 +251,18 @@ body {
 /* TOP 3 */
 .lista-ranking .item:nth-child(1) {
     background: linear-gradient(135deg, #f1c40f, #d4ac0d);
-    color: #000;
+    color: #fff;
     font-weight: bold;
 }
 
 .lista-ranking .item:nth-child(2) {
     background: linear-gradient(135deg, #bdc3c7, #95a5a6);
-    color: #000;
+    color: #fff;
 }
 
 .lista-ranking .item:nth-child(3) {
     background: linear-gradient(135deg, #cd7f32, #b87333);
-    color: #000;
+    color: #fff;
 }
 
 /* Modo escuro: mesmo padrão do menu_inicial (cards pretos, borda branca,
@@ -277,6 +277,14 @@ html.modo-escuro .input-mes {
     background-image: none !important;
     border: 1px solid #fff !important;
     color: #fff !important;
+}
+
+/* No escuro todo botão já fica com borda branca, então o indicador de "ativo"
+   não pode ser mais uma borda branca por cima (fica um anel duplo, parece
+   outro tamanho de card) — usa cor de destaque em vez de duplicar branco */
+html.modo-escuro .grupo-vermelho .btn.ativo {
+    border: 2px solid #e74c3c !important;
+    box-shadow: none;
 }
 
 /* Footer com logo */

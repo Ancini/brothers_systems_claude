@@ -96,6 +96,14 @@ function configurarNavegacaoCards() {
             window.location.href = "meusAgendamentos.html";
         });
     }
+
+    const cardRanking = document.querySelector(".ranking-card");
+    if (cardRanking) {
+        cardRanking.style.cursor = "pointer";
+        cardRanking.addEventListener("click", () => {
+            window.location.href = "raking.html";
+        });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
