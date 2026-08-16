@@ -202,19 +202,14 @@ a {
 }
 
 .agendamentos_por_ordem .titulo1 {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 400;
     opacity: 0.9;
 }
 
 .agendamento-valor {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-}
-
-.agendamento-servico {
-    font-size: 13px;
-    font-weight: 500;
 }
 
 .agendamento-horario {
