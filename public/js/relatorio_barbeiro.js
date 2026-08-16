@@ -54,20 +54,22 @@ async function buscarResumo(dataInicio, dataFim) {
     return { total, quantidade: data ? data.length : 0 };
 }
 
-async function carregarResumoHoje() {
+async function carregarResumoTopo() {
     const hoje = new Date();
     const amanha = new Date(hoje);
     amanha.setDate(amanha.getDate() + 1);
+    const inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    const inicioProximoMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 1);
 
-    const { total, quantidade } = await buscarResumo(
-        `${formatarDataBanco(hoje)}T00:00:00`,
-        `${formatarDataBanco(amanha)}T00:00:00`
-    );
+    const [resumoHoje, resumoMes] = await Promise.all([
+        buscarResumo(`${formatarDataBanco(hoje)}T00:00:00`, `${formatarDataBanco(amanha)}T00:00:00`),
+        buscarResumo(`${formatarDataBanco(inicioMes)}T00:00:00`, `${formatarDataBanco(inicioProximoMes)}T00:00:00`)
+    ]);
 
     const elVendas = document.getElementById("stat-vendas-hoje");
     const elAgendamentos = document.getElementById("stat-agendamentos-hoje");
-    if (elVendas) elVendas.textContent = formatarMoeda(total);
-    if (elAgendamentos) elAgendamentos.textContent = quantidade;
+    if (elVendas) elVendas.textContent = formatarMoeda(resumoMes.total);
+    if (elAgendamentos) elAgendamentos.textContent = resumoHoje.quantidade;
 }
 
 function capitalizar(texto) {
@@ -140,6 +142,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    await carregarResumoHoje();
+    await carregarResumoTopo();
     await filtrarRelatorio("mes");
 });
