@@ -110,7 +110,7 @@ html, body {
 
 .card.pontuacao {
     background-color: #c9c400;
-    color: #333;
+    color: #fff;
 }
 
 .card.pontuacao:hover {
@@ -120,7 +120,7 @@ html, body {
 
 .card.pontuacao .titulo1,
 .card.pontuacao .titulo2 {
-    color: #333;
+    color: #fff;
 }
 
 /* ---------- Card "Selecione o barbeiro" (destaque vermelho) ---------- */

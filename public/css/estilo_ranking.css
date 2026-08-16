@@ -133,7 +133,6 @@ body {
 /* Agrupamento vermelho */
 .grupo-vermelho {
     border-radius: 18px;
-    padding: 20px 15px;
     margin-bottom: 20px;
 
     display: grid;
@@ -287,7 +286,7 @@ html.modo-escuro .grupo-vermelho .btn.ativo {
     box-shadow: none;
 }
 
-/* Footer com logo */
+/* Footer com marca */
 footer {
     text-align: center;
     margin-top: 20px;
@@ -297,13 +296,24 @@ footer {
     border-radius: 0 0 14px 14px;
 }
 
-.logo-footer {
-    max-width: 160px;
-    width: 60%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    object-fit: contain;
+.brand-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
 }
 
 /* Media Queries para responsividade */
@@ -320,7 +330,6 @@ footer {
     }
     
     .grupo-vermelho {
-        padding: 15px 10px;
         gap: 10px;
         grid-auto-rows: 76px;
     }
@@ -339,11 +348,6 @@ footer {
         font-size: 16px;
     }
     
-    .logo-footer {
-        max-width: 140px;
-        width: 55%;
-    }
-    
     footer {
         padding: 12px;
         margin-top: 15px;
@@ -356,7 +360,6 @@ footer {
     }
     
     .grupo-vermelho {
-        padding: 12px 8px;
         gap: 8px;
         grid-auto-rows: 68px;
     }
@@ -373,11 +376,6 @@ footer {
     
     .ranking-texto {
         font-size: 15px;
-    }
-    
-    .logo-footer {
-        max-width: 120px;
-        width: 50%;
     }
     
     footer {
@@ -397,7 +395,6 @@ footer {
     }
     
     .grupo-vermelho {
-        padding: 25px 20px;
         gap: 20px;
         grid-auto-rows: 100px;
     }
@@ -411,11 +408,6 @@ footer {
         padding: 15px 20px;
         font-size: 18px;
         margin-bottom: 10px;
-    }
-    
-    .logo-footer {
-        max-width: 180px;
-        width: 60%;
     }
     
     footer {
