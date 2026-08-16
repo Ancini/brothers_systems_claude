@@ -23,6 +23,14 @@ function formatarDataBanco(data) {
     return `${ano}-${mes}-${dia}`;
 }
 
+// "YYYY-MM-DD" do dia seguinte, sem passar por UTC em nenhum momento
+function proximoDiaBanco(dataBanco) {
+    const [ano, mes, dia] = dataBanco.split('-').map(Number);
+    const data = new Date(ano, mes - 1, dia);
+    data.setDate(data.getDate() + 1);
+    return formatarDataBanco(data);
+}
+
 // FUNÇÃO DA PONTE
 async function inicializarIdentidadeBarbeiro() {
     const { data: { user } } = await supabaseClient.auth.getUser();
@@ -54,7 +62,7 @@ function inicializarLinhaDoTempo() {
     for (let i = 0; i < 3; i++) {
         const dataRef = new Date();
         dataRef.setDate(dataRef.getDate() + i);
-        const dataFormatadaBanco = dataRef.toISOString().split('T')[0];
+        const dataFormatadaBanco = formatarDataBanco(dataRef);
         
         const cardDia = document.createElement("div");
         cardDia.className = `card agendamento ${i === 0 ? 'ativo' : ''}`;
@@ -72,7 +80,7 @@ function inicializarLinhaDoTempo() {
         });
         containerDias.appendChild(cardDia);
     }
-    buscarAgendamentosDaAPI(new Date().toISOString().split('T')[0]);
+    buscarAgendamentosDaAPI(formatarDataBanco(new Date()));
 }
 
 // 3. BUSCA E RENDERIZAÇÃO
@@ -80,9 +88,7 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
     if (!idBarbeiroLogado) return;
 
     const dataInicio = `${dataFiltro}T00:00:00`;
-    const date = new Date(dataFiltro);
-    date.setDate(date.getDate() + 1);
-    const dataFim = date.toISOString().split('T')[0] + 'T00:00:00';
+    const dataFim = `${proximoDiaBanco(dataFiltro)}T00:00:00`;
 
     try {
         const { data: agendamentos, error } = await supabaseClient
@@ -167,7 +173,8 @@ function renderizarAgendamentos(agendamentos) {
     <div class="agendamento-info">
         <span class="titulo1">Cliente</span>
         <span class="agendamento-valor">${ag.nome_cliente}</span>
-        <span class="agendamento-servico">Serviço: ${ag.nome_servico}</span>
+        <span class="titulo1">Serviço</span>
+        <span class="agendamento-valor">${ag.nome_servico}</span>
     </div>
     <div class="agendamento-horario">
         ${hora}
