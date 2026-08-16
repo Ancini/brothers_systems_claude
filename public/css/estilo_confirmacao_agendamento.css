@@ -72,9 +72,9 @@ html, body {
 .card.ranking .texto-ranking a { color: #fff; text-decoration: none; font-size: 0.85rem; }
 .card.ranking .texto-ranking a:first-child { font-weight: 700; font-size: 0.95rem; }
 
-.card.pontuacao { background-color: #c9c400; color: #333; }
+.card.pontuacao { background-color: #c9c400; color: #fff; }
 .card.pontuacao:hover { background-color: #a8a400; cursor: pointer; }
-.card.pontuacao .titulo1, .card.pontuacao .titulo2 { color: #333; }
+.card.pontuacao .titulo1, .card.pontuacao .titulo2 { color: #fff; }
 
 /* ---------- Título da seção (destaque vermelho) ---------- */
 .card.informcacoes_agendamento {

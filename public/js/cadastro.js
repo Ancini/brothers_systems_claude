@@ -48,6 +48,8 @@ async function cadastrarUsuario(event) {
             "Cadastro realizado com sucesso! Verifique seu e-mail para confirmar sua conta."
         );
 
+        window.location.href = "index.html";
+
     } catch (erro) {
 
         console.error(

@@ -25,7 +25,8 @@
     align-items: center;
     gap: 12px;
     width: 90%;
-    height: 150px;
+    max-width: 340px;
+    height: 100px;
     margin: auto;
 
     transition: 
@@ -50,8 +51,12 @@
 /* texto principal */
 .titulo_confirmado{
     font-weight: bold;
-    font-size: 35px;
+    font-size: 20px;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .button{
