@@ -69,11 +69,17 @@
     return JSON.parse(localStorage.getItem("usuarioLogado"));
   }
 
+  // Pra onde mandar o usuário depois do login: administrador tem prioridade
+  // e vai pro painel dele primeiro, antes do menu do cliente.
+  function destinoPosLogin(usuario) {
+    return usuario.administrador ? "menu_administrador.html" : "menu_cliente.html";
+  }
+
   // Verificar se já está logado (MAS NÃO REDIRECIONA AUTOMATICAMENTE)
   const usuarioExistente = pegarSessao();
   if (usuarioExistente) {
     alert("✅ Você já está logado! Redirecionando...");
-    window.location.href = "menu_cliente.html";
+    window.location.href = destinoPosLogin(usuarioExistente);
   }
 
   // Busca o perfil na tabela "usuario" (pela coluna auth_id) e monta o objeto
@@ -82,7 +88,7 @@
   async function montarUsuarioCompleto(authUser) {
     const { data: dadosUsuario, error: dbError } = await supabaseClient
       .from('usuario')
-      .select('id_usuario, barbeiro, nome_usuario')
+      .select('id_usuario, barbeiro, administrador, nome_usuario')
       .eq('auth_id', authUser.id)
       .single();
 
@@ -94,6 +100,7 @@
       ...authUser,
       id_usuario: dadosUsuario ? dadosUsuario.id_usuario : null,
       barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false,
+      administrador: dadosUsuario ? dadosUsuario.administrador : false,
       nome: dadosUsuario ? dadosUsuario.nome_usuario : "Cliente"
     };
   }
@@ -128,7 +135,7 @@
       const usuarioCompleto = await montarUsuarioCompleto(session.user);
       salvarSessao(usuarioCompleto);
       alert("✅ E-mail confirmado! Bem-vindo(a).");
-      window.location.href = "menu_cliente.html";
+      window.location.href = destinoPosLogin(usuarioCompleto);
     }
   });
 
@@ -149,7 +156,7 @@
     if (result.success) {
       alert("✅ Login realizado com sucesso!");
       salvarSessao(result.user); // Agora salva no navegador com as informações completas
-      window.location.href = "menu_cliente.html";
+      window.location.href = destinoPosLogin(result.user);
     } else {
       alert("❌ Erro: " + result.error);
     }
