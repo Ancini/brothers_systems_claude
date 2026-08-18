@@ -42,6 +42,9 @@ body {
     height: 48px;
     object-fit: contain;
     flex-shrink: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 2px;
 }
 
 .admin-titulo {
@@ -139,7 +142,8 @@ body {
 }
 
 .input-container select option {
-    color: #000;
+    background-color: rgba(0, 74, 173, 1);
+    color: #fff;
     text-align: left;
 }
 

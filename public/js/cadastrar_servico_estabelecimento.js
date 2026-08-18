@@ -52,13 +52,45 @@ async function carregarServicos() {
     });
 }
 
+// Máscara de dinheiro: digita só números, formata como "R$ 12,34" em tempo real
+// (os dígitos digitados são sempre os centavos, como em caixa eletrônico)
+function aplicarMascaraMoeda(input) {
+    input.addEventListener("input", () => {
+        const digitos = input.value.replace(/\D/g, "");
+        if (!digitos) {
+            input.value = "";
+            return;
+        }
+        const valor = Number(digitos) / 100;
+        input.value = valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    });
+}
+
+function valorMascaradoParaNumero(valorFormatado) {
+    const digitos = valorFormatado.replace(/\D/g, "");
+    return digitos ? Number(digitos) / 100 : 0;
+}
+
+// Máscara de tempo: digita só números, formata como "45 min" em tempo real
+function aplicarMascaraTempo(input) {
+    input.addEventListener("input", () => {
+        const digitos = input.value.replace(/\D/g, "").slice(0, 3);
+        input.value = digitos ? `${digitos} min` : "";
+    });
+}
+
+function tempoMascaradoParaNumero(tempoFormatado) {
+    const digitos = tempoFormatado.replace(/\D/g, "");
+    return digitos ? Number(digitos) : 0;
+}
+
 async function cadastrarServicoEstabelecimento(event) {
     event.preventDefault();
 
     const idEstabelecimento = Number(document.getElementById("estabelecimento-select").value);
     const idServico = Number(document.getElementById("servico-select").value);
-    const valor = Number(document.getElementById("valor-servico").value);
-    const tempo = Number(document.getElementById("tempo-servico").value);
+    const valor = valorMascaradoParaNumero(document.getElementById("valor-servico").value);
+    const tempo = tempoMascaradoParaNumero(document.getElementById("tempo-servico").value);
 
     if (!idEstabelecimento || !idServico || !valor || !tempo) {
         alert("Preencha todos os campos antes de confirmar o cadastro.");
@@ -87,6 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
     preencherNomeAdmin();
     carregarEstabelecimentos();
     carregarServicos();
+    aplicarMascaraMoeda(document.getElementById("valor-servico"));
+    aplicarMascaraTempo(document.getElementById("tempo-servico"));
 
     document.getElementById("form-servico-estabelecimento").addEventListener("submit", cadastrarServicoEstabelecimento);
     document.getElementById("btn-cancelar").addEventListener("click", () => {
