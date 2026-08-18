@@ -1,7 +1,9 @@
 import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 
-const BUCKET_FOTOS = "estabelecimentos";
+// Nome do bucket no Supabase Storage — segue a mesma grafia (sem o "e") do
+// resto do banco, e foi criado com "E" maiúsculo (nomes de bucket são case-sensitive).
+const BUCKET_FOTOS = "Estabelicimentos";
 
 function preencherNomeAdmin() {
     const usuario = pegarSessao();
