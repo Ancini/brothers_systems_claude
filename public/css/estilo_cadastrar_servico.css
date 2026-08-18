@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    min-width: 320px;
+    margin: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 24px;
+}
+
+/* Header do administrador: sempre preto/bordado, igual ao card barbeiro no escuro */
+.admin-header {
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-foto {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.admin-titulo {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.admin-nome {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.btn {
+    border-radius: 14px;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
+
+.btn-voltar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    margin-bottom: 15px;
+}
+
+.secao-titulo {
+    background-color: rgba(0, 74, 173, 1);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.input-container {
+    width: 100%;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-container input {
+    background-color: rgba(0, 74, 173, 1);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    width: 100%;
+    height: 55px;
+    padding: 10px 50px 10px 15px;
+    text-align: center;
+    outline: none;
+}
+
+.input-container input::placeholder {
+    color: white;
+    text-align: center;
+    opacity: 0.9;
+}
+
+.input-container i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 18px;
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.btn-cancelar {
+    background-color: #e53935;
+}
+
+footer {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.brand-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
+}
+
+/* Modo escuro: mesmo padrão preto/borda branca usado no resto do app */
+html.modo-escuro .btn-voltar,
+html.modo-escuro .secao-titulo,
+html.modo-escuro .input-container input,
+html.modo-escuro .btn-confirmar,
+html.modo-escuro .btn-cancelar {
+    background: #000 !important;
+    background-color: #000 !important;
+    background-image: none !important;
+    border: 1px solid #fff !important;
+    color: #fff !important;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+        max-width: 100%;
+    }
+
+    .admin-nome {
+        font-size: 15px;
+    }
+
+    .secao-titulo {
+        font-size: 16px;
+    }
+}

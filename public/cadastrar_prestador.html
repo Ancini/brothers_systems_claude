@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Cadastrar Prestador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_cadastrar_prestador.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card admin-header">
+        <img src="css/imagens/administrador.png" alt="Administrador" class="admin-foto">
+        <div class="admin-info">
+            <div class="admin-titulo">Administrador</div>
+            <div class="admin-nome" id="admin-nome">Carregando...</div>
+        </div>
+    </div>
+
+    <div class="btn btn-voltar" onclick="window.location.href='menu_administrador.html'">
+        <i class="fa-solid fa-arrow-rotate-left"></i> Retornar ao menu principal
+    </div>
+
+    <div class="secao-titulo secao-azul">
+        <i class="fa-solid fa-user-tie"></i> Cadastrar Prestador
+    </div>
+
+    <form id="form-prestador">
+        <div class="input-container">
+            <select id="estabelecimento-select" required>
+                <option value="" disabled selected>Selecione o estabelecimento</option>
+            </select>
+            <i class="fa-solid fa-shop"></i>
+        </div>
+
+        <div class="input-container">
+            <select id="prestador-select" required>
+                <option value="" disabled selected>Selecione o prestador</option>
+            </select>
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <button type="submit" class="btn btn-confirmar">
+            Confirmar Cadastro <i class="fa-solid fa-check"></i>
+        </button>
+
+        <button type="button" class="btn btn-cancelar" id="btn-cancelar">
+            Cancelar cadastro <i class="fa-solid fa-xmark"></i>
+        </button>
+    </form>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/cadastrar_prestador.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>

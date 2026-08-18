@@ -11,8 +11,18 @@
 
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    padding: 20px;
+}
+
 .logo{
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -27,7 +37,7 @@
     width: 90%;
     max-width: 340px;
     height: 100px;
-    margin: auto;
+    margin: 0;
 
     transition: 
         transform 0.2s ease,

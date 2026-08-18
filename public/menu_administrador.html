@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Menu Administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_menu_administrador.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card admin-header">
+        <img src="css/imagens/administrador.png" alt="Administrador" class="admin-foto">
+        <div class="admin-info">
+            <div class="admin-titulo">Administrador</div>
+            <div class="admin-nome" id="admin-nome">Carregando...</div>
+        </div>
+    </div>
+
+    <div class="titulo-menu">
+        <i class="fa-solid fa-gauge"></i> Menu Inicial - Administrador
+    </div>
+
+    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_servico_estabelecimento.html'">
+        <i class="fa-solid fa-list-check"></i> Cadastrar serviço para estabelecimento
+    </div>
+
+    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_estabelecimento.html'">
+        <i class="fa-solid fa-shop"></i> Cadastrar novo estabelecimento
+    </div>
+
+    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_prestador.html'">
+        <i class="fa-solid fa-user-tie"></i> Cadastrar novo Prestador para estab.
+    </div>
+
+    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_servico.html'">
+        <i class="fa-solid fa-scissors"></i> Cadastrar novo serviço
+    </div>
+
+    <div class="btn btn-cliente" onclick="window.location.href='menu_cliente.html'">
+        <i class="fa-solid fa-arrow-right"></i> Ir ao menu Cliente
+    </div>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/menu_administrador.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>

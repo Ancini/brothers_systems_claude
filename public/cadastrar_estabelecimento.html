@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Cadastrar Estabelecimento</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_cadastrar_estabelecimento.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card admin-header">
+        <img src="css/imagens/administrador.png" alt="Administrador" class="admin-foto">
+        <div class="admin-info">
+            <div class="admin-titulo">Administrador</div>
+            <div class="admin-nome" id="admin-nome">Carregando...</div>
+        </div>
+    </div>
+
+    <div class="btn btn-voltar" onclick="window.location.href='menu_administrador.html'">
+        <i class="fa-solid fa-arrow-rotate-left"></i> Retornar ao menu principal
+    </div>
+
+    <div class="secao-titulo secao-azul">
+        <i class="fa-solid fa-shop"></i> Cadastrar Estabelecimento
+    </div>
+
+    <form id="form-estabelecimento">
+        <div class="input-container">
+            <input id="nome-estabelecimento" placeholder="Digite o nome da barbearia" required>
+            <i class="fa-solid fa-pencil"></i>
+        </div>
+
+        <div class="input-container">
+            <input id="ramo-estabelecimento" placeholder="Digite o ramo" required>
+            <i class="fa-solid fa-tag"></i>
+        </div>
+
+        <div class="linha-dupla">
+            <div class="input-container">
+                <input id="cidade-estabelecimento" placeholder="Escolha a cidade" required>
+                <i class="fa-solid fa-city"></i>
+            </div>
+
+            <div class="input-container">
+                <select id="estado-estabelecimento" required>
+                    <option value="" disabled selected>Escolha o estado</option>
+                    <option value="AC">AC - Acre</option>
+                    <option value="AL">AL - Alagoas</option>
+                    <option value="AP">AP - Amapá</option>
+                    <option value="AM">AM - Amazonas</option>
+                    <option value="BA">BA - Bahia</option>
+                    <option value="CE">CE - Ceará</option>
+                    <option value="DF">DF - Distrito Federal</option>
+                    <option value="ES">ES - Espírito Santo</option>
+                    <option value="GO">GO - Goiás</option>
+                    <option value="MA">MA - Maranhão</option>
+                    <option value="MT">MT - Mato Grosso</option>
+                    <option value="MS">MS - Mato Grosso do Sul</option>
+                    <option value="MG">MG - Minas Gerais</option>
+                    <option value="PA">PA - Pará</option>
+                    <option value="PB">PB - Paraíba</option>
+                    <option value="PR">PR - Paraná</option>
+                    <option value="PE">PE - Pernambuco</option>
+                    <option value="PI">PI - Piauí</option>
+                    <option value="RJ">RJ - Rio de Janeiro</option>
+                    <option value="RN">RN - Rio Grande do Norte</option>
+                    <option value="RS">RS - Rio Grande do Sul</option>
+                    <option value="RO">RO - Rondônia</option>
+                    <option value="RR">RR - Roraima</option>
+                    <option value="SC">SC - Santa Catarina</option>
+                    <option value="SP">SP - São Paulo</option>
+                    <option value="SE">SE - Sergipe</option>
+                    <option value="TO">TO - Tocantins</option>
+                </select>
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+        </div>
+
+        <div class="secao-titulo secao-vermelha">
+            <i class="fa-solid fa-clock"></i> Insira o horário de abertura e fechamento
+        </div>
+
+        <div class="linha-dupla">
+            <div class="input-container input-vermelho">
+                <input id="horario-abertura" type="time" required>
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div class="input-container input-vermelho">
+                <input id="horario-fechamento" type="time" required>
+                <i class="fa-solid fa-clock"></i>
+            </div>
+        </div>
+
+        <label class="btn btn-foto" id="label-foto">
+            <i class="fa-solid fa-camera"></i> <span id="texto-foto">Anexe foto do estabelecimento</span>
+            <input type="file" id="foto-estabelecimento" accept="image/*" hidden>
+        </label>
+
+        <button type="submit" class="btn btn-confirmar" id="btn-confirmar">
+            Confirmar Cadastro <i class="fa-solid fa-check"></i>
+        </button>
+
+        <button type="button" class="btn btn-cancelar" id="btn-cancelar">
+            Cancelar cadastro <i class="fa-solid fa-xmark"></i>
+        </button>
+    </form>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/cadastrar_estabelecimento.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>

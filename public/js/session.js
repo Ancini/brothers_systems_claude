@@ -30,7 +30,7 @@ export async function efetuarLogin(email, senha) {
 
         const { data: dadosUsuario, error: dbError } = await supabaseClient
             .from('usuario')
-            .select('id_usuario, barbeiro')
+            .select('id_usuario, barbeiro, administrador')
             .eq('auth_id', authData.user.id)
             .single();
 
@@ -41,7 +41,8 @@ export async function efetuarLogin(email, senha) {
         const usuarioCompleto = {
             ...authData.user,
             id_usuario: dadosUsuario ? dadosUsuario.id_usuario : null,
-            barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false
+            barbeiro: dadosUsuario ? dadosUsuario.barbeiro : false,
+            administrador: dadosUsuario ? dadosUsuario.administrador : false
         };
 
         salvarSessao(usuarioCompleto);
@@ -61,12 +62,21 @@ export function verificarFluxoUsuario() {
       return "login.html"; 
   }
 
+  if (usuario.administrador === true || usuario.administrador === "true") {
+      console.log(`O usuário é administrador.`);
+      return {
+          eAdministrador: true,
+          telaInicial: "menu_administrador.html",
+          exibirBotaoPainel: true
+      };
+  }
+
   if (usuario.barbeiro === true || usuario.barbeiro === "true" || usuario.barbeiro === "s") {
       console.log(`O usuário é um barbeiro ativo.`);
       return {
           eBarbeiro: true,
-          telaInicial: "home_cliente.html", 
-          exibirBotaoPainel: true           
+          telaInicial: "home_cliente.html",
+          exibirBotaoPainel: true
       };
   }
 
