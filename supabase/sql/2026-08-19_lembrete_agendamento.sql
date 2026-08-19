@@ -46,15 +46,15 @@ create extension if not exists pg_cron with schema extensions;
 create extension if not exists pg_net with schema extensions;
 
 -- 4. Agendamento: chama a Edge Function a cada 5 minutos.
---    IMPORTANTE: troque <PROJECT_REF> pela referência do seu projeto (aparece na URL
---    do Supabase, ex: hnaapsbkrokrkmnzayyr) e <SERVICE_ROLE_KEY> pela Service Role Key
---    (Project Settings -> API -> service_role, NÃO a anon/publishable).
+--    IMPORTANTE: troque <SERVICE_ROLE_KEY> pela Service Role Key
+--    (Project Settings -> API -> Legacy anon, service_role -> Reveal -> Copy).
+--    Mantenha o "Bearer " colado antes da chave, sem isso a chamada falha com 401.
 select cron.schedule(
   'lembrete-agendamento-1h30',
   '*/5 * * * *',
   $$
   select net.http_post(
-    url := 'https://<PROJECT_REF>.supabase.co/functions/v1/lembrete-agendamento',
+    url := 'https://hnaapsbkrokrkmnzayyr.supabase.co/functions/v1/lembrete-agendamento',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'Authorization', 'Bearer <SERVICE_ROLE_KEY>'

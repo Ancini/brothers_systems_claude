@@ -297,8 +297,8 @@ body {
     border-radius: 15px;
     padding: 12px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
 
 .estabelecimento-item {
@@ -327,7 +327,8 @@ body {
 /* Responsividade */
 @media (max-width: 480px) {
     .estabelecimentos-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
     }
 }
 
@@ -336,9 +337,9 @@ body {
         max-width: 600px;
         margin: 0 auto;
     }
-    
+
     .estabelecimentos-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
