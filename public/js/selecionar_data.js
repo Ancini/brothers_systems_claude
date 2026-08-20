@@ -1,3 +1,4 @@
+import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
@@ -28,7 +29,7 @@ function gerarProximasDatas() {
     return datas;
 }
 
-function carregarDatas() {
+async function carregarDatas() {
     const agendamento = pegarAgendamentoEmAndamento();
 
     if (!agendamento || !agendamento.id_estabelicimento) {
@@ -45,9 +46,25 @@ function carregarDatas() {
     container.innerHTML = "";
     container.className = "grade-datas";
 
+    const { data: estabelecimento, error: erroEstabelecimento } = await supabase
+        .from("estabelicimento")
+        .select("aberto_sabado, nome_estabelicimento")
+        .eq("id_estabelicimento", agendamento.id_estabelicimento)
+        .single();
+
+    if (erroEstabelecimento) {
+        console.error("Erro ao buscar aberto_sabado da barbearia:", erroEstabelecimento);
+    }
+
+    // Sem informação = assume que abre normalmente aos sábados.
+    const abertoSabado = estabelecimento?.aberto_sabado !== false;
+    const nomeBarbearia = estabelecimento?.nome_estabelicimento || agendamento.nome_estabelicimento || "Esta barbearia";
+
     const datas = gerarProximasDatas();
 
     datas.forEach(data => {
+        const ehSabado = data.getDay() === 6;
+
         const card = document.createElement("div");
         card.className = "card card-data";
         card.innerHTML = `
@@ -56,6 +73,11 @@ function carregarDatas() {
         `;
 
         card.addEventListener("click", () => {
+            if (ehSabado && !abertoSabado) {
+                alert(`A Barbearia ${nomeBarbearia} trabalha com ordem de chegada aos sábados.`);
+                return;
+            }
+
             salvarEtapaAgendamento({
                 data_agendamento: formatarDataBanco(data)
             });
