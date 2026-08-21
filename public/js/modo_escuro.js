@@ -73,6 +73,7 @@ function injetarEstilos() {
         html.modo-escuro .ranking-card *,
         html.modo-escuro .busca-card *,
         html.modo-escuro .barbeiro-acesso-card *,
+        html.modo-escuro .estabelecimento-item *,
         html.modo-escuro .ranking-section *,
         html.modo-escuro .pontuacao-section *,
         html.modo-escuro .card-agendamentos-header *,
