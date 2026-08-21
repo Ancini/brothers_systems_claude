@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import { pegarSessao } from "./session.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
@@ -60,6 +61,24 @@ async function carregarDatas() {
     const abertoSabado = estabelecimento?.aberto_sabado !== false;
     const nomeBarbearia = estabelecimento?.nome_estabelicimento || agendamento.nome_estabelicimento || "Esta barbearia";
 
+    // Datas em que o cliente já tem agendamento marcado (pra avisar antes de deixar marcar de novo).
+    const datasComAgendamento = new Set();
+    const usuario = pegarSessao();
+    if (usuario?.id_usuario) {
+        const { data: meusAgendamentos, error: erroMeusAgendamentos } = await supabase
+            .from("vw_meus_agendamentos")
+            .select("data_agendamento, status")
+            .eq("id_usuario", usuario.id_usuario);
+
+        if (erroMeusAgendamentos) {
+            console.error("Erro ao verificar agendamentos existentes do cliente:", erroMeusAgendamentos);
+        } else {
+            (meusAgendamentos || [])
+                .filter(a => !(a.status || "").toLowerCase().includes("cancel"))
+                .forEach(a => datasComAgendamento.add(a.data_agendamento));
+        }
+    }
+
     const datas = gerarProximasDatas();
 
     datas.forEach(data => {
@@ -78,8 +97,15 @@ async function carregarDatas() {
                 return;
             }
 
+            const dataFormatada = formatarDataBanco(data);
+
+            if (datasComAgendamento.has(dataFormatada)) {
+                const confirmar = confirm("Você já agendou um horário nesse dia. Tem certeza que deseja marcar um novo horário?");
+                if (!confirmar) return;
+            }
+
             salvarEtapaAgendamento({
-                data_agendamento: formatarDataBanco(data)
+                data_agendamento: dataFormatada
             });
             window.location.href = "selecionar_horario.html";
         });
