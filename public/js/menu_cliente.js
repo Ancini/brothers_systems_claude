@@ -71,7 +71,10 @@ function renderizar(lista, containerId) {
         const card = document.createElement("div");
         card.className = "estabelecimento-item";
         card.title = nome;
-        card.innerHTML = `<img src="${imagem}" alt="${nome}">`;
+        card.innerHTML = `
+            <div class="estabelecimento-imagem"><img src="${imagem}" alt="${nome}"></div>
+            <span class="estabelecimento-nome">${nome}</span>
+        `;
 
         card.addEventListener("click", () => {
             if (!id) {
