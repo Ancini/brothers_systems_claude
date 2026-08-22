@@ -176,6 +176,14 @@ function atualizarTotalVendas(agendamentos) {
     if (elVendas) elVendas.innerText = formatarMoeda(total);
 }
 
+// Escapa texto vindo do banco (ex: nome que o cliente escolheu no cadastro)
+// antes de inserir via innerHTML — evita XSS armazenado na agenda do barbeiro.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 function renderizarAgendamentos(agendamentos) {
     const container = document.getElementById("container-lista-agendamentos");
     if (!container) return;
@@ -190,9 +198,9 @@ function renderizarAgendamentos(agendamentos) {
         card.innerHTML = `
     <div class="agendamento-info">
         <span class="titulo1">Cliente</span>
-        <span class="agendamento-valor">${ag.nome_cliente}</span>
+        <span class="agendamento-valor">${escapeHtml(ag.nome_cliente)}</span>
         <span class="titulo1">Serviço</span>
-        <span class="agendamento-valor">${ag.nome_servico}</span>
+        <span class="agendamento-valor">${escapeHtml(ag.nome_servico)}</span>
     </div>
     <div class="agendamento-horario">
         ${hora}
