@@ -1,0 +1,16 @@
+{
+  "name": "Brothers Systems",
+  "short_name": "Brothers Systems",
+  "description": "Agendamento de barbearias em Palmas - Brothers Systems",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#eaf6fb",
+  "theme_color": "#004aad",
+  "icons": [
+    {
+      "src": "css/imagens/logo.png",
+      "sizes": "347x247",
+      "type": "image/png"
+    }
+  ]
+}

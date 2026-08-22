@@ -27,6 +27,13 @@ function exibirNomeCliente(usuario) {
     elNome.textContent = nomeCompleto.split(" ")[0];
 }
 
+// Escapa texto vindo do banco antes de inserir via innerHTML — evita XSS armazenado.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 function renderizarAgendamentos(agendamentos) {
     const container = document.querySelector(".agendamentos-lista");
     const elTotal = document.querySelector(".agendamentos-total");
@@ -49,8 +56,8 @@ function renderizarAgendamentos(agendamentos) {
         card.innerHTML = `
             <div class="agendamento-info">
                 <span class="barbeiro-label">Barbeiro</span>
-                <span class="barbearia-nome">${ag.nome_barbeiro || "-"}</span>
-                <span class="servico-label">Serviço: ${ag.nome_servico || "-"}</span>
+                <span class="barbearia-nome">${escapeHtml(ag.nome_barbeiro || "-")}</span>
+                <span class="servico-label">Serviço: ${escapeHtml(ag.nome_servico || "-")}</span>
                 <span class="data-label">Data</span>
                 <span class="data-valor">${data}</span>
             </div>

@@ -6,6 +6,13 @@ function formatarMoeda(valor) {
     return `R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}`;
 }
 
+// Escapa texto vindo do banco antes de inserir via innerHTML — evita XSS armazenado.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 async function carregarServicos() {
     const agendamento = pegarAgendamentoEmAndamento();
 
@@ -52,7 +59,7 @@ async function carregarServicos() {
         card.innerHTML = `
             <img src="css/imagens/servico.png" alt="servico" class="desenho_barbeiro">
             <div class="texto_barbeiros">
-                <span class="titulo5">${nome}</span>
+                <span class="titulo5">${escapeHtml(nome)}</span>
                 <span class="valor-servico">${formatarMoeda(item.valor_servico)}</span>
             </div>
         `;

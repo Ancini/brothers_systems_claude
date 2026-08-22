@@ -40,10 +40,19 @@ function intervaloDoPeriodo() {
     };
 }
 
+// Escapa texto vindo do banco (ex: nome escolhido pelo próprio usuário no
+// cadastro) antes de inserir via innerHTML — evita XSS armazenado, já que
+// esse ranking é visto por todos os clientes.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 function criarItemRanking(posicao, nome, pontos) {
     const item = document.createElement("div");
     item.className = "item";
-    item.innerHTML = `<span>${posicao}º ${nome}</span><span>${String(pontos).padStart(2, "0")} pt</span>`;
+    item.innerHTML = `<span>${posicao}º ${escapeHtml(nome)}</span><span>${String(pontos).padStart(2, "0")} pt</span>`;
     return item;
 }
 

@@ -2,6 +2,13 @@ import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
+// Escapa texto vindo do banco antes de inserir via innerHTML — evita XSS armazenado.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 async function carregarBarbeiros() {
     const agendamento = pegarAgendamentoEmAndamento();
 
@@ -46,7 +53,7 @@ async function carregarBarbeiros() {
         card.innerHTML = `
             <img src="css/imagens/desenho_barbeiro.png" alt="desenho_barbeiro" class="desenho_barbeiro">
             <div class="texto_barbeiros">
-                <span class="titulo5">${nome}</span>
+                <span class="titulo5">${escapeHtml(nome)}</span>
             </div>
         `;
 

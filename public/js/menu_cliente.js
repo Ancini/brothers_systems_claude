@@ -44,6 +44,13 @@ async function inicializarEstabelecimentos() {
     }
 }
 
+// Escapa texto/URL vindos do banco antes de inserir via innerHTML — evita XSS armazenado.
+function escapeHtml(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 function renderizar(lista, containerId) {
     const container = document.getElementById(containerId);
     
@@ -72,8 +79,8 @@ function renderizar(lista, containerId) {
         card.className = "estabelecimento-item";
         card.title = nome;
         card.innerHTML = `
-            <div class="estabelecimento-imagem"><img src="${imagem}" alt="${nome}"></div>
-            <span class="estabelecimento-nome">${nome}</span>
+            <div class="estabelecimento-imagem"><img src="${escapeHtml(imagem)}" alt="${escapeHtml(nome)}"></div>
+            <span class="estabelecimento-nome">${escapeHtml(nome)}</span>
         `;
 
         card.addEventListener("click", () => {
