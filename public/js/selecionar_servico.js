@@ -2,6 +2,10 @@ import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
+function formatarMoeda(valor) {
+    return `R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}`;
+}
+
 async function carregarServicos() {
     const agendamento = pegarAgendamentoEmAndamento();
 
@@ -49,6 +53,7 @@ async function carregarServicos() {
             <img src="css/imagens/servico.png" alt="servico" class="desenho_barbeiro">
             <div class="texto_barbeiros">
                 <span class="titulo5">${nome}</span>
+                <span class="valor-servico">${formatarMoeda(item.valor_servico)}</span>
             </div>
         `;
 

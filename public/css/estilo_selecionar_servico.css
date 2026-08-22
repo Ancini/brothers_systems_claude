@@ -134,6 +134,13 @@ html, body {
     font-weight: 700;
 }
 
+.texto_barbeiros .valor-servico {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
 /* ---------- Botão Voltar ---------- */
 .btn-retornar {
     width: 100%;
