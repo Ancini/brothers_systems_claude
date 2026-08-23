@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Brothers Systems - Menu Administrador</title>
+    <title>Brothers Systems - Dias de Funcionamento</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/estilo_menu_administrador.css">
+    <link rel="stylesheet" href="css/estilo_cadastrar_dias_funcionamento.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#004aad">
     <link rel="apple-touch-icon" href="css/imagens/logo.png">
@@ -25,28 +25,24 @@
         </div>
     </div>
 
-    <div class="titulo-menu">
-        <i class="fa-solid fa-gauge"></i> Menu Inicial - Administrador
+    <div class="secao-titulo secao-azul">
+        <i class="fa-solid fa-calendar-days"></i> Cadastrar Dias de Abertura p/ estabelecimento
     </div>
 
-    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_servico_estabelecimento.html'">
-        <i class="fa-solid fa-list-check"></i> Cadastrar serviço para estabelecimento
+    <div class="input-container">
+        <select id="estabelecimento-select">
+            <option value="" disabled selected>Selecione o Estabelecimento</option>
+        </select>
+        <i class="fa-solid fa-shop"></i>
     </div>
 
-    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_estabelecimento.html'">
-        <i class="fa-solid fa-shop"></i> Cadastrar novo estabelecimento
+    <div class="legenda-linha">
+        <span class="legenda-pill legenda-azul">Marque os dias da semana</span>
+        <span class="legenda-pill legenda-vermelha">Insira o horário de abertura e fechamento</span>
     </div>
 
-    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_prestador.html'">
-        <i class="fa-solid fa-user-tie"></i> Cadastrar novo Prestador para estab.
-    </div>
-
-    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_servico.html'">
-        <i class="fa-solid fa-scissors"></i> Cadastrar novo serviço
-    </div>
-
-    <div class="btn btn-menu-admin" onclick="window.location.href='cadastrar_dias_funcionamento.html'">
-        <i class="fa-solid fa-calendar-days"></i> Cadastrar dias de abertura
+    <div class="dias-lista" id="dias-lista">
+        <!-- Gerado dinamicamente via JS (cadastrar_dias_funcionamento.js) -->
     </div>
 
     <div class="btn btn-cliente" onclick="window.location.href='menu_cliente.html'">
@@ -62,7 +58,7 @@
 
 </div>
 
-    <script type="module" src="js/menu_administrador.js"></script>
+    <script type="module" src="js/cadastrar_dias_funcionamento.js"></script>
     <script type="module" src="js/modo_escuro.js"></script>
 </body>
 </html>
