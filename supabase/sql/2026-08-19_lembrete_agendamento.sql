@@ -69,3 +69,4 @@ select cron.schedule(
 
 -- Pra remover, se precisar recriar:
 -- select cron.unschedule('lembrete-agendamento-1h30');
+-- gabriel
