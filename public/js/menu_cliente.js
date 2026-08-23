@@ -2,6 +2,54 @@ import { buscarAbertos, buscarFechados } from "./abertos_fechados.js";
 import { pegarSessao, supabaseClient } from "./session.js"; // <-- Importamos o supabaseClient daqui
 import { salvarEtapaAgendamento } from "./agendamento_estado.js";
 
+// Descobre, direto da tabela horario_funcionamento, a configuração de hoje de
+// cada barbearia. Devolve um Map id_estabelicimento -> {aberto, horario_abertura,
+// horario_fechamento} só com quem já tem esse dia configurado.
+async function buscarConfigHojePorEstabelecimento() {
+    const hojeDiaSemana = new Date().getDay(); // 0=domingo...6=sábado
+
+    const { data, error } = await supabaseClient
+        .from("horario_funcionamento")
+        .select("id_estabelicimento, aberto, horario_abertura, horario_fechamento")
+        .eq("dia_semana", hojeDiaSemana);
+
+    if (error) {
+        console.error("Erro ao buscar horario_funcionamento de hoje:", error);
+        return new Map();
+    }
+
+    return new Map((data || []).map(linha => [linha.id_estabelicimento, linha]));
+}
+
+function paraMinutos(horaTexto) {
+    const [h, m] = horaTexto.split(":").map(Number);
+    return h * 60 + m;
+}
+
+function estaDentroDoHorario(horarioAbertura, horarioFechamento) {
+    const agora = new Date();
+    const agoraMin = agora.getHours() * 60 + agora.getMinutes();
+    return agoraMin >= paraMinutos(horarioAbertura) && agoraMin < paraMinutos(horarioFechamento);
+}
+
+// Decide se a barbearia está aberta agora. Quando existe configuração de hoje
+// em horario_funcionamento, ela manda (pode tanto FECHAR uma que a view geral
+// achava aberta quanto ABRIR uma que a view achava fechada, ex: horário
+// especial de domingo). Sem configuração pra hoje, cai no que a view decidiu —
+// exceto aos domingos, que por padrão consideramos fechado.
+function estaAbertoAgora(idEstabelecimento, configHojePorId, abertoNaView) {
+    const config = configHojePorId.get(idEstabelecimento);
+
+    if (config) {
+        if (!config.aberto) return false;
+        if (!config.horario_abertura || !config.horario_fechamento) return true;
+        return estaDentroDoHorario(config.horario_abertura, config.horario_fechamento);
+    }
+
+    if (new Date().getDay() === 0) return false;
+    return abertoNaView;
+}
+
 async function carregarPontuacaoUsuario() {
     try {
         const usuario = pegarSessao();
@@ -34,14 +82,32 @@ async function carregarPontuacaoUsuario() {
 
 async function inicializarEstabelecimentos() {
     try {
-        const [abertosView, fechadosView] = await Promise.all([buscarAbertos(), buscarFechados()]);
+        const [abertosView, fechadosView, configHojePorId] = await Promise.all([
+            buscarAbertos(),
+            buscarFechados(),
+            buscarConfigHojePorEstabelecimento()
+        ]);
 
-        // Nenhuma barbearia abre aos domingos por enquanto (regra geral, temporária).
-        // A view do banco ainda não considera o dia da semana, então força aqui:
-        // aos domingos, todo mundo cai em "fechados", nem que a view diga que está aberto.
-        const ehDomingo = new Date().getDay() === 0;
-        const abertos = ehDomingo ? [] : abertosView;
-        const fechados = ehDomingo ? [...abertosView, ...fechadosView] : fechadosView;
+        // Junta as duas listas da view e reclassifica cada uma usando
+        // horario_funcionamento como fonte de verdade pra hoje — isso vale
+        // tanto pra fechar quem a view achava aberto quanto pra abrir quem a
+        // view achava fechado (ex: horário especial de domingo).
+        const candidatos = [
+            ...abertosView.map(est => ({ est, abertoNaView: true })),
+            ...fechadosView.map(est => ({ est, abertoNaView: false }))
+        ];
+
+        const abertos = [];
+        const fechados = [];
+
+        candidatos.forEach(({ est, abertoNaView }) => {
+            const id = est.id_estabelicimento ?? est.id_estabelecimento;
+            if (estaAbertoAgora(id, configHojePorId, abertoNaView)) {
+                abertos.push(est);
+            } else {
+                fechados.push(est);
+            }
+        });
 
         renderizar(abertos, "abertos");
         renderizar(fechados, "fechados");
