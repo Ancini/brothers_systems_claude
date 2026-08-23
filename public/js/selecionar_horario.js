@@ -1,6 +1,7 @@
 import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
+import { pegarAjustesProvisorios } from "./ajustes_provisorios_agenda.js";
 
 const SLOTS_POR_PAGINA = 9;
 
@@ -59,6 +60,12 @@ function montarJanelasLivres(inicioMin, fimMin, bloqueios) {
     return janelas;
 }
 
+// Dia da semana (0=domingo...6=sábado) de uma data "YYYY-MM-DD", sem passar por UTC
+function diaDaSemana(dataBanco) {
+    const [ano, mes, dia] = dataBanco.split("-").map(Number);
+    return new Date(ano, mes - 1, dia).getDay();
+}
+
 // "YYYY-MM-DD" de hoje no fuso local (mesmo formato salvo em data_agendamento)
 function dataDeHojeBanco() {
     const hoje = new Date();
@@ -110,7 +117,13 @@ async function carregarHorarios() {
     }
 
     const inicioMin = paraMinutos(estabelecimento.horario_abertura);
-    const fimMin = paraMinutos(estabelecimento.horario_fechamento);
+    let fimMin = paraMinutos(estabelecimento.horario_fechamento);
+
+    // Ajuste provisório por estabelecimento (ver ajustes_provisorios_agenda.js).
+    const ajustesProvisorios = pegarAjustesProvisorios(agendamento.id_estabelicimento);
+    if (ajustesProvisorios?.fechamentoSabadoMin != null && diaDaSemana(agendamento.data_agendamento) === 6) {
+        fimMin = Math.min(fimMin, ajustesProvisorios.fechamentoSabadoMin);
+    }
 
     const ocupadosMin = (ocupados || [])
         .filter(o => !(o.status || "").toLowerCase().includes("cancel"))

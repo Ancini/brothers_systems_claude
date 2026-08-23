@@ -2,6 +2,7 @@ import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
+import { pegarAjustesProvisorios } from "./ajustes_provisorios_agenda.js";
 
 const DIAS_A_MOSTRAR = 9;
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -79,7 +80,12 @@ async function carregarDatas() {
         }
     }
 
-    const datas = gerarProximasDatas();
+    // Ajuste provisório por estabelecimento (ver ajustes_provisorios_agenda.js) —
+    // aqui só cobre "esconder o card de dias que essa barbearia não abre".
+    const ajustesProvisorios = pegarAjustesProvisorios(agendamento.id_estabelicimento);
+    const diasFechadosProvisorio = ajustesProvisorios?.diasFechados || [];
+
+    const datas = gerarProximasDatas().filter(data => !diasFechadosProvisorio.includes(data.getDay()));
 
     datas.forEach(data => {
         const ehSabado = data.getDay() === 6;
