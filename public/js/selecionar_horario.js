@@ -1,7 +1,6 @@
 import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
-import { pegarAjustesProvisorios } from "./ajustes_provisorios_agenda.js";
 
 const SLOTS_POR_PAGINA = 9;
 
@@ -116,14 +115,27 @@ async function carregarHorarios() {
         console.error("Erro ao buscar horários ocupados:", erroOcupados);
     }
 
-    const inicioMin = paraMinutos(estabelecimento.horario_abertura);
-    let fimMin = paraMinutos(estabelecimento.horario_fechamento);
+    // Horário do dia específico (tabela horario_funcionamento — uma linha por
+    // dia da semana, ver public/cadastrar_dias_funcionamento.html). Se a
+    // barbearia ainda não configurou esse dia ali, cai no horário geral dela.
+    const { data: diaFuncionamento, error: erroDiaFuncionamento } = await supabase
+        .from("horario_funcionamento")
+        .select("aberto, horario_abertura, horario_fechamento")
+        .eq("id_estabelicimento", agendamento.id_estabelicimento)
+        .eq("dia_semana", diaDaSemana(agendamento.data_agendamento))
+        .maybeSingle();
 
-    // Ajuste provisório por estabelecimento (ver ajustes_provisorios_agenda.js).
-    const ajustesProvisorios = pegarAjustesProvisorios(agendamento.id_estabelicimento);
-    if (ajustesProvisorios?.fechamentoSabadoMin != null && diaDaSemana(agendamento.data_agendamento) === 6) {
-        fimMin = Math.min(fimMin, ajustesProvisorios.fechamentoSabadoMin);
+    if (erroDiaFuncionamento) {
+        console.error("Erro ao buscar horario_funcionamento do dia:", erroDiaFuncionamento);
     }
+
+    if (diaFuncionamento && diaFuncionamento.aberto === false) {
+        container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Essa barbearia não atende nesse dia.</p>`;
+        return;
+    }
+
+    const inicioMin = paraMinutos(diaFuncionamento?.horario_abertura || estabelecimento.horario_abertura);
+    const fimMin = paraMinutos(diaFuncionamento?.horario_fechamento || estabelecimento.horario_fechamento);
 
     const ocupadosMin = (ocupados || [])
         .filter(o => !(o.status || "").toLowerCase().includes("cancel"))

@@ -25,5 +25,28 @@ for select
 to authenticated, anon
 using (true);
 
+-- Escrita (insert/update/delete) só pra quem é administrador — mesma checagem
+-- (usuario.auth_id = auth.uid() e usuario.administrador = true) que dá pra
+-- reaproveitar nas outras tabelas de cadastro (estabelicimento, servico_estabelicimento
+-- etc.) se elas ainda não tiverem essa policy.
+create policy "horario_funcionamento_admin_escreve"
+on public.horario_funcionamento
+for all
+to authenticated
+using (
+    exists (
+        select 1 from public.usuario
+        where usuario.auth_id = auth.uid()
+        and usuario.administrador = true
+    )
+)
+with check (
+    exists (
+        select 1 from public.usuario
+        where usuario.auth_id = auth.uid()
+        and usuario.administrador = true
+    )
+);
+
 -- Pra conferir depois de rodar:
 -- select * from public.horario_funcionamento order by id_estabelicimento, dia_semana;
