@@ -34,8 +34,14 @@ async function carregarPontuacaoUsuario() {
 
 async function inicializarEstabelecimentos() {
     try {
-        const abertos = await buscarAbertos();
-        const fechados = await buscarFechados();
+        const [abertosView, fechadosView] = await Promise.all([buscarAbertos(), buscarFechados()]);
+
+        // Nenhuma barbearia abre aos domingos por enquanto (regra geral, temporária).
+        // A view do banco ainda não considera o dia da semana, então força aqui:
+        // aos domingos, todo mundo cai em "fechados", nem que a view diga que está aberto.
+        const ehDomingo = new Date().getDay() === 0;
+        const abertos = ehDomingo ? [] : abertosView;
+        const fechados = ehDomingo ? [...abertosView, ...fechadosView] : fechadosView;
 
         renderizar(abertos, "abertos");
         renderizar(fechados, "fechados");

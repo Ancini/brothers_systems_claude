@@ -2,7 +2,6 @@ import { supabase } from "./supabase.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
 
-const INTERVALO_MINUTOS = 30;
 const SLOTS_POR_PAGINA = 9;
 
 // Intervalo de almoço fixo, aplicado a todas as barbearias por enquanto.
@@ -22,8 +21,42 @@ function paraHoraTexto(minutos) {
     return `${h}:${m}`;
 }
 
-function horariosSeSobrepoem(inicioA, fimA, inicioB, fimB) {
-    return inicioA < fimB && fimA > inicioB;
+// Junta blocos ocupados que se sobrepõem/encostam num só, pra sobrar só os
+// intervalos realmente ocupados (já ordenados por horário de início).
+function mesclarBloqueios(blocos) {
+    const ordenados = [...blocos].sort((a, b) => a.inicio - b.inicio);
+    const mesclados = [];
+
+    for (const bloco of ordenados) {
+        const ultimo = mesclados[mesclados.length - 1];
+        if (ultimo && bloco.inicio <= ultimo.fim) {
+            ultimo.fim = Math.max(ultimo.fim, bloco.fim);
+        } else {
+            mesclados.push({ ...bloco });
+        }
+    }
+
+    return mesclados;
+}
+
+// Descobre as janelas livres entre a abertura e o fechamento, descontando
+// os bloqueios (agendamentos existentes + almoço) já mesclados.
+function montarJanelasLivres(inicioMin, fimMin, bloqueios) {
+    const janelas = [];
+    let cursor = inicioMin;
+
+    for (const bloco of bloqueios) {
+        if (bloco.inicio > cursor) {
+            janelas.push({ inicio: cursor, fim: bloco.inicio });
+        }
+        cursor = Math.max(cursor, bloco.fim);
+    }
+
+    if (cursor < fimMin) {
+        janelas.push({ inicio: cursor, fim: fimMin });
+    }
+
+    return janelas;
 }
 
 // "YYYY-MM-DD" de hoje no fuso local (mesmo formato salvo em data_agendamento)
@@ -91,17 +124,22 @@ async function carregarHorarios() {
     const agora = new Date();
     const agoraMin = agora.getHours() * 60 + agora.getMinutes();
 
+    // Agenda dinâmica: em vez de uma grade fixa de 30 em 30, os horários são
+    // encadeados a partir da duração real de cada serviço. Ex: um corte de 30min
+    // marcado às 9h libera o próximo horário já às 9h30; uma barba de 20min
+    // marcada em seguida libera o próximo já às 9h50 — sem "buracos" de grade fixa.
+    const bloqueios = mesclarBloqueios(ocupadosMin);
+    const janelasLivres = montarJanelasLivres(inicioMin, fimMin, bloqueios);
+
     const disponiveis = [];
-    for (let slot = inicioMin; slot + duracaoServico <= fimMin; slot += INTERVALO_MINUTOS) {
-        if (ehHoje && slot <= agoraMin) {
-            continue;
-        }
-        const fimSlot = slot + duracaoServico;
-        const conflita = ocupadosMin.some(o => horariosSeSobrepoem(slot, fimSlot, o.inicio, o.fim));
-        if (!conflita) {
+    janelasLivres.forEach(janela => {
+        for (let slot = janela.inicio; slot + duracaoServico <= janela.fim; slot += duracaoServico) {
+            if (ehHoje && slot <= agoraMin) {
+                continue;
+            }
             disponiveis.push(slot);
         }
-    }
+    });
 
     if (disponiveis.length === 0) {
         container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Nenhum horário disponível nesse dia.</p>`;
