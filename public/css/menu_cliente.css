@@ -319,6 +319,7 @@ body {
 }
 
 .estabelecimento-imagem {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -329,6 +330,19 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+.estabelecimento-promocao {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #8e24aa;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-bottom-right-radius: 10px;
 }
 
 .estabelecimento-nome {

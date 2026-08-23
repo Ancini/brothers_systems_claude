@@ -21,6 +21,30 @@ async function buscarConfigHojePorEstabelecimento() {
     return new Map((data || []).map(linha => [linha.id_estabelicimento, linha]));
 }
 
+function dataDeHojeBanco() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
+
+// Devolve um Map id_estabelicimento -> percentual_desconto só de quem tem
+// promoção cadastrada pra hoje (ver public/js/cadastrar_promocao.js).
+async function buscarPromocoesDeHoje() {
+    const { data, error } = await supabaseClient
+        .from("promocao")
+        .select("id_estabelicimento, percentual_desconto")
+        .eq("data_promocao", dataDeHojeBanco());
+
+    if (error) {
+        console.error("Erro ao buscar promoções de hoje:", error);
+        return new Map();
+    }
+
+    return new Map((data || []).map(linha => [linha.id_estabelicimento, linha.percentual_desconto]));
+}
+
 function paraMinutos(horaTexto) {
     const [h, m] = horaTexto.split(":").map(Number);
     return h * 60 + m;
@@ -82,10 +106,11 @@ async function carregarPontuacaoUsuario() {
 
 async function inicializarEstabelecimentos() {
     try {
-        const [abertosView, fechadosView, configHojePorId] = await Promise.all([
+        const [abertosView, fechadosView, configHojePorId, promocoesHojePorId] = await Promise.all([
             buscarAbertos(),
             buscarFechados(),
-            buscarConfigHojePorEstabelecimento()
+            buscarConfigHojePorEstabelecimento(),
+            buscarPromocoesDeHoje()
         ]);
 
         // Junta as duas listas da view e reclassifica cada uma usando
@@ -109,8 +134,8 @@ async function inicializarEstabelecimentos() {
             }
         });
 
-        renderizar(abertos, "abertos");
-        renderizar(fechados, "fechados");
+        renderizar(abertos, "abertos", promocoesHojePorId);
+        renderizar(fechados, "fechados", promocoesHojePorId);
     } catch (error) {
         console.error("Erro ao carregar os estabelecimentos:", error);
     }
@@ -123,7 +148,7 @@ function escapeHtml(valor) {
     }[c]));
 }
 
-function renderizar(lista, containerId) {
+function renderizar(lista, containerId, promocoesHojePorId = new Map()) {
     const container = document.getElementById(containerId);
     
     if (!container) {
@@ -147,11 +172,16 @@ function renderizar(lista, containerId) {
         const nome = est.nome_estabelecimento || est.nome_estabelicimento;
         const id = est.id_estabelicimento ?? est.id_estabelecimento; // cobre os dois nomes possíveis vindos da view
 
+        const percentualPromocao = promocoesHojePorId.get(id);
+
         const card = document.createElement("div");
         card.className = "estabelecimento-item";
         card.title = nome;
         card.innerHTML = `
-            <div class="estabelecimento-imagem"><img src="${escapeHtml(imagem)}" alt="${escapeHtml(nome)}"></div>
+            <div class="estabelecimento-imagem">
+                ${percentualPromocao != null ? `<span class="estabelecimento-promocao">${percentualPromocao}% OFF</span>` : ""}
+                <img src="${escapeHtml(imagem)}" alt="${escapeHtml(nome)}">
+            </div>
             <span class="estabelecimento-nome">${escapeHtml(nome)}</span>
         `;
 

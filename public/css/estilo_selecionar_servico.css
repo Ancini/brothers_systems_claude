@@ -141,6 +141,30 @@ html, body {
     margin-top: 2px;
 }
 
+.texto_barbeiros .promocao-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background-color: #8e24aa;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 4px;
+}
+
+.texto_barbeiros .valor-original {
+    text-decoration: line-through;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.texto_barbeiros .valor-promocional {
+    color: #ffe082;
+    font-weight: 800;
+    margin-top: 0;
+}
+
 /* ---------- Botão Voltar ---------- */
 .btn-retornar {
     width: 100%;
