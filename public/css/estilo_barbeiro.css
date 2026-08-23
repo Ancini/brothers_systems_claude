@@ -81,8 +81,9 @@
     background-color: rgba(245, 131, 44, 1);
 }
 
-/* PROMOÇÃO */
+/* PROMOÇÃO: ocupa a linha toda (como .barbeiro e .painel-administrativo) */
 .promocao {
+    grid-column: span 2;
     background-color: #f5a623;
     cursor: pointer;
 }
