@@ -251,6 +251,15 @@ body {
     filter: brightness(0.95);
 }
 
+.btn-salvar {
+    background-color: rgba(0, 74, 173, 1);
+}
+
+.btn-salvar:disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
 .btn-cliente {
     background: linear-gradient(135deg, #2ecc71, #27ae60);
     margin-top: 4px;
@@ -286,6 +295,7 @@ footer {
 html.modo-escuro .secao-titulo,
 html.modo-escuro .input-container select,
 html.modo-escuro .btn-cliente,
+html.modo-escuro .btn-salvar,
 html.modo-escuro .horario-pill,
 html.modo-escuro .legenda-azul,
 html.modo-escuro .legenda-vermelha {

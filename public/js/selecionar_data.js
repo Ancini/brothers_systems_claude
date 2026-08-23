@@ -2,7 +2,6 @@ import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 import { pegarAgendamentoEmAndamento, salvarEtapaAgendamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
-import { pegarAjustesProvisorios } from "./ajustes_provisorios_agenda.js";
 
 const DIAS_A_MOSTRAR = 9;
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -15,14 +14,19 @@ function formatarDataBanco(data) {
     return `${ano}-${mes}-${dia}`;
 }
 
-function gerarProximasDatas() {
+// Máximo de dias corridos que a busca avança tentando achar DIAS_A_MOSTRAR
+// dias abertos — evita loop infinito caso a barbearia esteja fechada todo dia.
+const LIMITE_DIAS_VARRIDOS = 60;
+
+// Anda dia a dia a partir de hoje, pulando os que "diaEstaAberto" reprovar,
+// até juntar DIAS_A_MOSTRAR datas válidas (ou bater o limite de segurança).
+function gerarProximasDatasAbertas(diaEstaAberto) {
     const datas = [];
     const cursor = new Date();
     cursor.setHours(0, 0, 0, 0);
 
-    while (datas.length < DIAS_A_MOSTRAR) {
-        if (cursor.getDay() !== 0) {
-            // Nenhuma barbearia abre no domingo
+    for (let i = 0; i < LIMITE_DIAS_VARRIDOS && datas.length < DIAS_A_MOSTRAR; i++) {
+        if (diaEstaAberto(cursor.getDay())) {
             datas.push(new Date(cursor));
         }
         cursor.setDate(cursor.getDate() + 1);
@@ -48,19 +52,25 @@ async function carregarDatas() {
     container.innerHTML = "";
     container.className = "grade-datas";
 
-    const { data: estabelecimento, error: erroEstabelecimento } = await supabase
-        .from("estabelicimento")
-        .select("aberto_sabado, nome_estabelicimento")
-        .eq("id_estabelicimento", agendamento.id_estabelicimento)
-        .single();
+    // Dias da semana em que essa barbearia atende (tabela horario_funcionamento,
+    // uma linha por dia — ver public/cadastrar_dias_funcionamento.html).
+    const { data: diasFuncionamento, error: erroDiasFuncionamento } = await supabase
+        .from("horario_funcionamento")
+        .select("dia_semana, aberto")
+        .eq("id_estabelicimento", agendamento.id_estabelicimento);
 
-    if (erroEstabelecimento) {
-        console.error("Erro ao buscar aberto_sabado da barbearia:", erroEstabelecimento);
+    if (erroDiasFuncionamento) {
+        console.error("Erro ao buscar horario_funcionamento:", erroDiasFuncionamento);
     }
 
-    // Sem informação = assume que abre normalmente aos sábados.
-    const abertoSabado = estabelecimento?.aberto_sabado !== false;
-    const nomeBarbearia = estabelecimento?.nome_estabelicimento || agendamento.nome_estabelicimento || "Esta barbearia";
+    const abertoPorDia = new Map((diasFuncionamento || []).map(linha => [linha.dia_semana, linha.aberto]));
+
+    // Se a barbearia ainda não configurou nenhum dia na tela nova, mantém o
+    // comportamento antigo como fallback: todo mundo aberto, menos domingo.
+    function diaEstaAberto(diaSemana) {
+        if (abertoPorDia.has(diaSemana)) return abertoPorDia.get(diaSemana);
+        return diaSemana !== 0;
+    }
 
     // Datas em que o cliente já tem agendamento marcado (pra avisar antes de deixar marcar de novo).
     const datasComAgendamento = new Set();
@@ -80,16 +90,9 @@ async function carregarDatas() {
         }
     }
 
-    // Ajuste provisório por estabelecimento (ver ajustes_provisorios_agenda.js) —
-    // aqui só cobre "esconder o card de dias que essa barbearia não abre".
-    const ajustesProvisorios = pegarAjustesProvisorios(agendamento.id_estabelicimento);
-    const diasFechadosProvisorio = ajustesProvisorios?.diasFechados || [];
-
-    const datas = gerarProximasDatas().filter(data => !diasFechadosProvisorio.includes(data.getDay()));
+    const datas = gerarProximasDatasAbertas(diaEstaAberto);
 
     datas.forEach(data => {
-        const ehSabado = data.getDay() === 6;
-
         const card = document.createElement("div");
         card.className = "card card-data";
         card.innerHTML = `
@@ -98,11 +101,6 @@ async function carregarDatas() {
         `;
 
         card.addEventListener("click", () => {
-            if (ehSabado && !abertoSabado) {
-                alert(`A Barbearia ${nomeBarbearia} trabalha com ordem de chegada aos sábados.`);
-                return;
-            }
-
             const dataFormatada = formatarDataBanco(data);
 
             if (datasComAgendamento.has(dataFormatada)) {
@@ -118,6 +116,10 @@ async function carregarDatas() {
 
         container.appendChild(card);
     });
+
+    if (datas.length === 0) {
+        container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Nenhum dia disponível pra essa barbearia no momento.</p>`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

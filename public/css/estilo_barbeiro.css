@@ -52,11 +52,12 @@
     height: 80px;
 }
 
-/* VENDAS, AGENDAMENTOS, RANKING E RELATÓRIOS: todos do mesmo tamanho */
+/* VENDAS, AGENDAMENTOS, RANKING, RELATÓRIOS E PROMOÇÃO: todos do mesmo tamanho */
 .vendas,
 .total_agendamentos,
 .ranking,
-.relatorios {
+.relatorios,
+.promocao {
     height: 80px;
 }
 
@@ -78,6 +79,12 @@
 /* RELATÓRIOS */
 .relatorios {
     background-color: rgba(245, 131, 44, 1);
+}
+
+/* PROMOÇÃO */
+.promocao {
+    background-color: #f5a623;
+    cursor: pointer;
 }
 
 /* PAINEL ADMINISTRATIVO: só aparece pra usuário com administrador=true (ver controle_barbeiro.js) */
@@ -111,6 +118,7 @@
 .texto-agendamentos,
 .texto-ranking,
 .texto-relatorio,
+.texto-promocao,
 .texto-dia {
     display: flex;
     flex-direction: column;
