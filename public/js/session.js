@@ -59,7 +59,7 @@ export function verificarFluxoUsuario() {
   
   if (!usuario) {
       console.log("Nenhum usuário logado.");
-      return "login.html"; 
+      return "index.html";
   }
 
   if (usuario.administrador === true || usuario.administrador === "true") {

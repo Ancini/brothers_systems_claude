@@ -38,7 +38,7 @@ async function confirmarAgendamento(agendamento) {
 
     if (!usuario || !usuario.id_usuario) {
         alert("Você precisa estar logado para confirmar o agendamento.");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
     }
 

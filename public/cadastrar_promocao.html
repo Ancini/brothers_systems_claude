@@ -30,34 +30,34 @@
     </div>
 
     <div class="promocao-grid">
-        <div class="promocao-coluna promocao-dias">
+        <div class="promocao-coluna promocao-dias" id="promocao-dias">
             <label class="opcao-item">
                 <span>Segunda-feira</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="1">
             </label>
             <label class="opcao-item">
                 <span>Terça-feira</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="2">
             </label>
             <label class="opcao-item">
                 <span>Quarta-feira</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="3">
             </label>
             <label class="opcao-item">
                 <span>Quinta-feira</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="4">
             </label>
             <label class="opcao-item">
                 <span>Sexta-feira</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="5">
             </label>
             <label class="opcao-item">
                 <span>Sábado</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="6">
             </label>
             <label class="opcao-item">
                 <span>Domingo</span>
-                <input type="checkbox">
+                <input type="checkbox" class="dia-checkbox" value="0">
             </label>
         </div>
 
@@ -66,44 +66,44 @@
         <div class="promocao-coluna promocao-descontos">
             <label class="opcao-item">
                 <span>5% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="5">
             </label>
             <label class="opcao-item">
                 <span>10% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="10">
             </label>
             <label class="opcao-item">
                 <span>15% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="15">
             </label>
             <label class="opcao-item">
                 <span>20% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="20">
             </label>
             <label class="opcao-item">
                 <span>25% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="25">
             </label>
             <label class="opcao-item">
                 <span>30% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="30">
             </label>
             <label class="opcao-item">
                 <span>35% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="35">
             </label>
             <label class="opcao-item">
                 <span>40% OFF</span>
-                <input type="checkbox" name="desconto">
+                <input type="radio" name="desconto" value="40">
             </label>
         </div>
     </div>
 
-    <button type="button" class="btn btn-confirmar">
+    <button type="button" class="btn btn-confirmar" id="btn-confirmar">
         Confirmar <i class="fa-solid fa-check"></i>
     </button>
 
-    <button type="button" class="btn btn-cancelar">
+    <button type="button" class="btn btn-cancelar" id="btn-cancelar">
         Cancelar <i class="fa-solid fa-ban"></i>
     </button>
 
@@ -122,6 +122,7 @@
 
 </div>
 
+    <script type="module" src="js/cadastrar_promocao.js"></script>
     <script type="module" src="js/modo_escuro.js"></script>
 </body>
 </html>

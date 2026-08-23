@@ -124,7 +124,8 @@ body {
     white-space: nowrap;
 }
 
-.opcao-item input[type="checkbox"] {
+.opcao-item input[type="checkbox"],
+.opcao-item input[type="radio"] {
     width: 20px;
     height: 20px;
     accent-color: rgba(0, 74, 173, 1);
