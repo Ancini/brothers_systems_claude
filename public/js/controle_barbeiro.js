@@ -77,7 +77,7 @@ function inicializarLinhaDoTempo() {
     const containerDias = document.querySelector(".linha-tempo-dias");
     containerDias.innerHTML = ""; 
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 7; i++) {
         const dataRef = new Date();
         dataRef.setDate(dataRef.getDate() + i);
         const dataFormatadaBanco = formatarDataBanco(dataRef);

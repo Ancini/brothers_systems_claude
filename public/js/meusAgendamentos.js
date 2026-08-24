@@ -92,7 +92,8 @@ async function carregarAgendamentos(usuario) {
         .select("*")
         .eq("id_usuario", usuario.id_usuario)
         .order("data_agendamento", { ascending: false })
-        .order("horario_inicio", { ascending: false });
+        .order("horario_inicio", { ascending: false })
+        .limit(5);
 
     if (error) {
         console.error("Erro ao buscar agendamentos:", error);
