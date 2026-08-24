@@ -175,6 +175,23 @@ a {
     margin-top: 20px;
 }
 
+/* Linha do tempo dos dias: em vez de grid fixo, rola pro lado (mais dias
+   gerados em controle_barbeiro.js do que cabem na tela de uma vez). */
+.linha-tempo-dias {
+    display: flex;
+    grid-template-columns: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+}
+
+.linha-tempo-dias .agendamento {
+    flex: 0 0 auto;
+    width: 90px;
+    scroll-snap-align: start;
+}
+
 /* CARD DOS DIAS */
 .agendamento {
     width: 100%;
