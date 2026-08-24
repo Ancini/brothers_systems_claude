@@ -187,8 +187,10 @@ a {
 }
 
 .linha-tempo-dias .agendamento {
-    flex: 0 0 auto;
-    width: 90px;
+    /* Mantém 3 cards visíveis por vez (tamanho original) — o resto fica
+       escondido até rolar pro lado, em vez de espremer tudo na tela. */
+    flex: 0 0 calc((100% - 20px) / 3);
+    width: auto;
     scroll-snap-align: start;
 }
 
