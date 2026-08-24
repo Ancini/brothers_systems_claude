@@ -111,7 +111,7 @@ async function carregarDatas() {
             salvarEtapaAgendamento({
                 data_agendamento: dataFormatada
             });
-            window.location.href = "selecionar_horario.html";
+            window.location.href = "tela_selecionar_servico.html";
         });
 
         container.appendChild(card);

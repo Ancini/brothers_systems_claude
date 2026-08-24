@@ -6,27 +6,19 @@ function formatarMoeda(valor) {
     return `R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}`;
 }
 
-function dataDeHojeBanco() {
-    const hoje = new Date();
-    const ano = hoje.getFullYear();
-    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-    const dia = String(hoje.getDate()).padStart(2, "0");
-    return `${ano}-${mes}-${dia}`;
-}
-
-// Promoção vale só pro dia de hoje (ver public/js/cadastrar_promocao.js) —
-// aqui ainda não existe data escolhida no fluxo, então o desconto mostrado
-// reflete a promoção de hoje mesmo.
-async function buscarPercentualPromocaoHoje(idEstabelecimento) {
+// Promoção vale só pro dia exato cadastrado (ver public/js/cadastrar_promocao.js).
+// A tela de Data agora vem antes da tela de Serviço no fluxo, então o desconto
+// mostrado aqui já é o da data que o cliente escolheu — não o de hoje.
+async function buscarPercentualPromocaoDaData(idEstabelecimento, dataAgendamento) {
     const { data, error } = await supabase
         .from("promocao")
         .select("percentual_desconto")
         .eq("id_estabelicimento", idEstabelecimento)
-        .eq("data_promocao", dataDeHojeBanco())
+        .eq("data_promocao", dataAgendamento)
         .maybeSingle();
 
     if (error) {
-        console.error("Erro ao buscar promoção de hoje:", error);
+        console.error("Erro ao buscar promoção da data escolhida:", error);
         return null;
     }
 
@@ -43,8 +35,8 @@ function escapeHtml(valor) {
 async function carregarServicos() {
     const agendamento = pegarAgendamentoEmAndamento();
 
-    if (!agendamento || !agendamento.id_estabelicimento) {
-        alert("Nenhuma barbearia selecionada. Voltando ao menu...");
+    if (!agendamento || !agendamento.id_estabelicimento || !agendamento.id_prestador || !agendamento.data_agendamento) {
+        alert("Faltam informações do agendamento. Voltando ao início...");
         window.location.href = "menu_cliente.html";
         return;
     }
@@ -59,7 +51,7 @@ async function carregarServicos() {
                 servico:id_servico ( id_servico, nome_servico, pontuacao_servico )
             `)
             .eq("id_estabelicimento", agendamento.id_estabelicimento),
-        buscarPercentualPromocaoHoje(agendamento.id_estabelicimento)
+        buscarPercentualPromocaoDaData(agendamento.id_estabelicimento, agendamento.data_agendamento)
     ]);
 
     const container = document.getElementById("lista-servicos");
@@ -111,7 +103,7 @@ async function carregarServicos() {
                 valor_servico: valorFinal,
                 tempo_servico: item.tempo_servico
             });
-            window.location.href = "selecionar_data.html";
+            window.location.href = "selecionar_horario.html";
         });
 
         container.appendChild(card);

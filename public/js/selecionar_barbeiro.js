@@ -62,7 +62,7 @@ async function carregarBarbeiros() {
                 id_prestador: prestador.id_prestador,
                 nome_prestador: nome
             });
-            window.location.href = "tela_selecionar_servico.html";
+            window.location.href = "selecionar_data.html";
         });
 
         container.appendChild(card);
