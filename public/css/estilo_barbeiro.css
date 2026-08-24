@@ -184,6 +184,13 @@ a {
     overflow-x: auto;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
+    /* Rolagem continua funcionando (toque/arrasto), só esconde a barra visual. */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Edge/IE legado */
+}
+
+.linha-tempo-dias::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge (Chromium) */
 }
 
 .linha-tempo-dias .agendamento {
