@@ -95,7 +95,7 @@ async function carregarHorarios() {
 
     const { data: estabelecimento, error: erroEstabelecimento } = await supabase
         .from("estabelicimento")
-        .select("horario_abertura, horario_fechamento")
+        .select("horario_abertura, horario_fechamento, aberto_12")
         .eq("id_estabelicimento", agendamento.id_estabelicimento)
         .single();
 
@@ -143,7 +143,12 @@ async function carregarHorarios() {
             inicio: paraMinutos(o.horario_inicio),
             fim: paraMinutos(o.horario_fim)
         }));
-    ocupadosMin.push({ inicio: ALMOCO_INICIO_MIN, fim: ALMOCO_FIM_MIN });
+    // Gambiarra temporária (2026-08-25): barbearia com aberto_12 = true atende
+    // durante o horário de almoço, então não bloqueia esse intervalo pra ela.
+    // Isso deve virar uma tela de cadastro própria mais pra frente.
+    if (!estabelecimento.aberto_12) {
+        ocupadosMin.push({ inicio: ALMOCO_INICIO_MIN, fim: ALMOCO_FIM_MIN });
+    }
 
     const ehHoje = agendamento.data_agendamento === dataDeHojeBanco();
     const agora = new Date();
