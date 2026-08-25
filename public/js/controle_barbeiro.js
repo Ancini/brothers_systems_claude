@@ -304,12 +304,22 @@ async function cancelarAgendamento(ag, item) {
     }
 
     try {
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
             .from("agendamento")
             .update({ status: "cancelado" })
-            .eq("id_agendamento", ag.id_agendamento);
+            .eq("id_agendamento", ag.id_agendamento)
+            .select();
 
         if (error) throw error;
+
+        // Update sem erro mas 0 linhas afetadas quase sempre é RLS barrando
+        // silenciosamente (a policy não reconheceu o barbeiro como dono do agendamento).
+        if (!data || data.length === 0) {
+            console.error("Update não afetou nenhuma linha — provável bloqueio de RLS na tabela agendamento.", ag);
+            alert("Não foi possível cancelar: sem permissão para alterar este agendamento (RLS). Verifique a policy no Supabase.");
+            fecharCard(item);
+            return;
+        }
 
         if (dataSelecionadaAtual) buscarAgendamentosDaAPI(dataSelecionadaAtual);
         buscarTotalVendasDoMes();
