@@ -103,6 +103,13 @@ html, body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     margin-bottom: 10px;
+    /* Rolagem continua funcionando (toque/arrasto), só esconde a barra visual. */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Edge/IE legado */
+}
+
+.horarios-carrossel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge (Chromium) */
 }
 
 .pagina-horarios {
