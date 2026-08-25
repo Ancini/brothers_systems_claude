@@ -171,6 +171,7 @@ a {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    --gap-dias: 10px;
     padding: 10px;
     margin-top: 20px;
 }
@@ -187,7 +188,11 @@ a {
     /* Rolagem continua funcionando (toque/arrasto), só esconde a barra visual. */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Edge/IE legado */
-    margin-bottom: 24px;
+    /* padding (herdado de .borda-segundaria) some daqui: o clip do overflow-x
+       acontece na borda externa do padding, não na do conteúdo, então sobrava
+       uma faixa onde o próximo card "espiava". Margin não tem esse problema. */
+    padding: 0;
+    margin: 24px 10px 32px;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
@@ -199,8 +204,11 @@ a {
 
 .linha-tempo-dias .agendamento {
     /* Mantém 3 cards visíveis por vez (tamanho original) — o resto fica
-       escondido até rolar pro lado, em vez de espremer tudo na tela. */
-    flex: 0 0 calc((100% - 20px) / 3);
+       escondido até rolar pro lado, em vez de espremer tudo na tela.
+       Usa a mesma variável do "gap" do container, senão os dois saem de
+       sincronia (ex: no mobile o gap muda pra 6px) e sobra um espacinho
+       que deixa o próximo card "espiando" na borda. */
+    flex: 0 0 calc((100% - (var(--gap-dias, 10px) * 2)) / 3);
     width: auto;
     scroll-snap-align: start;
 }
@@ -386,7 +394,26 @@ footer{
 .agendamento.ativo {
     background-color: #004aad !important; /* Cor idêntica à do card do Barbeiro */
     box-shadow: 0 0 0 3px #ffffff, 0 8px 20px rgba(0, 74, 173, 0.5); /* Borda branca fina e sombra azul */
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px);
+}
+
+/* modo_escuro.js aplica border: 1px solid #fff nos cards genéricos, mas em
+   telas de alta densidade isso vira um valor bem fino (ex: 0.8px) que o
+   navegador às vezes não desenha direito nos lados verticais — some por
+   completo já que o fundo do card e da página ficam ambos pretos, sem nenhum
+   contraste de sobra pra disfarçar a falha. Deixa mais grossa só aqui. */
+html.modo-escuro .card.agendamentos_por_ordem,
+html.modo-escuro .card.agendamento {
+    border-width: 2px !important;
+}
+
+/* O dia selecionado tem, além dessa borda, um anel branco (box-shadow) de
+   destaque — no modo escuro os dois ficam quase colados um no outro e o
+   resultado sai serrilhado/quebrado nos cantos. Tira o anel branco duplicado
+   e usa a cor azul da marca só na borda pra destacar sem sobrepor. */
+html.modo-escuro .agendamento.ativo {
+    box-shadow: none !important;
+    border-color: #2698f6 !important;
 }
 
 /* 4. Garante que os links dentro do card de Ranking herdem a cor branca e quebrem linha */
@@ -438,8 +465,14 @@ footer{
 
     .borda-segundaria {
         gap: 6px;
+        --gap-dias: 6px;
         padding: 8px;
         margin-top: 12px;
+    }
+
+    .linha-tempo-dias {
+        padding: 0;
+        margin: 20px 8px 28px;
     }
 
     .agendamentos_por_ordem {
