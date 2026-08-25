@@ -3,7 +3,9 @@ const SUPABASE_URL = "https://hnaapsbkrokrkmnzayyr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_AaxUlPsbivnRIu2_iu3Epg_nzr8w-3u";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let idBarbeiroLogado = null; 
+let idBarbeiroLogado = null;
+let dataSelecionadaAtual = null;
+const LARGURA_BOTAO_CANCELAR = 130;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const sucesso = await inicializarIdentidadeBarbeiro();
@@ -94,11 +96,13 @@ function inicializarLinhaDoTempo() {
         cardDia.addEventListener("click", () => {
             document.querySelectorAll(".linha-tempo-dias .card").forEach(c => c.classList.remove("ativo"));
             cardDia.classList.add("ativo");
+            dataSelecionadaAtual = dataFormatadaBanco;
             buscarAgendamentosDaAPI(dataFormatadaBanco);
         });
         containerDias.appendChild(cardDia);
     }
-    buscarAgendamentosDaAPI(formatarDataBanco(new Date()));
+    dataSelecionadaAtual = formatarDataBanco(new Date());
+    buscarAgendamentosDaAPI(dataSelecionadaAtual);
 }
 
 // 3. BUSCA E RENDERIZAÇÃO
@@ -118,9 +122,15 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
             .order('horario_inicio', { ascending: true });
 
         if (error) throw error;
-        
-        atualizarContadorAgendamentos(agendamentos ? agendamentos.length : 0);
-        renderizarAgendamentos(agendamentos || []);
+
+        // Mesmo critério usado em selecionar_horario.js: um agendamento cancelado
+        // não deve mais aparecer na agenda do barbeiro.
+        const agendamentosAtivos = (agendamentos || []).filter(
+            ag => !(ag.status || "").toLowerCase().includes("cancel")
+        );
+
+        atualizarContadorAgendamentos(agendamentosAtivos.length);
+        renderizarAgendamentos(agendamentosAtivos);
     } catch (error) {
         console.error("Erro ao buscar agendamentos:", error);
     }
@@ -190,22 +200,129 @@ function renderizarAgendamentos(agendamentos) {
     container.innerHTML = "";
 
     agendamentos.forEach(ag => {
-        const card = document.createElement("div");
-        card.className = "card agendamentos_por_ordem";
-
         const hora = formatarHorario24h(ag.horario_inicio);
 
-        card.innerHTML = `
-    <div class="agendamento-info">
-        <span class="titulo1">Cliente</span>
-        <span class="agendamento-valor">${escapeHtml(ag.nome_cliente)}</span>
-        <span class="titulo1">Serviço</span>
-        <span class="agendamento-valor">${escapeHtml(ag.nome_servico)}</span>
-    </div>
-    <div class="agendamento-horario">
-        ${hora}
+        const item = document.createElement("div");
+        item.className = "agendamento-item";
+
+        item.innerHTML = `
+    <button type="button" class="agendamento-cancelar-btn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+            <path d="M10 11v6"></path>
+            <path d="M14 11v6"></path>
+        </svg>
+        <span>Cancelar<br>agendamento</span>
+    </button>
+    <div class="card agendamentos_por_ordem">
+        <div class="agendamento-info">
+            <span class="titulo1">Cliente</span>
+            <span class="agendamento-valor">${escapeHtml(ag.nome_cliente)}</span>
+            <span class="titulo1">Serviço</span>
+            <span class="agendamento-valor">${escapeHtml(ag.nome_servico)}</span>
+        </div>
+        <div class="agendamento-horario">
+            ${hora}
+        </div>
     </div>
 `;
-        container.appendChild(card);
+        const btnCancelar = item.querySelector(".agendamento-cancelar-btn");
+        btnCancelar.addEventListener("click", () => cancelarAgendamento(ag, item));
+
+        configurarSwipe(item);
+        container.appendChild(item);
     });
 }
+
+// O card azul (.agendamentos_por_ordem) fica parado — quem se move é o botão
+// vermelho, que desliza por cima vindo da direita e cobre a área do horário.
+function configurarSwipe(item) {
+    const botao = item.querySelector(".agendamento-cancelar-btn");
+    let inicioX = 0;
+    let deslocamentoInicial = 0; // 0 = fechado, LARGURA_BOTAO_CANCELAR = totalmente aberto
+    let deslocamentoAtual = 0;
+    let arrastando = false;
+
+    item.addEventListener("pointerdown", (evento) => {
+        // Fecha qualquer outro card aberto antes de começar a arrastar este.
+        document.querySelectorAll(".agendamento-item.aberto").forEach(outro => {
+            if (outro !== item) fecharCard(outro);
+        });
+
+        inicioX = evento.clientX;
+        deslocamentoInicial = item.classList.contains("aberto") ? LARGURA_BOTAO_CANCELAR : 0;
+        arrastando = true;
+        botao.style.transition = "none";
+        item.setPointerCapture(evento.pointerId);
+    });
+
+    item.addEventListener("pointermove", (evento) => {
+        if (!arrastando) return;
+        const delta = evento.clientX - inicioX; // negativo = arrastando pra esquerda
+        deslocamentoAtual = Math.min(LARGURA_BOTAO_CANCELAR, Math.max(0, deslocamentoInicial - delta));
+        botao.style.transform = `translateX(${LARGURA_BOTAO_CANCELAR - deslocamentoAtual}px)`;
+    });
+
+    const finalizarArraste = () => {
+        if (!arrastando) return;
+        arrastando = false;
+        botao.style.transition = "";
+        if (deslocamentoAtual > LARGURA_BOTAO_CANCELAR / 2) {
+            abrirCard(item);
+        } else {
+            fecharCard(item);
+        }
+    };
+
+    item.addEventListener("pointerup", finalizarArraste);
+    item.addEventListener("pointercancel", finalizarArraste);
+}
+
+function abrirCard(item) {
+    item.classList.add("aberto");
+    item.querySelector(".agendamento-cancelar-btn").style.transform = "translateX(0)";
+}
+
+function fecharCard(item) {
+    item.classList.remove("aberto");
+    item.querySelector(".agendamento-cancelar-btn").style.transform = `translateX(${LARGURA_BOTAO_CANCELAR}px)`;
+}
+
+async function cancelarAgendamento(ag, item) {
+    if (!ag.id_agendamento) {
+        console.error("Agendamento sem id_agendamento — não é possível cancelar. Verifique se a view vw_agenda_do_barbeiro expõe essa coluna.", ag);
+        alert("Não foi possível cancelar: falta o identificador do agendamento.");
+        return;
+    }
+
+    const confirmou = confirm(`Cancelar o agendamento de ${ag.nome_cliente}?`);
+    if (!confirmou) {
+        fecharCard(item);
+        return;
+    }
+
+    try {
+        const { error } = await supabaseClient
+            .from("agendamento")
+            .update({ status: "cancelado" })
+            .eq("id_agendamento", ag.id_agendamento);
+
+        if (error) throw error;
+
+        if (dataSelecionadaAtual) buscarAgendamentosDaAPI(dataSelecionadaAtual);
+        buscarTotalVendasDoMes();
+    } catch (error) {
+        console.error("Erro ao cancelar agendamento:", error);
+        alert("Não foi possível cancelar o agendamento. Tente novamente.");
+        fecharCard(item);
+    }
+}
+
+// Toca fora de qualquer card aberto para fechá-lo de volta.
+document.addEventListener("pointerdown", (evento) => {
+    document.querySelectorAll(".agendamento-item.aberto").forEach(item => {
+        if (!item.contains(evento.target)) fecharCard(item);
+    });
+});
