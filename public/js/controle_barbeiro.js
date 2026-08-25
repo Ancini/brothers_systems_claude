@@ -272,17 +272,14 @@ function renderizarAgendamentos(agendamentos) {
         </div>
     </div>
 `;
-        const btnCancelar = item.querySelector(".agendamento-cancelar-btn");
-        btnCancelar.addEventListener("click", () => cancelarAgendamento(ag, item));
-
-        configurarSwipe(item);
+        configurarSwipe(item, ag);
         container.appendChild(item);
     });
 }
 
 // O card azul (.agendamentos_por_ordem) fica parado — quem se move é o botão
 // vermelho, que desliza por cima vindo da direita e cobre a área do horário.
-function configurarSwipe(item) {
+function configurarSwipe(item, ag) {
     const botao = item.querySelector(".agendamento-cancelar-btn");
     let inicioX = 0;
     let deslocamentoInicial = 0; // 0 = fechado, LARGURA_BOTAO_CANCELAR = totalmente aberto
@@ -313,10 +310,27 @@ function configurarSwipe(item) {
         botao.style.transform = `translateX(${LARGURA_BOTAO_CANCELAR - deslocamentoAtual}px)`;
     });
 
-    const finalizarArraste = () => {
+    const finalizarArraste = (evento) => {
         if (!arrastando) return;
         arrastando = false;
         botao.style.transition = "";
+
+        // Toque/clique parado (sem arrastar) em cima do botão já revelado = cancelar.
+        // Não dá pra confiar no evento "click" nativo do botão aqui: o
+        // setPointerCapture no item muda o alvo dos eventos de ponteiro e, em
+        // vários navegadores desktop, isso impede o "click" de disparar depois.
+        const moveuPouco = Math.abs(evento.clientX - inicioX) < 5;
+        const estavaAberto = item.classList.contains("aberto");
+        if (moveuPouco && estavaAberto) {
+            const retanguloBotao = botao.getBoundingClientRect();
+            const tocouNoBotao = evento.clientX >= retanguloBotao.left && evento.clientX <= retanguloBotao.right
+                && evento.clientY >= retanguloBotao.top && evento.clientY <= retanguloBotao.bottom;
+            if (tocouNoBotao) {
+                cancelarAgendamento(ag, item);
+                return;
+            }
+        }
+
         if (deslocamentoAtual > LARGURA_BOTAO_CANCELAR / 2) {
             abrirCard(item);
         } else {
