@@ -74,10 +74,54 @@ function exibirNomeBarbeiro(nome) {
     if (elNome && nome) elNome.textContent = nome;
 }
 
+// Arrasta com o mouse pra rolar (no touch já rola de graça) e converte a rodinha
+// vertical em scroll lateral, já que o container não tem gesto horizontal nativo no desktop.
+function configurarArrastoComMouse(container) {
+    let arrastando = false;
+    let comecouArrasto = false;
+    let inicioX = 0;
+    let scrollInicial = 0;
+
+    container.addEventListener("mousedown", (evento) => {
+        arrastando = true;
+        comecouArrasto = false;
+        inicioX = evento.clientX;
+        scrollInicial = container.scrollLeft;
+        container.style.cursor = "grabbing";
+    });
+
+    window.addEventListener("mousemove", (evento) => {
+        if (!arrastando) return;
+        const delta = evento.clientX - inicioX;
+        if (Math.abs(delta) > 5) comecouArrasto = true;
+        container.scrollLeft = scrollInicial - delta;
+    });
+
+    window.addEventListener("mouseup", () => {
+        arrastando = false;
+        container.style.cursor = "grab";
+    });
+
+    // Evita que o clique disparado logo após o arrasto ative o card de dia errado.
+    container.addEventListener("click", (evento) => {
+        if (comecouArrasto) {
+            evento.stopPropagation();
+            evento.preventDefault();
+        }
+    }, true);
+
+    container.addEventListener("wheel", (evento) => {
+        if (evento.deltaY === 0) return;
+        evento.preventDefault();
+        container.scrollLeft += evento.deltaY;
+    }, { passive: false });
+}
+
 // 2. GERA OS 4 DIAS DINAMICAMENTE
 function inicializarLinhaDoTempo() {
     const containerDias = document.querySelector(".linha-tempo-dias");
-    containerDias.innerHTML = ""; 
+    containerDias.innerHTML = "";
+    configurarArrastoComMouse(containerDias);
 
     for (let i = 0; i < 7; i++) {
         const dataRef = new Date();
@@ -246,6 +290,10 @@ function configurarSwipe(item) {
     let arrastando = false;
 
     item.addEventListener("pointerdown", (evento) => {
+        // Sem isso, no desktop o navegador entende o clique-e-arrasto como seleção
+        // de texto (ou início de um drag nativo) em vez do gesto de swipe.
+        evento.preventDefault();
+
         // Fecha qualquer outro card aberto antes de começar a arrastar este.
         document.querySelectorAll(".agendamento-item.aberto").forEach(outro => {
             if (outro !== item) fecharCard(outro);
