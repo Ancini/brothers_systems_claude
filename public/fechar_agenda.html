@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Fechar Agenda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="css/estilo_fechar_agenda.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#004aad">
+    <link rel="apple-touch-icon" href="css/imagens/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Brothers Systems">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card barbeiro">
+        <img src="css/imagens/barbeiro.png" alt="barbeiro" class="icone">
+        <div class="texto-barbeiro">
+            <span class="titulo1">Barbeiro</span>
+            <span class="titulo2" id="barbeiro-nome">Carregando...</span>
+        </div>
+    </div>
+
+    <div class="secao-titulo secao-vermelha">
+        <img src="css/imagens/fechar.png" alt="" class="icone-fechar">
+        Fechar Agenda
+        <img src="css/imagens/fechar.png" alt="" class="icone-fechar">
+    </div>
+
+    <p class="aviso-semana">Vale só para esta semana</p>
+
+    <div class="dias-lista" id="dias-lista">
+        <!-- Gerado dinamicamente via JS (fechar_agenda.js) -->
+    </div>
+
+    <button type="button" class="btn btn-confirmar" id="btn-confirmar">
+        Confirmar
+    </button>
+
+    <button type="button" class="btn btn-voltar" id="btn-voltar">
+        <img src="css/imagens/voltar.png" alt="" class="icone-voltar">
+        Voltar
+    </button>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/fechar_agenda.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>

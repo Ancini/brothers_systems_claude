@@ -1,0 +1,293 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    min-width: 320px;
+    margin: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 24px;
+}
+
+.card.barbeiro {
+    background-color: rgba(0, 74, 173, 1);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card.barbeiro .icone {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.texto-barbeiro {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.texto-barbeiro .titulo1 {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.texto-barbeiro .titulo2 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.secao-titulo {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.secao-vermelha {
+    background-color: #e53935;
+}
+
+.icone-fechar {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.aviso-semana {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.dias-lista {
+    margin-bottom: 15px;
+}
+
+/* Tudo numa linha só: checkbox -> nome do dia -> horários (quando marcado) —
+   dá pra seguir a sequência da esquerda pra direita em vez de quebrar em duas linhas. */
+.dia-linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 4px;
+    border-bottom: 1px solid #eee;
+}
+
+.dia-linha:last-child {
+    border-bottom: none;
+}
+
+.dia-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.dia-checkbox {
+    width: 22px;
+    height: 22px;
+    accent-color: rgba(0, 74, 173, 1);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.dia-nome {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(0, 74, 173, 1);
+    white-space: nowrap;
+}
+
+.dia-bloqueio {
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.horario-icone {
+    color: #e53935;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.horario-pill {
+    flex: 1;
+    min-width: 0;
+    background-color: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 6px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    text-align: center;
+    outline: none;
+}
+
+.horario-pill::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.btn-excluir-bloqueio {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-excluir-bloqueio img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.btn {
+    border-radius: 14px;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: default;
+    transform: none;
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.btn-voltar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.icone-voltar {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+footer {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.brand-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.brand-footer-nome {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.brand-footer-sub {
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(38, 152, 246, 1);
+    letter-spacing: 1px;
+}
+
+/* Modo escuro: mesmo padrão preto/borda branca usado no resto do app */
+html.modo-escuro .card.barbeiro,
+html.modo-escuro .secao-titulo,
+html.modo-escuro .horario-pill,
+html.modo-escuro .btn-confirmar,
+html.modo-escuro .btn-voltar {
+    background: #000 !important;
+    background-color: #000 !important;
+    background-image: none !important;
+    border: 1px solid #fff !important;
+    color: #fff !important;
+}
+
+html.modo-escuro .dia-linha {
+    border-bottom: 1px solid #333;
+}
+
+html.modo-escuro .dia-nome {
+    color: #fff;
+}
+
+html.modo-escuro img {
+    filter: none !important;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+        max-width: 100%;
+    }
+
+    .secao-titulo {
+        font-size: 14px;
+    }
+
+    .horario-pill {
+        padding: 8px 4px;
+        font-size: 12px;
+    }
+}

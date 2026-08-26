@@ -88,6 +88,13 @@
     cursor: pointer;
 }
 
+/* FECHAR AGENDA: ocupa a linha toda, mesmo padrão da promoção */
+.fechar-agenda {
+    grid-column: span 2;
+    background-color: #e53935;
+    cursor: pointer;
+}
+
 /* PAINEL ADMINISTRATIVO: só aparece pra usuário com administrador=true (ver controle_barbeiro.js) */
 .painel-administrativo {
     display: none;
@@ -120,6 +127,7 @@
 .texto-ranking,
 .texto-relatorio,
 .texto-promocao,
+.texto-fechar-agenda,
 .texto-dia {
     display: flex;
     flex-direction: column;
