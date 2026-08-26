@@ -117,14 +117,14 @@ async function carregarHorarios() {
 
     // Intervalo que o próprio barbeiro fechou pra essa data específica
     // (ver public/fechar_agenda.html) — só vale pra semana em que foi cadastrado.
-    const { data: bloqueios, error: erroBloqueios } = await supabase
+    const { data: bloqueiosAgenda, error: erroBloqueiosAgenda } = await supabase
         .from("bloqueio_agenda")
         .select("horario_inicio, horario_fim")
         .eq("id_prestador", agendamento.id_prestador)
         .eq("data", agendamento.data_agendamento);
 
-    if (erroBloqueios) {
-        console.error("Erro ao buscar bloqueios da agenda do barbeiro:", erroBloqueios);
+    if (erroBloqueiosAgenda) {
+        console.error("Erro ao buscar bloqueios da agenda do barbeiro:", erroBloqueiosAgenda);
     }
 
     // Horário do dia específico (tabela horario_funcionamento — uma linha por
@@ -156,7 +156,7 @@ async function carregarHorarios() {
             fim: paraMinutos(o.horario_fim)
         }));
 
-    (bloqueios || []).forEach(b => {
+    (bloqueiosAgenda || []).forEach(b => {
         ocupadosMin.push({ inicio: paraMinutos(b.horario_inicio), fim: paraMinutos(b.horario_fim) });
     });
 
