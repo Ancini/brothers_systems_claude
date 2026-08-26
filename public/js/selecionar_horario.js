@@ -115,6 +115,18 @@ async function carregarHorarios() {
         console.error("Erro ao buscar horários ocupados:", erroOcupados);
     }
 
+    // Intervalo que o próprio barbeiro fechou pra essa data específica
+    // (ver public/fechar_agenda.html) — só vale pra semana em que foi cadastrado.
+    const { data: bloqueios, error: erroBloqueios } = await supabase
+        .from("bloqueio_agenda")
+        .select("horario_inicio, horario_fim")
+        .eq("id_prestador", agendamento.id_prestador)
+        .eq("data", agendamento.data_agendamento);
+
+    if (erroBloqueios) {
+        console.error("Erro ao buscar bloqueios da agenda do barbeiro:", erroBloqueios);
+    }
+
     // Horário do dia específico (tabela horario_funcionamento — uma linha por
     // dia da semana, ver public/cadastrar_dias_funcionamento.html). Se a
     // barbearia ainda não configurou esse dia ali, cai no horário geral dela.
@@ -143,6 +155,11 @@ async function carregarHorarios() {
             inicio: paraMinutos(o.horario_inicio),
             fim: paraMinutos(o.horario_fim)
         }));
+
+    (bloqueios || []).forEach(b => {
+        ocupadosMin.push({ inicio: paraMinutos(b.horario_inicio), fim: paraMinutos(b.horario_fim) });
+    });
+
     // Gambiarra temporária (2026-08-25): barbearia com aberto_12 = true atende
     // durante o horário de almoço, então não bloqueia esse intervalo pra ela.
     // Isso deve virar uma tela de cadastro própria mais pra frente.
