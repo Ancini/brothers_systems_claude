@@ -138,34 +138,17 @@
     background-color: rgb(247, 148, 74);
 }
 
-/* CADASTRAR PORCENTAGEM PARA BARBEIRO: card já reservado no layout, tela/lógica
-   ainda não existem (nem o protótipo) — fica visualmente "desligado", sem
-   cursor de link nem navegação, com o selo "Em breve". */
+/* CADASTRAR PORCENTAGEM PARA BARBEIRO: leva pra cadastrar_porcentagem_barbeiro.html */
 .porcentagem-barbeiro {
     grid-column: span 2;
     height: 80px;
     background-color: #6b6b6b;
-    cursor: default;
-    position: relative;
+    cursor: pointer;
 }
 
 .porcentagem-barbeiro:hover {
     background-color: #6b6b6b;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Fundo translúcido + borda, em vez de cor sólida: assim continua legível
-   mesmo com o modo escuro forçando texto branco em ".card *" */
-.badge-em-breve {
-    align-self: flex-start;
-    margin-top: 2px;
-    font-size: 11px;
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.2);
-    border: 1px solid currentColor;
-    padding: 2px 8px;
-    border-radius: 999px;
+    filter: brightness(1.15);
 }
 
 /* VOLTAR (tela outras_funcionalidades.html): mesmo grid de cards, mas
@@ -176,6 +159,12 @@
     justify-content: center;
     background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
     cursor: pointer;
+}
+
+.btn-voltar-funcionalidades .icone-voltar {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }
 
 
@@ -322,6 +311,34 @@ a {
 
 #container-lista-agendamentos {
     padding: 0 10px;
+}
+
+/* VOLTAR (menu_inicial_barbeiro.html): leva de volta pro menu do cliente,
+   de onde o barbeiro entrou nessa área (ver cardAcessoBarbeiro em menu_cliente.html) */
+.btn-voltar-menu {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    justify-content: center;
+    margin: 15px 10px 0;
+    padding: 14px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.btn-voltar-menu:hover {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
+
+.btn-voltar-menu:active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.btn-voltar-menu .icone-voltar {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Envelope que recorta o swipe: o card azul desliza por cima,

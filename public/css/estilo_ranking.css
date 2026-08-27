@@ -123,11 +123,21 @@ body {
 .btn-voltar {
     background: linear-gradient(135deg, #2ecc71, #27ae60);
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-voltar:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+.icone-voltar {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Agrupamento vermelho */

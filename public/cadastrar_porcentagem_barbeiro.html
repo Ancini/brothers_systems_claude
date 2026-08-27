@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Cadastrar Porcentagem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo_cadastrar_porcentagem_barbeiro.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#004aad">
+    <link rel="apple-touch-icon" href="css/imagens/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Brothers Systems">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card dono">
+        <img src="css/imagens/barbeiro.png" alt="Proprietário" class="icone">
+        <div class="texto-dono">
+            <span class="titulo1">Barbeiro - Proprietário</span>
+            <span class="titulo2" id="dono-nome">Carregando...</span>
+        </div>
+    </div>
+
+    <div class="btn btn-voltar" onclick="window.location.href='menu_inicial_barbeiro.html'">
+        <i class="fa-solid fa-arrow-rotate-left"></i> Retornar ao menu principal
+    </div>
+
+    <form id="form-porcentagem">
+        <div class="input-container">
+            <select id="barbeiro-select" required>
+                <option value="" disabled selected>Selecione o barbeiro</option>
+            </select>
+            <i class="fa-solid fa-user-tie"></i>
+        </div>
+
+        <div class="input-container">
+            <input id="porcentagem-barbeiro" type="text" inputmode="numeric" placeholder="Informe a % para o barbeiro" required>
+            <i class="fa-solid fa-percent"></i>
+        </div>
+
+        <button type="submit" class="btn btn-confirmar">
+            Confirmar <i class="fa-solid fa-check"></i>
+        </button>
+
+        <button type="button" class="btn btn-cancelar" id="btn-cancelar">
+            Cancelar <i class="fa-solid fa-xmark"></i>
+        </button>
+    </form>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/cadastrar_porcentagem_barbeiro.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>

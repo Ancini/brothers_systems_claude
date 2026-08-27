@@ -172,7 +172,9 @@ body {
 }
 
 .icone-voltar {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Card Header Agendamentos */

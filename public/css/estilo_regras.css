@@ -48,6 +48,12 @@ body {
     transform: translateY(-2px);
 }
 
+.icone-voltar {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
 /* Título Principal */
 .titulo-principal {
     background: #e74c3c;
