@@ -15,25 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
         console.error("Não foi possível identificar o barbeiro. Verifique o login ou o vínculo no banco.");
     }
-
-    exibirCardPainelAdministrativo();
 });
-
-// Mostra o atalho pro painel do administrador só se a sessão salva
-// (localStorage, ver public/js/session.js) tiver administrador = true.
-function exibirCardPainelAdministrativo() {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    const ehAdministrador = usuario?.administrador === true || usuario?.administrador === "true";
-    if (!ehAdministrador) return;
-
-    const card = document.getElementById("cardPainelAdministrativo");
-    if (!card) return;
-
-    card.style.display = "flex";
-    card.addEventListener("click", () => {
-        window.location.href = "menu_administrador.html";
-    });
-}
 
 // Formata um Date pra "YYYY-MM-DD" usando o fuso local (evita o desvio de dia do toISOString)
 function formatarDataBanco(data) {

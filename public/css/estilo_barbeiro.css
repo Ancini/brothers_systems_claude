@@ -110,14 +110,85 @@
     filter: brightness(1.4);
 }
 
+/* OUTRAS FUNCIONALIDADES: no lugar que "Relatórios" ocupava no menu principal
+   do barbeiro, leva pra tela outras_funcionalidades.html — mesmo cinza do
+   card "Cadastrar porcentagem para barbeiro" (.porcentagem-barbeiro) */
+.outras-funcionalidades {
+    height: 80px;
+    background-color: #6b6b6b;
+    cursor: pointer;
+}
+
+.outras-funcionalidades:hover {
+    background-color: #6b6b6b;
+    filter: brightness(1.15);
+}
+
+/* RELATÓRIO POR FUNCIONÁRIO: (tela outras_funcionalidades.html) só aparece pro
+   prestador cadastrado como dono do estabelecimento (ver
+   exibirCardRelatorioFuncionarios em js/outras_funcionalidades.js) */
+.relatorio-funcionarios {
+    display: none;
+    height: 80px;
+    background-color: rgba(245, 131, 44, 1);
+    cursor: pointer;
+}
+
+.relatorio-funcionarios:hover {
+    background-color: rgb(247, 148, 74);
+}
+
+/* CADASTRAR PORCENTAGEM PARA BARBEIRO: card já reservado no layout, tela/lógica
+   ainda não existem (nem o protótipo) — fica visualmente "desligado", sem
+   cursor de link nem navegação, com o selo "Em breve". */
+.porcentagem-barbeiro {
+    grid-column: span 2;
+    height: 80px;
+    background-color: #6b6b6b;
+    cursor: default;
+    position: relative;
+}
+
+.porcentagem-barbeiro:hover {
+    background-color: #6b6b6b;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Fundo translúcido + borda, em vez de cor sólida: assim continua legível
+   mesmo com o modo escuro forçando texto branco em ".card *" */
+.badge-em-breve {
+    align-self: flex-start;
+    margin-top: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid currentColor;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+/* VOLTAR (tela outras_funcionalidades.html): mesmo grid de cards, mas
+   centralizado e sem ícone lateral, pra ficar claro que é a ação de sair */
+.btn-voltar-funcionalidades {
+    grid-column: span 2;
+    height: 60px;
+    justify-content: center;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    cursor: pointer;
+}
 
 
 
 
-/* ÍCONES */
+
+/* ÍCONES: altura fixa (não só largura) pra imagens com proporção estranha
+   (ex: administrador.png) não esticarem o card além dos 80px definidos */
 .icone {
     width: 48px;
-    height: auto;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 /* TEXTO DOS CARDS PRINCIPAIS */
@@ -126,6 +197,9 @@
 .texto-agendamentos,
 .texto-ranking,
 .texto-relatorio,
+.texto-relatorio-funcionarios,
+.texto-outras-funcionalidades,
+.texto-porcentagem,
 .texto-promocao,
 .texto-fechar-agenda,
 .texto-dia {
@@ -461,6 +535,7 @@ html.modo-escuro .agendamento.ativo {
 
     .icone {
         width: 34px;
+        height: 34px;
     }
 
     .titulo1 {
@@ -504,6 +579,7 @@ html.modo-escuro .agendamento.ativo {
 
     .icone {
         width: 56px;
+        height: 56px;
     }
 
     .titulo1 {
@@ -518,7 +594,9 @@ html.modo-escuro .agendamento.ativo {
     .vendas,
     .total_agendamentos,
     .ranking,
-    .relatorios {
+    .relatorios,
+    .outras-funcionalidades,
+    .relatorio-funcionarios {
         height: 95px;
     }
 

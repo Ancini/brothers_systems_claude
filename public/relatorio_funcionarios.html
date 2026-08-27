@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Brothers Systems - Relatório da Barbearia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="css/imagens/2.ico">
+    <link rel="stylesheet" href="css/estilo_relatorio_funcionarios.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#004aad">
+    <link rel="apple-touch-icon" href="css/imagens/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Brothers Systems">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card dono">
+        <img src="css/imagens/barbeiro.png" alt="Proprietário" class="icone">
+        <div class="texto-dono">
+            <span class="titulo1">Barbeiro - Proprietário</span>
+            <span class="titulo2" id="dono-nome">Carregando...</span>
+        </div>
+    </div>
+
+    <div class="secao-titulo secao-laranja">
+        <img src="css/imagens/relatorio.png" alt="" class="icone-secao">
+        Relatórios da Barbearia
+        <img src="css/imagens/relatorio.png" alt="" class="icone-secao">
+    </div>
+
+    <div class="filtros-botoes">
+        <div class="filtro-btn" data-periodo="semana">
+            <img src="css/imagens/calendario.png" alt="" class="filtro-icone">
+            Semana
+        </div>
+        <div class="filtro-btn ativo" data-periodo="mes">
+            <img src="css/imagens/calendario.png" alt="" class="filtro-icone">
+            Mês
+        </div>
+        <div class="filtro-btn" data-periodo="ano">
+            <img src="css/imagens/relogio.png" alt="" class="filtro-icone">
+            Ano
+        </div>
+    </div>
+
+    <div class="btn-intervalo" id="btn-intervalo">
+        <img src="css/imagens/calendario.png" alt="" class="icone-secao">
+        Selecionar Intervalo
+        <img src="css/imagens/calendario.png" alt="" class="icone-secao">
+    </div>
+
+    <div class="painel-intervalo" id="painel-intervalo">
+        <input type="date" class="data-input" id="data-inicio">
+        <span class="intervalo-ate">até</span>
+        <input type="date" class="data-input" id="data-fim">
+        <button type="button" class="btn-aplicar-intervalo" id="btn-aplicar-intervalo">Aplicar</button>
+    </div>
+
+    <div class="periodo-info" id="periodo-info">
+        Carregando...
+    </div>
+
+    <div class="estatistica-card arrecadou">
+        <img src="css/imagens/dinheiro.png" alt="valor" class="estatistica-icone">
+        <div>
+            <div class="estatistica-label">A barbearia arrecadou</div>
+            <div class="estatistica-valor" id="valor-total">R$0,00 Reais</div>
+        </div>
+    </div>
+
+    <div class="funcionarios-lista" id="funcionarios-lista">
+        <!-- Gerado dinamicamente via JS (relatorio_funcionarios.js) -->
+    </div>
+
+    <div class="btn-voltar" id="btn-voltar">
+        <span>Voltar</span>
+        <span class="voltar-icone">↩</span>
+    </div>
+
+    <footer>
+        <div class="brand-footer">
+            <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
+            <span class="brand-footer-sub">BARBER SHOP</span>
+        </div>
+    </footer>
+
+</div>
+
+    <script type="module" src="js/relatorio_funcionarios.js"></script>
+    <script type="module" src="js/modo_escuro.js"></script>
+</body>
+</html>
