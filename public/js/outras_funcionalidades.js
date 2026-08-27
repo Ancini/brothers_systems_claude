@@ -32,10 +32,9 @@ function exibirCardPainelAdministrativo(usuario) {
 
 // Mostra o atalho pro relatório por funcionário para: (1) administrador, sempre
 // — pra poder acompanhar/testar a tela mesmo sem ser dono de nenhum
-// estabelecimento; ou (2) prestador cadastrado como dono do estabelecimento na
-// tabela `proprietario_estabelecimento` (id_prestador, id_estabelicimento) —
-// tabela/nomes ainda a confirmar quando a tela de "cadastrar proprietário" for
-// criada; ajustar aqui se mudar.
+// estabelecimento; ou (2) prestador com `proprietario_estab = true` em
+// alguma linha da tabela `prestador` (coluna criada 2026-08-27, marca a
+// linha barbeiro↔loja em que esse prestador é o dono daquele estabelecimento).
 async function exibirCardRelatorioFuncionarios(usuario, idPrestador) {
     const ehAdministrador = usuario?.administrador === true || usuario?.administrador === "true";
 
@@ -44,9 +43,10 @@ async function exibirCardRelatorioFuncionarios(usuario, idPrestador) {
 
         try {
             const { data, error } = await supabase
-                .from('proprietario_estabelecimento')
+                .from('prestador')
                 .select('id_prestador')
                 .eq('id_prestador', idPrestador)
+                .eq('proprietario_estab', true)
                 .limit(1);
 
             if (error) throw error;
