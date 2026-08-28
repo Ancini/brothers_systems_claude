@@ -309,6 +309,56 @@ a {
     
 }
 
+/* Paginação dos agendamentos: mostra 5 por vez, empilhados verticalmente
+   (layout original), com setas ‹ › trocando de página — ver
+   renderizarPaginaAgendamentos e configurarSetasAgendamentos em
+   controle_barbeiro.js. Nada de rolagem horizontal aqui. */
+.agendamentos-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.agendamentos-nav .agendamentos-setas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.agendamentos-seta {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background-color: #1e90ff;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.agendamentos-seta:hover:not(:disabled) {
+    background-color: #0074ad;
+    transform: scale(1.08);
+}
+
+.agendamentos-seta:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.agendamentos-pagina-info {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
 #container-lista-agendamentos {
     padding: 0 10px;
 }

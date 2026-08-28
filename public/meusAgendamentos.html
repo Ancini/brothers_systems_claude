@@ -56,8 +56,17 @@
             </div>
         </div>
 
-        <!-- Lista de Agendamentos: renderizada dinamicamente via JS -->
-        <div class="agendamentos-lista"></div>
+        <!-- Lista de Agendamentos: renderizada dinamicamente via JS, empilhados
+             (layout normal). Mostra os 5 mais recentes por padrão; "‹ anterior"
+             busca e mostra os 5 mais antigos seguintes, "› próximo" volta. -->
+        <div class="agendamentos-nav">
+            <div class="agendamentos-lista"></div>
+            <div class="agendamentos-setas">
+                <button type="button" class="agendamentos-seta" id="btn-agendamentos-anterior" aria-label="Agendamentos mais antigos">‹</button>
+                <span class="agendamentos-pagina-info" id="agendamentos-pagina-info"></span>
+                <button type="button" class="agendamentos-seta" id="btn-agendamentos-proximo" aria-label="Agendamentos mais recentes">›</button>
+            </div>
+        </div>
 
         <div class="brand-footer">
             <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>

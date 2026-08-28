@@ -216,7 +216,56 @@ body {
     color: #ffffff;
 }
 
-/* Lista de Agendamentos */
+/* Paginação da lista: 5 cards por vez, empilhados verticalmente (layout
+   original) — setas ‹ › abaixo trocam de página, buscando mais antigos sob
+   demanda quando preciso (ver carregarPaginaAgendamentos em
+   meusAgendamentos.js). Mesmo padrão de menu_inicial_barbeiro.html. */
+.agendamentos-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.agendamentos-setas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.agendamentos-seta {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background-color: #2196F3;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.agendamentos-seta:hover:not(:disabled) {
+    background-color: rgb(6, 93, 164);
+    transform: scale(1.08);
+}
+
+.agendamentos-seta:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.agendamentos-pagina-info {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
 .agendamentos-lista {
     display: flex;
     flex-direction: column;
@@ -290,13 +339,6 @@ body {
     line-height: 1;
 }
 
-.periodo {
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: 700;
-    line-height: 1;
-}
-
 .dia-semana {
     font-size: 12px;
     color: #ffffff;
@@ -331,12 +373,8 @@ body {
     .agendamento-card {
         padding: 12px 15px;
     }
-    
+
     .horario {
         font-size: 28px;
-    }
-    
-    .periodo {
-        font-size: 18px;
     }
 }

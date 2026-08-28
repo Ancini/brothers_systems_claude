@@ -192,6 +192,19 @@ body {
     display: none;
 }
 
+.select-estabelecimento {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e74c3c;
+    color: #333;
+    font-size: 15px;
+    font-family: inherit;
+    margin-bottom: 15px;
+    background: #fff;
+    cursor: pointer;
+}
+
 /* Ranking */
 .ranking-titulo {
     background: #bfa200;
@@ -280,7 +293,8 @@ html.modo-escuro .stat-card,
 html.modo-escuro .btn-voltar,
 html.modo-escuro .grupo-vermelho .btn,
 html.modo-escuro .ranking-titulo,
-html.modo-escuro .input-mes {
+html.modo-escuro .input-mes,
+html.modo-escuro .select-estabelecimento {
     background: #000 !important;
     background-color: #000 !important;
     background-image: none !important;
