@@ -108,10 +108,12 @@ function porcentagemMascaradaParaNumero(valorFormatado) {
     return digitos ? Number(digitos) : 0;
 }
 
-// A tabela/coluna de comissão ainda não existe no banco (ver memória do
-// projeto) — por enquanto só valida o formulário; o cadastro em si fica
-// pendente até o back-end estar pronto.
-function confirmarCadastro(event) {
+// Guarda as lojas do dono logado (preenchido no DOMContentLoaded) pra
+// restringir o update só às linhas de prestador que ele realmente é dono —
+// mesmo raciocínio da policy de UPDATE (ver eh_dono_da_loja no banco).
+let estabelecimentosDoDono = [];
+
+async function confirmarCadastro(event) {
     event.preventDefault();
 
     const idBarbeiro = Number(document.getElementById("barbeiro-select").value);
@@ -122,7 +124,36 @@ function confirmarCadastro(event) {
         return;
     }
 
-    alert("Essa tela ainda está sem back-end — o cadastro da porcentagem será habilitado em breve.");
+    if (!estabelecimentosDoDono.length) {
+        alert("Não foi possível confirmar: nenhum estabelecimento encontrado pra esse dono.");
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from("prestador")
+            .update({ porcentagem_comissao: porcentagem })
+            .eq("id_prestador", idBarbeiro)
+            .in("id_estabelicimento", estabelecimentosDoDono)
+            .select();
+
+        if (error) throw error;
+
+        // Update sem erro mas 0 linhas afetadas quase sempre é RLS barrando
+        // silenciosamente (mesmo padrão já visto em cancelarAgendamento,
+        // controle_barbeiro.js) — falta a policy de UPDATE em prestador.
+        if (!data || data.length === 0) {
+            console.error("Update não afetou nenhuma linha — provável bloqueio de RLS na tabela prestador.");
+            alert("Não foi possível salvar: sem permissão para alterar essa linha (RLS). Verifique a policy de UPDATE no Supabase.");
+            return;
+        }
+
+        alert("Porcentagem cadastrada com sucesso!");
+        window.location.href = "menu_inicial_barbeiro.html";
+    } catch (erro) {
+        console.error("Erro ao cadastrar porcentagem:", erro);
+        alert(erro.message || "Erro ao cadastrar a porcentagem.");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -131,8 +162,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const idPrestadorLogado = await identificarPrestadorLogado();
     if (idPrestadorLogado) {
-        const idsEstabelecimentos = await buscarEstabelecimentosDoDono(idPrestadorLogado);
-        await carregarFuncionarios(idPrestadorLogado, idsEstabelecimentos);
+        estabelecimentosDoDono = await buscarEstabelecimentosDoDono(idPrestadorLogado);
+        await carregarFuncionarios(idPrestadorLogado, estabelecimentosDoDono);
     } else {
         console.error("Não foi possível identificar o dono logado. Verifique o login ou o vínculo no banco.");
     }

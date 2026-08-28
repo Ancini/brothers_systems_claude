@@ -251,6 +251,13 @@ body {
     margin-bottom: 15px;
 }
 
+.funcionarios-vazio {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+    padding: 20px 10px;
+}
+
 .funcionario-card {
     background-color: rgba(0, 74, 173, 1);
     color: #fff;
