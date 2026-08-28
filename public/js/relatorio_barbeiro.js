@@ -40,7 +40,7 @@ async function inicializarIdentidadeBarbeiro() {
 async function buscarResumo(dataInicio, dataFim) {
     const { data, error } = await supabase
         .from('vw_agenda_do_barbeiro')
-        .select('valor_servico')
+        .select('valor_servico, status')
         .eq('id_prestador', idBarbeiroLogado)
         .gte('data_agendamento', dataInicio)
         .lt('data_agendamento', dataFim);
@@ -50,8 +50,14 @@ async function buscarResumo(dataInicio, dataFim) {
         return { total: 0, quantidade: 0 };
     }
 
-    const total = (data || []).reduce((soma, ag) => soma + Number(ag.valor_servico || 0), 0);
-    return { total, quantidade: data ? data.length : 0 };
+    // Mesmo critério usado em controle_barbeiro.js: agendamento cancelado
+    // não conta nem no total vendido, nem na contagem de cortes.
+    const agendamentosAtivos = (data || []).filter(
+        ag => !(ag.status || "").toLowerCase().includes("cancel")
+    );
+
+    const total = agendamentosAtivos.reduce((soma, ag) => soma + Number(ag.valor_servico || 0), 0);
+    return { total, quantidade: agendamentosAtivos.length };
 }
 
 async function carregarResumoTopo() {
