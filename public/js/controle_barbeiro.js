@@ -176,14 +176,20 @@ async function buscarTotalVendasDoMes() {
     try {
         const { data: agendamentos, error } = await supabaseClient
             .from('vw_agenda_do_barbeiro')
-            .select('valor_servico')
+            .select('valor_servico, status')
             .eq('id_prestador', idBarbeiroLogado)
             .gte('data_agendamento', dataInicio)
             .lt('data_agendamento', dataFim);
 
         if (error) throw error;
 
-        atualizarTotalVendas(agendamentos || []);
+        // Mesmo critério usado em buscarAgendamentosDaAPI: um agendamento
+        // cancelado não deve entrar na soma do total vendido.
+        const agendamentosAtivos = (agendamentos || []).filter(
+            ag => !(ag.status || "").toLowerCase().includes("cancel")
+        );
+
+        atualizarTotalVendas(agendamentosAtivos);
     } catch (error) {
         console.error("Erro ao buscar total de vendas do mês:", error);
     }
