@@ -3,6 +3,14 @@ import { pegarSessao } from "./session.js";
 
 const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 const DIAS_SEMANA = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+const PAGINA_TAMANHO = 5;
+
+// Estado da paginação "5 em 5": página 0 = os mais recentes. Páginas já
+// buscadas ficam em cache (evita reconsultar ao ir e voltar); "última página"
+// é conhecida assim que uma busca volta com menos de PAGINA_TAMANHO linhas.
+let paginaAgendamentosAtual = 0;
+let cachePaginasAgendamentos = new Map();
+let ultimaPaginaAgendamentos = null;
 
 function formatarHorario24h(horario24) {
     if (!horario24) return "--:--";
@@ -34,10 +42,32 @@ function escapeHtml(valor) {
     }[c]));
 }
 
+function criarCardAgendamento(ag) {
+    const hora = formatarHorario24h(ag.horario_inicio);
+    const { data, diaSemana } = formatarData(ag.data_agendamento);
+
+    const card = document.createElement("div");
+    card.className = "agendamento-card";
+    card.innerHTML = `
+        <div class="agendamento-info">
+            <span class="barbeiro-label">Barbeiro</span>
+            <span class="barbearia-nome">${escapeHtml(ag.nome_barbeiro || "-")}</span>
+            <span class="servico-label">Serviço: ${escapeHtml(ag.nome_servico || "-")}</span>
+            <span class="data-label">Data</span>
+            <span class="data-valor">${data}</span>
+        </div>
+        <div class="agendamento-horario">
+            <span class="horario">${hora}</span>
+            <span class="dia-semana">${diaSemana}</span>
+        </div>
+    `;
+    return card;
+}
+
+// Desenha a lista de uma página (empilhados, mais recente no topo — mesma
+// ordem/layout de sempre). agendamentos já vem filtrado e na ordem certa.
 function renderizarAgendamentos(agendamentos) {
     const container = document.querySelector(".agendamentos-lista");
-    const elTotal = document.querySelector(".agendamentos-total");
-    if (elTotal) elTotal.textContent = agendamentos.length;
     if (!container) return;
 
     container.innerHTML = "";
@@ -47,27 +77,83 @@ function renderizarAgendamentos(agendamentos) {
         return;
     }
 
-    agendamentos.forEach(ag => {
-        const hora = formatarHorario24h(ag.horario_inicio);
-        const { data, diaSemana } = formatarData(ag.data_agendamento);
+    agendamentos.forEach(ag => container.appendChild(criarCardAgendamento(ag)));
+}
 
-        const card = document.createElement("div");
-        card.className = "agendamento-card";
-        card.innerHTML = `
-            <div class="agendamento-info">
-                <span class="barbeiro-label">Barbeiro</span>
-                <span class="barbearia-nome">${escapeHtml(ag.nome_barbeiro || "-")}</span>
-                <span class="servico-label">Serviço: ${escapeHtml(ag.nome_servico || "-")}</span>
-                <span class="data-label">Data</span>
-                <span class="data-valor">${data}</span>
-            </div>
-            <div class="agendamento-horario">
-                <span class="horario">${hora}</span>
-                <span class="dia-semana">${diaSemana}</span>
-            </div>
-        `;
-        container.appendChild(card);
-    });
+// Busca (ou reaproveita do cache) a página pedida e desenha. total sempre
+// mostra quantos estão carregados até agora (cresce conforme "anterior" é usado).
+async function carregarPaginaAgendamentos(usuario, pagina) {
+    if (cachePaginasAgendamentos.has(pagina)) {
+        renderizarAgendamentos(cachePaginasAgendamentos.get(pagina));
+        atualizarSetasAgendamentos();
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from("vw_meus_agendamentos")
+        .select("*")
+        .eq("id_usuario", usuario.id_usuario)
+        // vw_meus_agendamentos traz o histórico completo, cancelado incluso —
+        // aqui só interessa o que ainda está ativo (status is.null cobre
+        // agendamentos antigos sem status explícito, tratados como confirmados).
+        .or("status.is.null,status.not.ilike.%cancel%")
+        .order("data_agendamento", { ascending: false })
+        .order("horario_inicio", { ascending: false })
+        .range(pagina * PAGINA_TAMANHO, pagina * PAGINA_TAMANHO + PAGINA_TAMANHO - 1);
+
+    if (error) {
+        console.error("Erro ao buscar agendamentos:", error);
+        const container = document.querySelector(".agendamentos-lista");
+        if (container) {
+            container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Erro ao carregar agendamentos.</p>`;
+        }
+        return;
+    }
+
+    const pagina_ = data || [];
+    cachePaginasAgendamentos.set(pagina, pagina_);
+    if (pagina_.length < PAGINA_TAMANHO) ultimaPaginaAgendamentos = pagina;
+
+    const elTotal = document.querySelector(".agendamentos-total");
+    if (elTotal) elTotal.textContent = pagina_.length;
+
+    renderizarAgendamentos(pagina_);
+    atualizarSetasAgendamentos();
+}
+
+function atualizarSetasAgendamentos() {
+    const btnAnterior = document.getElementById("btn-agendamentos-anterior");
+    const btnProximo = document.getElementById("btn-agendamentos-proximo");
+    const elInfo = document.getElementById("agendamentos-pagina-info");
+    if (!btnAnterior || !btnProximo) return;
+
+    btnAnterior.disabled = ultimaPaginaAgendamentos !== null && paginaAgendamentosAtual >= ultimaPaginaAgendamentos;
+    btnProximo.disabled = paginaAgendamentosAtual <= 0;
+
+    if (elInfo) {
+        const paginaVazia = paginaAgendamentosAtual === 0 && cachePaginasAgendamentos.get(0)?.length === 0;
+        elInfo.textContent = paginaVazia ? "" : `Página ${paginaAgendamentosAtual + 1}`;
+    }
+}
+
+function mudarPaginaAgendamentos(direcao, usuario) {
+    const novaPagina = paginaAgendamentosAtual + direcao;
+    if (novaPagina < 0) return;
+    if (ultimaPaginaAgendamentos !== null && novaPagina > ultimaPaginaAgendamentos) return;
+
+    paginaAgendamentosAtual = novaPagina;
+    carregarPaginaAgendamentos(usuario, paginaAgendamentosAtual);
+}
+
+function configurarSetasAgendamentos(usuario) {
+    const btnAnterior = document.getElementById("btn-agendamentos-anterior");
+    const btnProximo = document.getElementById("btn-agendamentos-proximo");
+    if (!btnAnterior || !btnProximo) return;
+
+    // "Anterior" (‹) avança pra página seguinte = mais antigos; "Próximo" (›)
+    // volta pra página anterior = mais recentes (página 0 é sempre a mais nova).
+    btnAnterior.addEventListener("click", () => mudarPaginaAgendamentos(1, usuario));
+    btnProximo.addEventListener("click", () => mudarPaginaAgendamentos(-1, usuario));
 }
 
 async function carregarPontuacao(usuario) {
@@ -84,27 +170,6 @@ async function carregarPontuacao(usuario) {
 
     const elPontuacao = document.getElementById("pontuacao-usuario");
     if (elPontuacao) elPontuacao.textContent = data?.pontuacao_total ?? 0;
-}
-
-async function carregarAgendamentos(usuario) {
-    const { data, error } = await supabase
-        .from("vw_meus_agendamentos")
-        .select("*")
-        .eq("id_usuario", usuario.id_usuario)
-        .order("data_agendamento", { ascending: false })
-        .order("horario_inicio", { ascending: false })
-        .limit(5);
-
-    if (error) {
-        console.error("Erro ao buscar agendamentos:", error);
-        const container = document.querySelector(".agendamentos-lista");
-        if (container) {
-            container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Erro ao carregar agendamentos.</p>`;
-        }
-        return;
-    }
-
-    renderizarAgendamentos(data || []);
 }
 
 function configurarBotaoRetornar() {
@@ -133,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    carregarAgendamentos(usuario);
+    configurarSetasAgendamentos(usuario);
+    carregarPaginaAgendamentos(usuario, 0);
     carregarPontuacao(usuario);
 });

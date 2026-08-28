@@ -7,7 +7,13 @@ let idBarbeiroLogado = null;
 let dataSelecionadaAtual = null;
 const LARGURA_BOTAO_CANCELAR = 130;
 
+const AGENDAMENTOS_POR_PAGINA = 5;
+let agendamentosDoDia = []; // todos os agendamentos ativos do dia selecionado
+let paginaAgendamentosAtual = 0;
+
 document.addEventListener("DOMContentLoaded", async () => {
+    configurarSetasAgendamentos();
+
     const sucesso = await inicializarIdentidadeBarbeiro();
     if (sucesso) {
         inicializarLinhaDoTempo();
@@ -156,7 +162,9 @@ async function buscarAgendamentosDaAPI(dataFiltro) {
         );
 
         atualizarContadorAgendamentos(agendamentosAtivos.length);
-        renderizarAgendamentos(agendamentosAtivos);
+        agendamentosDoDia = agendamentosAtivos;
+        paginaAgendamentosAtual = calcularPaginaInicial(dataFiltro, agendamentosDoDia);
+        renderizarPaginaAgendamentos();
     } catch (error) {
         console.error("Erro ao buscar agendamentos:", error);
     }
@@ -226,12 +234,21 @@ function escapeHtml(valor) {
     }[c]));
 }
 
-function renderizarAgendamentos(agendamentos) {
+// Renderiza só a página atual (AGENDAMENTOS_POR_PAGINA itens), empilhados
+// verticalmente como sempre foi — só a paginação é nova.
+function renderizarPaginaAgendamentos() {
     const container = document.getElementById("container-lista-agendamentos");
     if (!container) return;
     container.innerHTML = "";
 
-    agendamentos.forEach(ag => {
+    const inicio = paginaAgendamentosAtual * AGENDAMENTOS_POR_PAGINA;
+    const pagina = agendamentosDoDia.slice(inicio, inicio + AGENDAMENTOS_POR_PAGINA);
+
+    if (pagina.length === 0) {
+        container.innerHTML = `<p style="color:#999;text-align:center;padding:20px;">Nenhum agendamento nesse dia.</p>`;
+    }
+
+    pagina.forEach(ag => {
         const hora = formatarHorario24h(ag.horario_inicio);
 
         const item = document.createElement("div");
@@ -263,6 +280,64 @@ function renderizarAgendamentos(agendamentos) {
         configurarSwipe(item, ag);
         container.appendChild(item);
     });
+
+    atualizarSetasAgendamentos();
+}
+
+// Quantas páginas de AGENDAMENTOS_POR_PAGINA cabem na lista atual (mínimo 1,
+// mesmo com lista vazia, pra não dividir por zero nem exibir "página 0 de 0").
+function totalPaginasAgendamentos() {
+    return Math.max(1, Math.ceil(agendamentosDoDia.length / AGENDAMENTOS_POR_PAGINA));
+}
+
+// No dia de HOJE, começa na página que contém o primeiro agendamento a partir
+// da hora atual em diante — pedido do usuário ("são 15h agora, mostra a
+// partir das 15h"). Num dia passado/futuro não existe "agora" pra comparar,
+// então começa sempre na primeira página.
+function calcularPaginaInicial(dataDoDia, agendamentos) {
+    if (dataDoDia !== formatarDataBanco(new Date())) return 0;
+
+    const horaAgora = formatarHorario24h(
+        `${String(new Date().getHours()).padStart(2, "0")}:${String(new Date().getMinutes()).padStart(2, "0")}`
+    );
+
+    const indice = agendamentos.findIndex(ag => formatarHorario24h(ag.horario_inicio) >= horaAgora);
+    if (indice === -1) return 0;
+
+    return Math.floor(indice / AGENDAMENTOS_POR_PAGINA);
+}
+
+// Habilita/desabilita as setas e atualiza "página X de Y" conforme a posição atual.
+function atualizarSetasAgendamentos() {
+    const btnAnterior = document.getElementById("btn-agendamentos-anterior");
+    const btnProximo = document.getElementById("btn-agendamentos-proximo");
+    const elInfo = document.getElementById("agendamentos-pagina-info");
+    if (!btnAnterior || !btnProximo) return;
+
+    const totalPaginas = totalPaginasAgendamentos();
+
+    btnAnterior.disabled = paginaAgendamentosAtual <= 0;
+    btnProximo.disabled = paginaAgendamentosAtual >= totalPaginas - 1;
+
+    if (elInfo) elInfo.textContent = `${paginaAgendamentosAtual + 1} de ${totalPaginas}`;
+}
+
+function mudarPaginaAgendamentos(direcao) {
+    const totalPaginas = totalPaginasAgendamentos();
+    const novaPagina = paginaAgendamentosAtual + direcao;
+    if (novaPagina < 0 || novaPagina >= totalPaginas) return;
+
+    paginaAgendamentosAtual = novaPagina;
+    renderizarPaginaAgendamentos();
+}
+
+function configurarSetasAgendamentos() {
+    const btnAnterior = document.getElementById("btn-agendamentos-anterior");
+    const btnProximo = document.getElementById("btn-agendamentos-proximo");
+    if (!btnAnterior || !btnProximo) return;
+
+    btnAnterior.addEventListener("click", () => mudarPaginaAgendamentos(-1));
+    btnProximo.addEventListener("click", () => mudarPaginaAgendamentos(1));
 }
 
 // O card azul (.agendamentos_por_ordem) fica parado — quem se move é o botão

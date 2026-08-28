@@ -57,9 +57,18 @@
             <!-- Gerado dinamicamente via JS -->
         </div>
 
-        <!-- ÁREA DOS AGENDAMENTOS: O JavaScript renderizará os agendamentos do dia ativo aqui dentro -->
-        <div id="container-lista-agendamentos">
-            <!-- Gerado dinamicamente via JS -->
+        <!-- ÁREA DOS AGENDAMENTOS: o JavaScript renderiza 5 por vez (empilhados,
+             layout normal), começando a partir do horário atual; as setas trocam
+             de página pra ver os de antes/depois -->
+        <div class="agendamentos-nav">
+            <div id="container-lista-agendamentos">
+                <!-- Gerado dinamicamente via JS -->
+            </div>
+            <div class="agendamentos-setas">
+                <button type="button" class="agendamentos-seta" id="btn-agendamentos-anterior" aria-label="Agendamentos anteriores">‹</button>
+                <span class="agendamentos-pagina-info" id="agendamentos-pagina-info"></span>
+                <button type="button" class="agendamentos-seta" id="btn-agendamentos-proximo" aria-label="Próximos agendamentos">›</button>
+            </div>
         </div>
 
         <div class="card btn-voltar-menu" onclick="window.location.href='menu_cliente.html'">

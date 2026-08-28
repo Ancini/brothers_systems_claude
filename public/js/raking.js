@@ -6,6 +6,7 @@ const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julh
 
 let modoPeriodo = "mensal"; // "mensal" | "anual"
 let mesSelecionado = formatarAnoMes(new Date()); // "YYYY-MM"
+let estabelecimentoSelecionado = null; // null = geral (todas as lojas)
 
 function formatarAnoMes(data) {
     const ano = data.getFullYear();
@@ -64,9 +65,12 @@ async function carregarCabecalhoCliente(usuario) {
     if (!usuario.id_usuario) return;
 
     const [agendamentosResp, pontuacaoResp] = await Promise.all([
+        // vw_meus_agendamentos traz o histórico completo (cancelados inclusos,
+        // de propósito — é o mesmo histórico exibido em meusAgendamentos.html),
+        // então filtra cancelado aqui em vez de usar count:true na consulta.
         supabase
             .from("vw_meus_agendamentos")
-            .select("id_agendamento", { count: "exact", head: true })
+            .select("id_agendamento, status")
             .eq("id_usuario", usuario.id_usuario),
         supabase
             .from("vw_pontuacao_usuario")
@@ -78,8 +82,11 @@ async function carregarCabecalhoCliente(usuario) {
     if (agendamentosResp.error) {
         console.error("Erro ao buscar total de agendamentos:", agendamentosResp.error);
     } else {
+        const agendamentosAtivos = (agendamentosResp.data || []).filter(
+            ag => !(ag.status || "").toLowerCase().includes("cancel")
+        );
         const elAgendamentos = document.getElementById("stat-agendamentos");
-        if (elAgendamentos) elAgendamentos.textContent = agendamentosResp.count ?? 0;
+        if (elAgendamentos) elAgendamentos.textContent = agendamentosAtivos.length;
     }
 
     if (pontuacaoResp.error) {
@@ -90,30 +97,28 @@ async function carregarCabecalhoCliente(usuario) {
     }
 }
 
-// Ranking por período: soma os pontos de cada agendamento (pontuacao_servico) dentro
-// do intervalo selecionado, agrupando por cliente. Depende da view vw_pontuacao_periodo
-// (id_usuario, usuario, data_agendamento, pontuacao_servico) — precisa existir no Supabase.
-async function carregarRanking(usuario) {
-    const container = document.querySelector(".lista-ranking");
-    if (!container) return;
-
-    container.innerHTML = `<p class="ranking-carregando">Carregando ranking...</p>`;
-
-    const { inicio, fim, texto } = intervaloDoPeriodo();
-
-    const elSub = document.querySelector(".ranking-sub");
-    if (elSub) elSub.textContent = texto;
-
-    const { data, error } = await supabase
+// Soma os pontos de cada agendamento (pontuacao_servico) dentro do intervalo
+// selecionado, agrupando por cliente — geral (idEstabelecimento null/undefined)
+// ou de uma barbearia específica. Depende de vw_pontuacao_periodo já expor
+// id_estabelicimento e já excluir agendamento cancelado (recriada 2026-08-28
+// especificamente pra isso). Retorna null em erro de consulta (distinto de
+// "sem dados"), pra tela mostrar mensagem certa.
+async function buscarRanking(inicio, fim, idEstabelecimento) {
+    let consulta = supabase
         .from("vw_pontuacao_periodo")
         .select("id_usuario, usuario, data_agendamento, pontuacao_servico")
         .gte("data_agendamento", inicio)
         .lt("data_agendamento", fim);
 
+    if (idEstabelecimento) {
+        consulta = consulta.eq("id_estabelicimento", idEstabelecimento);
+    }
+
+    const { data, error } = await consulta;
+
     if (error || !data) {
         console.error("Erro ao carregar ranking:", error);
-        container.innerHTML = `<p class="ranking-carregando">Erro ao carregar o ranking.</p>`;
-        return;
+        return null;
     }
 
     const totais = new Map();
@@ -123,9 +128,36 @@ async function carregarRanking(usuario) {
         totais.set(linha.id_usuario, atual);
     });
 
-    const ranking = Array.from(totais.entries())
-        .map(([id_usuario, valores]) => ({ id_usuario, usuario: valores.usuario, total: valores.total }))
-        .sort((a, b) => b.total - a.total);
+    return Array.from(totais.entries()).map(([id_usuario, valores]) => ({
+        id_usuario, usuario: valores.usuario, total: valores.total
+    }));
+}
+
+async function carregarRanking(usuario) {
+    const container = document.querySelector(".lista-ranking");
+    if (!container) return;
+
+    container.innerHTML = `<p class="ranking-carregando">Carregando ranking...</p>`;
+
+    const { inicio, fim, texto } = intervaloDoPeriodo();
+    const elSub = document.querySelector(".ranking-sub");
+
+    if (estabelecimentoSelecionado) {
+        const selectEstab = document.getElementById("estabelecimento-select");
+        const nomeEstab = selectEstab?.selectedOptions[0]?.textContent || "";
+        if (elSub) elSub.textContent = `${nomeEstab} — ${texto}`;
+    } else {
+        if (elSub) elSub.textContent = texto;
+    }
+
+    const ranking = await buscarRanking(inicio, fim, estabelecimentoSelecionado);
+
+    if (ranking === null) {
+        container.innerHTML = `<p class="ranking-carregando">Erro ao carregar o ranking.</p>`;
+        return;
+    }
+
+    ranking.sort((a, b) => b.total - a.total);
 
     container.innerHTML = "";
 
@@ -146,6 +178,40 @@ async function carregarRanking(usuario) {
         itemCliente.classList.add("item-atual");
         container.appendChild(itemCliente);
     }
+}
+
+// Popula o <select> com todas as barbearias cadastradas — "Geral" (value="")
+// já vem fixo no HTML como primeira opção.
+async function carregarEstabelecimentos() {
+    const select = document.getElementById("estabelecimento-select");
+    if (!select) return;
+
+    const { data, error } = await supabase
+        .from("estabelicimento")
+        .select("id_estabelicimento, nome_estabelicimento")
+        .order("nome_estabelicimento");
+
+    if (error) {
+        console.error("Erro ao buscar estabelecimentos:", error);
+        return;
+    }
+
+    (data || []).forEach(estabelecimento => {
+        const option = document.createElement("option");
+        option.value = estabelecimento.id_estabelicimento;
+        option.textContent = estabelecimento.nome_estabelicimento;
+        select.appendChild(option);
+    });
+}
+
+function configurarSeletorEstabelecimento(usuario) {
+    const select = document.getElementById("estabelecimento-select");
+    if (!select) return;
+
+    select.addEventListener("change", () => {
+        estabelecimentoSelecionado = select.value ? Number(select.value) : null;
+        carregarRanking(usuario);
+    });
 }
 
 function definirModoPeriodo(modo, usuario) {
@@ -185,12 +251,14 @@ function configurarFiltrosPeriodo(usuario) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const usuario = pegarSessao();
 
     if (usuario) {
         carregarCabecalhoCliente(usuario);
     }
     configurarFiltrosPeriodo(usuario);
+    configurarSeletorEstabelecimento(usuario);
+    await carregarEstabelecimentos();
     definirModoPeriodo("mensal", usuario);
 });
