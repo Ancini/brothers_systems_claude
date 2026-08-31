@@ -43,7 +43,7 @@ async function enviarPushLembrete(idUsuario: number, nomeEstabelecimento: string
 function montarEmail(nome: string, nomeEstabelecimento: string, horario: string | null) {
   const assunto = "Lembrete de agendamento";
   const texto =
-    `Olha ${nome}, tudo bem? Lembre-se que hoje você possui horário marcado na barbearia ${nomeEstabelecimento}, às ${formatarHorario(horario)}.\n\n` +
+    `Olha ${nome}, tudo bem? Lembre-se que hoje você possui horário marcado no estabelecimento ${nomeEstabelecimento}, às ${formatarHorario(horario)}.\n\n` +
     `Atenciosamente,\nEquipe Brothers Systems`;
   return { assunto, texto };
 }
