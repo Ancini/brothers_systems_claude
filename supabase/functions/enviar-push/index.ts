@@ -97,7 +97,10 @@ Deno.serve(async (req) => {
     });
   }
 
+  console.log("Destinatários resolvidos:", destinatarios);
+
   if (destinatarios.length === 0) {
+    console.log("Nenhum destinatário — payload não tinha id_usuario nem id_estabelicimento válido.");
     return new Response(JSON.stringify({ enviados: 0, falhas: [] }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -115,6 +118,8 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
+
+  console.log(`Inscrições encontradas pros destinatários ${JSON.stringify(destinatarios)}:`, inscricoes?.length ?? 0);
 
   let enviados = 0;
   const falhas: Array<{ id: number; erro: string }> = [];
@@ -142,6 +147,8 @@ Deno.serve(async (req) => {
       falhas.push({ id: inscricao.id, erro: String(erro) });
     }
   }
+
+  console.log("Resultado final:", JSON.stringify({ enviados, falhas }));
 
   return new Response(JSON.stringify({ enviados, falhas }), {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
