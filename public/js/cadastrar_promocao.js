@@ -152,8 +152,10 @@ async function confirmarPromocao(idEstabelecimento, datasDaSemana) {
 
         alert("Promoção salva com sucesso!");
 
-        // Fire-and-forget: avisa quem já tem histórico de agendamento nessa loja.
-        enviarPush({
+        // Espera antes de navegar — ver comentário equivalente em
+        // confirmacao_agendamento.js (Safari/iOS cancela fetch pendente na
+        // troca de página). Avisa quem já tem histórico de agendamento nessa loja.
+        await enviarPush({
             id_estabelicimento: idEstabelecimento,
             titulo: "Promoção especial! 🔥",
             corpo: `Sua barbearia tem ${percentual}% de desconto te esperando essa semana.`,
