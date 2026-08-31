@@ -22,6 +22,14 @@ function formatarData(dataTexto) {
     return `${String(dia).padStart(2, "0")} de ${MESES[mes - 1]}<br>${DIAS_SEMANA[data.getDay()]}`;
 }
 
+// Versão em texto puro (sem <br>), pro corpo do push — não dá pra usar
+// formatarData ali porque ela devolve HTML.
+function formatarDataCurta(dataTexto) {
+    if (!dataTexto) return "-";
+    const [, mes, dia] = dataTexto.split("-");
+    return `${dia}/${mes}`;
+}
+
 function exibirResumo(agendamento) {
     const elBarbeiro = document.getElementById("nome-barbeiro-confirmacao");
     const elServico = document.getElementById("nome-servico-confirmacao");
@@ -74,7 +82,7 @@ async function confirmarAgendamento(agendamento) {
         enviarPush({
             id_usuario: agendamento.id_prestador,
             titulo: "Novo agendamento! 📅",
-            corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou ${agendamento.nome_servico || "um horário"} às ${formatarHora12h(agendamento.horario_inicio)}.`,
+            corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou ${agendamento.nome_servico || "um serviço"} no dia ${formatarDataCurta(agendamento.data_agendamento)} às ${formatarHora12h(agendamento.horario_inicio)}.`,
             url: "menu_inicial_barbeiro.html"
         });
     }

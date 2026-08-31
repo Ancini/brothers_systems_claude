@@ -12,8 +12,8 @@ self.addEventListener("push", (evento) => {
     const titulo = dados.title || "Brothers Systems";
     const opcoes = {
         body: dados.body || "",
-        icon: "css/imagens/logo.png",
-        badge: "css/imagens/logo.png",
+        icon: "css/imagens/bs_push.png",
+        badge: "css/imagens/bs_push.png",
         data: { url: dados.url || "/" }
     };
 
