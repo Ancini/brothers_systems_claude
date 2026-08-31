@@ -35,6 +35,28 @@
             font-size: 12px;
             color: #999;
         }
+
+        .notificacoes-btn {
+            background: #1e90ff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-bottom: 12px;
+        }
+
+        .notificacoes-btn:hover:not(:disabled) {
+            background: #0074ad;
+        }
+
+        .notificacoes-btn:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.json">
@@ -119,6 +141,7 @@
         </section>
 
         <div class="footer-sair">
+            <button class="notificacoes-btn" id="btnAtivarNotificacoes">🔔 Ativar notificações</button>
             <button class="logout-btn-footer" id="btnSairFooter">🚪 Sair da Conta</button>
             <div class="brand-footer">
                 <span class="brand-footer-nome">&lt;Brothers Systems&gt;</span>
@@ -129,6 +152,10 @@
     </div>
 
     <script type="module" src="js/menu_cliente.js"></script>
+    <script type="module">
+        import { configurarBotaoNotificacoes } from "./js/push.js";
+        configurarBotaoNotificacoes("btnAtivarNotificacoes");
+    </script>
 
     <script>
         // Funções de sessão (cópia local para não precisar de import)
