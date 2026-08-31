@@ -1,6 +1,18 @@
 // Service worker: só cuida de notificação push. Precisa ficar na raiz de
 // public/ (não numa subpasta) pra ter escopo sobre o site inteiro.
 
+// Sem isso, uma versão nova desse arquivo fica "esperando" — só assume de
+// verdade depois que TODAS as abas/instâncias do app forem fechadas por
+// completo (não só minimizadas). skipWaiting + clients.claim faz a troca
+// acontecer na hora, na próxima vez que a página carregar.
+self.addEventListener("install", () => {
+    self.skipWaiting();
+});
+
+self.addEventListener("activate", (evento) => {
+    evento.waitUntil(self.clients.claim());
+});
+
 self.addEventListener("push", (evento) => {
     let dados = {};
     try {
