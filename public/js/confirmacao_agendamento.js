@@ -77,9 +77,12 @@ async function confirmarAgendamento(agendamento) {
 
     limparAgendamentoEmAndamento();
 
-    // Não espera (fire-and-forget) — notificação é bônus, não pode atrasar o
-    // redirecionamento nem quebrar o fluxo se falhar (enviarPush já não lança).
-    enviarPush({
+    // Espera as duas chamadas antes de navegar — sem isso (fire-and-forget), o
+    // window.location.href logo abaixo troca de página antes da requisição
+    // sair do aparelho, e o Safari/iOS cancela fetch pendente na troca de
+    // página bem mais agressivo que o Chrome desktop (que geralmente "ganha a
+    // corrida"). enviarPush nunca lança erro, então isso não quebra o fluxo.
+    await enviarPush({
         id_usuario: usuario.id_usuario,
         titulo: "Agendamento confirmado! ✅",
         corpo: `Seu horário com ${agendamento.nome_prestador || "o barbeiro"} foi confirmado para ${formatarHora12h(agendamento.horario_inicio)}.`,
@@ -87,7 +90,7 @@ async function confirmarAgendamento(agendamento) {
     });
 
     if (agendamento.id_prestador) {
-        enviarPush({
+        await enviarPush({
             id_usuario: agendamento.id_prestador,
             titulo: "Novo agendamento! 📅",
             corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou um horário dia ${formatarDataExtensa(agendamento.data_agendamento)} às ${formatarHora24h(agendamento.horario_inicio)}.`,
