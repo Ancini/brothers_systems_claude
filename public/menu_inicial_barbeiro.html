@@ -71,6 +71,10 @@
             </div>
         </div>
 
+        <div class="card btn-notificacoes" id="btnAtivarNotificacoes">
+            <span>🔔 Ativar notificações</span>
+        </div>
+
         <div class="card btn-voltar-menu" onclick="window.location.href='menu_cliente.html'">
             <img src="css/imagens/voltar.png" alt="" class="icone-voltar">
             <span>Voltar</span>
@@ -87,5 +91,9 @@
     <!-- Arquivo de script responsável pela lógica e atualização dinâmica dos dados -->
     <script src="js/controle_barbeiro.js"></script>
     <script type="module" src="js/modo_escuro.js"></script>
+    <script type="module">
+        import { configurarBotaoNotificacoes } from "./js/push.js";
+        configurarBotaoNotificacoes("btnAtivarNotificacoes");
+    </script>
 </body>
 </html>

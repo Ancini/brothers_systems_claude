@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import { enviarPush } from "./push.js";
 
 function formatarDataBanco(data) {
     const ano = data.getFullYear();
@@ -150,6 +151,15 @@ async function confirmarPromocao(idEstabelecimento, datasDaSemana) {
         if (erroSalvar) throw erroSalvar;
 
         alert("Promoção salva com sucesso!");
+
+        // Fire-and-forget: avisa quem já tem histórico de agendamento nessa loja.
+        enviarPush({
+            id_estabelicimento: idEstabelecimento,
+            titulo: "Promoção especial! 🔥",
+            corpo: `Sua barbearia tem ${percentual}% de desconto te esperando essa semana.`,
+            url: "menu_cliente.html"
+        });
+
         window.location.href = "menu_inicial_barbeiro.html";
     } catch (erro) {
         console.error("Erro ao salvar promoção:", erro);

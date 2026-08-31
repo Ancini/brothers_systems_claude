@@ -2,6 +2,7 @@ import { supabase } from "./supabase.js";
 import { pegarSessao } from "./session.js";
 import { pegarAgendamentoEmAndamento, limparAgendamentoEmAndamento } from "./agendamento_estado.js";
 import { preencherCabecalhoCliente } from "./cabecalho_cliente.js";
+import { enviarPush } from "./push.js";
 
 const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 const DIAS_SEMANA = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
@@ -59,6 +60,25 @@ async function confirmarAgendamento(agendamento) {
     }
 
     limparAgendamentoEmAndamento();
+
+    // Não espera (fire-and-forget) — notificação é bônus, não pode atrasar o
+    // redirecionamento nem quebrar o fluxo se falhar (enviarPush já não lança).
+    enviarPush({
+        id_usuario: usuario.id_usuario,
+        titulo: "Agendamento confirmado! ✅",
+        corpo: `Seu horário com ${agendamento.nome_prestador || "o barbeiro"} foi confirmado para ${formatarHora12h(agendamento.horario_inicio)}.`,
+        url: "meusAgendamentos.html"
+    });
+
+    if (agendamento.id_prestador) {
+        enviarPush({
+            id_usuario: agendamento.id_prestador,
+            titulo: "Novo agendamento! 📅",
+            corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou ${agendamento.nome_servico || "um horário"} às ${formatarHora12h(agendamento.horario_inicio)}.`,
+            url: "menu_inicial_barbeiro.html"
+        });
+    }
+
     window.location.href = "agendamento_confirmado.html";
 }
 
