@@ -27,6 +27,18 @@ const VAPID_SUBJECT = Deno.env.get("VAPID_SUBJECT") ?? "mailto:contato@brothersy
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
+// Essa function é chamada direto do navegador (supabase.functions.invoke, em
+// push.js) — diferente da lembrete-agendamento, que só recebe chamada
+// servidor-a-servidor do pg_cron. Toda chamada de navegador pra um domínio
+// diferente (aqui: site na Vercel -> function no Supabase) manda antes um
+// "preflight" OPTIONS pra pedir permissão (CORS); sem responder ele
+// corretamente, o navegador bloqueia a chamada de verdade antes de sair.
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
 interface CorpoRequisicao {
   id_usuario?: number | number[];
   id_estabelicimento?: number;
@@ -50,20 +62,27 @@ async function resolverDestinatarios(payload: CorpoRequisicao): Promise<number[]
 }
 
 Deno.serve(async (req) => {
+  // Preflight do CORS — o navegador manda isso ANTES da chamada real pra
+  // pedir permissão. Tem que responder rápido, sem tentar ler corpo nenhum
+  // (não tem corpo num OPTIONS).
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
   let payload: CorpoRequisicao;
   try {
     payload = await req.json();
   } catch {
     return new Response(JSON.stringify({ error: "JSON inválido" }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
   if (!payload.titulo || !payload.corpo) {
     return new Response(JSON.stringify({ error: "titulo e corpo são obrigatórios" }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
@@ -74,13 +93,13 @@ Deno.serve(async (req) => {
     console.error("Erro ao resolver destinatários:", erro);
     return new Response(JSON.stringify({ error: String(erro) }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
   if (destinatarios.length === 0) {
     return new Response(JSON.stringify({ enviados: 0, falhas: [] }), {
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
@@ -93,7 +112,7 @@ Deno.serve(async (req) => {
     console.error("Erro ao buscar inscrições push:", erroInscricoes);
     return new Response(JSON.stringify({ error: erroInscricoes.message }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
@@ -125,6 +144,6 @@ Deno.serve(async (req) => {
   }
 
   return new Response(JSON.stringify({ enviados, falhas }), {
-    headers: { "Content-Type": "application/json" },
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 });
