@@ -78,12 +78,28 @@ export async function ativarNotificacoes() {
     }
 }
 
+// Se já existe um service worker registrado (de uma ativação anterior nesse
+// aparelho), força uma checagem por versão nova toda vez que a página carrega
+// — sem isso, o navegador só rechecha sozinho de tempos em tempos (pode levar
+// até um dia), e o usuário fica preso numa versão antiga do sw.js até lá.
+async function verificarAtualizacaoServiceWorker() {
+    if (!suportaPush()) return;
+    try {
+        const registro = await navigator.serviceWorker.getRegistration();
+        if (registro) await registro.update();
+    } catch (erro) {
+        console.error("Erro ao checar atualização do service worker:", erro);
+    }
+}
+
 // Liga um botão existente na página ao fluxo de ativação, já refletindo o
 // status atual (some se o navegador não suporta, trava se já está ativo).
 // Não usa a propriedade .disabled porque o botão às vezes é uma <div class="card">
 // (padrão usado em menu_inicial_barbeiro.html), que não tem esse comportamento
 // nativo — o "trava" é feito na mão com uma flag, funciona pra qualquer elemento.
 export function configurarBotaoNotificacoes(idBotao) {
+    verificarAtualizacaoServiceWorker();
+
     const botao = document.getElementById(idBotao);
     if (!botao) return;
 
