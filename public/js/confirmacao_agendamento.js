@@ -22,12 +22,20 @@ function formatarData(dataTexto) {
     return `${String(dia).padStart(2, "0")} de ${MESES[mes - 1]}<br>${DIAS_SEMANA[data.getDay()]}`;
 }
 
-// Versão em texto puro (sem <br>), pro corpo do push — não dá pra usar
-// formatarData ali porque ela devolve HTML.
-function formatarDataCurta(dataTexto) {
+// Versão em texto puro (sem <br>), pro corpo do push — "01 de junho", não
+// dá pra usar formatarData ali porque ela devolve HTML.
+function formatarDataExtensa(dataTexto) {
     if (!dataTexto) return "-";
     const [, mes, dia] = dataTexto.split("-");
-    return `${dia}/${mes}`;
+    return `${dia} de ${MESES[Number(mes) - 1]}`;
+}
+
+// Horário em 24h (o banco já guarda assim, só corta os segundos) — usado no
+// push em vez de formatarHora12h, que é só pro resumo na tela.
+function formatarHora24h(horaTexto) {
+    if (!horaTexto) return "--:--";
+    const [h, m] = horaTexto.split(":");
+    return `${h.padStart(2, "0")}:${m}`;
 }
 
 function exibirResumo(agendamento) {
@@ -82,7 +90,7 @@ async function confirmarAgendamento(agendamento) {
         enviarPush({
             id_usuario: agendamento.id_prestador,
             titulo: "Novo agendamento! 📅",
-            corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou ${agendamento.nome_servico || "um serviço"} no dia ${formatarDataCurta(agendamento.data_agendamento)} às ${formatarHora12h(agendamento.horario_inicio)}.`,
+            corpo: `${usuario.nome || usuario.user_metadata?.name || "Um cliente"} marcou um horário dia ${formatarDataExtensa(agendamento.data_agendamento)} às ${formatarHora24h(agendamento.horario_inicio)}.`,
             url: "menu_inicial_barbeiro.html"
         });
     }
